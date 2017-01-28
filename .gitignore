@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# editor
+.vscode
+
+.DS_Store
+
+#build
+dist/
+*.map
