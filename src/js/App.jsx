@@ -7,6 +7,7 @@ import { Router, Route, browserHistory } from 'react-router';
 require('../scss/main.scss');
 
 import NoteShare from './NoteShare';
+import LandingPage from './LandingPage';
 
 /**
  * Bootstraps the app by linking it to the div with id=app in index.html
@@ -16,6 +17,8 @@ import NoteShare from './NoteShare';
 render((
     <Router history={browserHistory}>
         <Route path="/" component={NoteShare} />
+        <Route path="signup" component={LandingPage} />
+        <Route path="login" component={LandingPage} />
     </Router>
 
 ), document.getElementById('app'));
