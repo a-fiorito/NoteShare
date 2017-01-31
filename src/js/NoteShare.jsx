@@ -8,7 +8,8 @@ class NoteShare extends Component {
     render() {
         return (
             <div className="app-container">
-            Hello World
+            {/* NAVBAR GOES HERE*/}
+            {this.props.children}
             </div>
         );
     }

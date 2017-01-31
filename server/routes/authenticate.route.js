@@ -2,7 +2,8 @@ const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
     Validator = require('validator'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    bcrypt = require('bcrypt');
 
 function validate(input) {
     let errors = {};
@@ -38,7 +39,19 @@ module.exports = (function() {
 
     authenticate.post('/user', (req, res) => {
         const { errors, isValid } = validate(req.body.user)
-        if(!isValid) {
+        if(isValid) {
+            const { username, password, email } = req.body.user;
+            const password_digest = bcrypt.hashSync(password, 10);
+
+            models.User.create({
+                username: username,
+                password: password_digest,
+                email: email
+            })
+            .then(user => res.json({success: true}))
+            //.catch(err => res.status(500).json({error: err}));
+
+        } else {
             res.status(400).send(errors);
         }
     });

@@ -29,13 +29,40 @@ export default class LandingPage extends Component {
     }
 }
 
+const FormGroup = ({name, value, label, error, type, placeholder, onChange}) => {
+    return (
+        <div className={"form-group" + (error ? " error" : "")}>
+            <label className="form-label">{label.toUpperCase()}</label>
+            <input 
+                type={type}
+                value={value}
+                name={name}
+                className="form-input"
+                placeholder={placeholder}
+                onChange={onChange}
+            />
+            {error && <span className="form-error">{error}</span>}
+        </div>
+    );
+}
+
+FormGroup.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired,
+    error: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    type: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+}
+
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: '',
+            username: '',
             password: ''
         }
     }
@@ -48,27 +75,22 @@ class LoginForm extends Component {
         return (
             <form onSubmit={this._onSubmit} className="landing-form">
                 <h1>Welcome, Please Sign in</h1>
-                <div className="form-group">
-                    <label className="form-label">EMAIL</label>
-                    <input 
-                        type="text"
-                        value={this.state.email}
-                        name="email"
-                        className="form-input"
-                        placeholder="Enter your email"
-                        onChange={this._onChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">PASSWORD</label>
-                    <input 
-                        type="password"
-                        name="password"
-                        className="form-input"
-                        placeholder="Enter your password"
-                        onChange={this._onChange}
-                    />
-                </div>
+                <FormGroup
+                    type="text"
+                    label="username"
+                    value={this.state.username}
+                    name="username"
+                    placeholder="Enter your username"
+                    onChange={this._onChange}
+                />
+                <FormGroup
+                    type="password"
+                    label="password"
+                    value={this.state.password}
+                    name="password"
+                    placeholder="Enter your password"
+                    onChange={this._onChange}
+                />
                 <div className="form-group">
                     <button className="form-button">
                     Login
@@ -104,7 +126,8 @@ class SignUpForm extends Component {
             user: this.state
         })
         .then(res => {
-            console.log(res);
+            console.log('res');
+            this.context.router.push('/')
         })
         .catch(err => this.setState({errors: err.response.data, isLoading: false}));
         
@@ -115,41 +138,33 @@ class SignUpForm extends Component {
         return (
             <form onSubmit={this._onSubmit} className="landing-form">
                 <h1>Create an Account</h1>
-                <div className={"form-group" + (errors.username ? " error" : "")}>
-                    <label className="form-label">USERNAME</label>
-                    <input 
-                        type="text"
-                        value={this.state.username}
-                        name="username"
-                        className="form-input"
-                        placeholder="Create a username"
-                        onChange={this._onChange}
-                    />
-                    {errors.username && <span className="form-error">{errors.username}</span>}
-                </div>
-                <div className={"form-group" + (errors.email ? " error" : "")}>
-                    <label className="form-label">EMAIL</label>
-                    <input 
-                        type="text"
-                        value={this.state.email}
-                        name="email"
-                        className="form-input"
-                        placeholder="Enter your email"
-                        onChange={this._onChange}
-                    />
-                    {errors.email && <span className="form-error">{errors.email}</span>}
-                </div>
-                <div className={"form-group" + (errors.password ? " error" : "")}>
-                    <label className="form-label">PASSWORD</label>
-                    <input 
-                        type="password"
-                        name="password"
-                        className="form-input"
-                        placeholder="Enter your password"
-                        onChange={this._onChange}
-                    />
-                    {errors.password && <span className="form-error">{errors.password}</span>}
-                </div>
+                <FormGroup
+                    type="text"
+                    label="username"
+                    error={this.state.errors.username}
+                    value={this.state.username}
+                    name="username"
+                    placeholder="Choose a username"
+                    onChange={this._onChange}
+                />
+                <FormGroup
+                    type="text"
+                    label="email"
+                    error={this.state.errors.email}
+                    value={this.state.email}
+                    name="email"
+                    placeholder="Enter your email"
+                    onChange={this._onChange}
+                />
+                <FormGroup
+                    type="password"
+                    label="password"
+                    error={this.state.errors.password}
+                    value={this.state.password}
+                    name="password"
+                    placeholder="Enter your password"
+                    onChange={this._onChange}
+                />
                 <div className="form-group">
                     <button disabled={this.state.isLoading} className="form-button">
                     Register
@@ -158,4 +173,8 @@ class SignUpForm extends Component {
             </form>
         );
     }
+}
+
+SignUpForm.contextTypes = {
+    router: React.PropTypes.object.isRequired
 }
