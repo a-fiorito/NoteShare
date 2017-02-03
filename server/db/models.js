@@ -3,9 +3,10 @@ const Sequelize = require('sequelize');
 module.exports = function (sequelize) {
 
     const User = sequelize.define('user', {
-        username: Sequelize.TEXT,
+        username: {type: Sequelize.TEXT, unique: true},
         name: Sequelize.TEXT,
-        email: Sequelize.TEXT
+        email: Sequelize.TEXT,
+        password: Sequelize.TEXT
     });
 
     return {
