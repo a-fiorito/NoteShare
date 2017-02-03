@@ -24,6 +24,21 @@ $form-title: Helvetica;
             h1 {
                 font-family: $form-title;
             }
+
+            .global-form-error {
+                border-radius: 16px;
+                padding: 5px;
+                margin-bottom: 10px;
+                height: 30px;
+                line-height: 30px;
+                vertical-align: middle;
+                text-align: center;
+                background: palevioletred * 1.8;
+                color: red;
+                width: 85%;
+
+            }
+
             .form-group {
                 display: flex;
                 flex-direction: column;
