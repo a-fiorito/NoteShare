@@ -1,7 +1,7 @@
 const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
-    bcrypt = require('bcrypt'),
+    bcrypt = require('bcryptjs'),
     helpers = require('../helpers'),
     jwt = require('jsonwebtoken'),
     config = require('../config');
