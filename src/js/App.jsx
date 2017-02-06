@@ -12,6 +12,7 @@ import NoteShare from './NoteShare';
 import LandingPage from './LandingPage';
 import Homepage from './Homepage';
 import Dashboard from './Dashboard';
+import DocumentArea from './DocumentArea';
 import authenticate from './Authenticate';
 
 /**
@@ -31,6 +32,7 @@ render((
             <Route path="login" component={LandingPage} />
             <Route path="signup" component={LandingPage} />
             <Route path="dashboard" component={authenticate(Dashboard)} />
+            <Route path="doc" component={DocumentArea} />
         </Route>
     </Router>
 
