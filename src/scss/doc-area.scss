@@ -1,0 +1,24 @@
+.docs{
+
+  height: auto;
+  background: #f3fff2;
+
+    .doc-thumbnail{
+      width: 16%; /*Fit 5 notes per line*/
+      margin: 0 2%;
+      font-family: arial;
+      padding-top: 2%;
+      display: inline-block;
+    }
+
+    img{
+      width: 100%;
+      height: auto;
+    }
+
+    p{
+      margin: 0;
+      text-align: center;
+    }
+
+}

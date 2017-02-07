@@ -8,6 +8,7 @@ import auth from './utils/auth';
 // check main.scss for more info.
 require('../scss/main.scss');
 
+
 import NoteShare from './NoteShare';
 import LandingPage from './LandingPage';
 import Homepage from './Homepage';
