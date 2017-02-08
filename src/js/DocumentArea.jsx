@@ -27,16 +27,18 @@ class DocThumbnail extends Component {
     //use a placeholder image for now
 
     constructor(props){
-      super();
+      super(props);
     }
 
     render(){
         return (
           <div className = "doc-thumbnail">
-            <img src="./assets/images/placeholder-300x300.png"></img>
-            <p>{this.props.name}</p>
-            <p>{this.props.course}</p>
-            <p>Comments: {this.props.comments}</p>
+            <div className="doc-holder"><img src="./assets/images/placeholder-300x300.png"></img></div>
+            <div className="document-info">
+              <p>{this.props.name}</p>
+              <p>{this.props.course}</p>
+              <p>Comments: {this.props.comments}</p>
+            </div>
           </div>
         );
     }
@@ -44,15 +46,19 @@ class DocThumbnail extends Component {
 
 export default class DocumentArea extends Component {
 
-    constructor(props){
-      super();
-      this.state = {order: "Newest", numPerRow: 6};
+    constructor(props) {
+      super(props);
+      this.state = {
+        documents: notes,
+        order: "Newest", numPerRow: 6
+      };
     }
 
+    /* Not really needed anymore but ill keep it here just incase
     _onRowChange = (select) => {
       //update the state to reflect the change in the dropdown
       //because setState is async, call the setState only after it has been processed
-      this.setState({numPerRow: select.target.value}, this._setNumPerRow);
+      this.setState({numPerRow: select.target.value}, this._setNumPerRow); // DONT DO THIS
     }
 
     _setNumPerRow = () => {
@@ -81,21 +87,18 @@ export default class DocumentArea extends Component {
         obj.style.width=width;
       });
 
+    }*/
+
+    displayNotes() {
+      return this.state.documents.map(d => {
+          return <DocThumbnail key={d.id} {...d} /> // dump all the props
+      });
     }
 
     render() {
         return (
-            <div className="docs">
-              <div id="doc-wrapper" className="doc-wrapper">
-                {notes.map(info =>
-                  <DocThumbnail key = {info.id} {...info}/>//dump all the props
-                )}
-              </div>
-              <select onChange={this._onRowChange}>
-                <option value='6'>6</option>
-                <option value='3'>3</option>
-                <option value='10'>10</option>
-              </select>
+            <div id="doc-wrapper" className="doc-wrapper">
+              {this.displayNotes()}
             </div>
         );
     }
