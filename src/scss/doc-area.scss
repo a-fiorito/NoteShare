@@ -1,26 +1,35 @@
-.doc-wrapper{
-  display: inline-flex;
+.doc-wrapper {
+  display: flex;
   flex-wrap: wrap;
   width: 100%;
+  background: #f3fff2;
 
     .doc-thumbnail{
       font-family: arial;
-      padding: 2%;
-      width: 12%;
+      margin: 10px 0px 10px 15px;
+      width: 150px;
+
+      .doc-holder {
+        display: flex;
+        justify-content: center;
+        height: 50px;
+        border: 1px solid black;
+        height: 200px;
+
+        img {
+          margin-top: 20px;
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .document-info {
+        padding: 2px;
+        p {
+          margin: 0;
+          text-align: center;
+        } 
+      }
     }
 
-    img{
-      width: 100%;
-      height: auto;
-    }
-
-    p{
-      margin: 0;
-      text-align: center;
-    }
-
-}
-
-.docs{
-    background: #f3fff2;
 }
