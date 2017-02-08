@@ -12,7 +12,13 @@ let notes = [
   {id : 4, course : "SOEN 331", name : "ALGEBRAIC SPECIFICATION", comments : 15},
   {id : 5, course : "SOEN 331", name : "PREDICATE LOGIC", comments : 3},
   {id : 6, course : "SOEN 371", name : "POISSON DISTRIBUTION", comments : 12},
-  {id : 7, course : "SOEN 371", name : "BINOMIAL DISTRIBUTION", comments : 7}
+  {id : 7, course : "SOEN 371", name : "BINOMIAL DISTRIBUTION", comments : 7},
+  {id : 8, course : "SOEN 341", name : "AGILE NOTES", comments : 22},
+  {id : 9, course : "SOEN 341", name : "SCRUM NOTES", comments : 14},
+  {id : 10, course : "SOEN 331", name : "ALGEBRAIC SPECIFICATION", comments : 15},
+  {id : 11, course : "SOEN 331", name : "PREDICATE LOGIC", comments : 3},
+  {id : 12, course : "SOEN 371", name : "POISSON DISTRIBUTION", comments : 12},
+  {id : 13, course : "SOEN 371", name : "BINOMIAL DISTRIBUTION", comments : 7}
 
 ];
 
@@ -36,63 +42,59 @@ class DocThumbnail extends Component {
     }
 }
 
-
-
 export default class DocumentArea extends Component {
 
     constructor(props){
       super();
-      this.state = {order: "Newest"};
+      this.state = {order: "Newest", numPerRow: 6};
     }
 
-    _onOrderChange = (select) => {
+    _onRowChange = (select) => {
       //update the state to reflect the change in the dropdown
-      //because setState is async, call the changeOrder only after it has been processed
-      this.setState({order: select.target.value}, this._changeOrder);
+      //because setState is async, call the setState only after it has been processed
+      this.setState({numPerRow: select.target.value}, this._setNumPerRow);
     }
 
-    _changeOrder = () => {
+    _setNumPerRow = () => {
 
-      switch(this.state.order){
+      switch(this.state.numPerRow){
 
-        case "class":
-
-        //array to store a list of unique courses. might take this out later depending on how we
-        //set up the system.
-        var uniqueClasses = [];
-        //find how many unique courses there are
-
-        for(var x=0;x<notes.length;x++){
-          if(uniqueClasses.includes(notes[x].course))
-            uniqueClasses.push(notes[x].course);
-        }
-
-
-
-
+        case '3':
+          this.__setWidth('28%', 'doc-thumbnail');
         break;
 
-        default:
+        case '6':
+          this.__setWidth('12%', 'doc-thumbnail');
+        break;
 
-
-
+        case '10':
+          this.__setWidth('6%', 'doc-thumbnail');
+        break;
 
       }
+    }
+
+    __setWidth = (width, className) => {
+      //returns an array- like object so we have to change it to an array
+      var obj = document.getElementsByClassName(className);
+      Array.from(obj).forEach(obj=>{
+        obj.style.width=width;
+      });
+
     }
 
     render() {
         return (
             <div className="docs">
-              <div className="docs-wrapper">
-                <p>{this.state.order}</p>
+              <div id="doc-wrapper" className="doc-wrapper">
                 {notes.map(info =>
                   <DocThumbnail key = {info.id} {...info}/>//dump all the props
                 )}
               </div>
-              <select onChange={this._onOrderChange}>
-                <option value="new">Newest</option>
-                <option value="class">By Class</option>
-                <option value="old">Oldest</option>
+              <select onChange={this._onRowChange}>
+                <option value='6'>6</option>
+                <option value='3'>3</option>
+                <option value='10'>10</option>
               </select>
             </div>
         );
