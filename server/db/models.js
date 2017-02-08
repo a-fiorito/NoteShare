@@ -9,7 +9,14 @@ module.exports = function (sequelize) {
         password: Sequelize.TEXT
     });
 
+    const Course = sequelize.define('course', {
+        name: Sequelize.TEXT,
+        number: Sequelize.TEXT,
+        
+    });
+
     return {
-        User: User
+        User: User,
+        Course: Course
     }
 }
