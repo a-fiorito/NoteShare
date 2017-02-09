@@ -1,0 +1,59 @@
+.profile-area{
+  background: $background-color;
+}
+
+.name-button-wrapper{
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+
+  h1, h2{
+    margin: 0;
+  }
+
+  .button-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.button{
+  background: #f25454;
+  width: 120px;
+  text-align: center;
+  border-bottom: 8px solid #d32a2a;
+  border-radius: 3px;
+  padding: 10px;
+  font-family: $form-title;
+  color: white;
+  margin: 0 10px;
+
+  span{
+    font-weight: bold;
+  }
+
+  span::after{
+    content: "  +";
+    opacity: 0;
+    transition: 0.5s;
+    font-weight: bold;
+  }
+
+  &:hover{
+    background: #d32a2a;
+    cursor: pointer;
+    transition: 0.5s;
+    transform: translateY(2px);
+    border-bottom: 6px solid #8e2727;
+
+    span::after{
+      opacity: 1;
+    }
+  }
+
+  &:active{
+    transform: translateY(4px);
+    border-bottom: 2px solid #8e2727;
+    transition: 0.1s;
+  }
+}
