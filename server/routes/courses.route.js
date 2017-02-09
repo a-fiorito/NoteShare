@@ -1,8 +1,6 @@
 const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
-    bcrypt = require('bcryptjs'),
-    jwt = require('jsonwebtoken'),
     config = require('../config'),
     helpers = require('../courses-helpers');
     
@@ -28,13 +26,8 @@ module.exports = (function () {
                    
                })
                .then(course => {
-                   // Returns token
-                   const token = jwt.sign({
-                       id: course.id,
-                       name: course.name,
-                       number: course.number,
-                   }, config.jwtSecret);
-                   res.json({token})
+                   // Returns course object as json
+                   res.json(course);
                })
                .catch(err => res.status(500).json({error: err}));
 
