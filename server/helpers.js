@@ -32,7 +32,7 @@ function formValidate(input) {
 /*
     Checks if user already exists in the db
 */  
-function validateSignUp(input, extraValidation) {
+function validateSignUp(input) {
     let errors = formValidate(input);
 
     return models.User.findOne({where: {username: input.username}})
