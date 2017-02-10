@@ -14,7 +14,7 @@ module.exports = (function() {
     // adds user to database on signup
     authenticate.post('/signup', function(req, res) {
         // validate input
-        require('../helpers').validateSignUp(req.body.user)
+        helpers.validateSignUp(req.body.user)
         .then(({errors, isValid}) => {
             if(isValid) {
                 const { username, password, email } = req.body.user;

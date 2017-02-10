@@ -2,7 +2,7 @@ const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
     config = require('../config'),
-    helpers = require('../courses-helpers');
+    course_helpers = require('../courses-helpers');
     
 
 module.exports = (function () {
@@ -14,7 +14,7 @@ module.exports = (function () {
     coursesroute.post('/courses', (req, res) => {
        
        // Validates input
-       helpers.validateCourse(req.body.course)
+       course_helpers.validateCourse(req.body.course)
        .then(({errors, isValid}) => {
            if(isValid) {
                const {name, number} = req.body.course;
