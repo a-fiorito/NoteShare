@@ -1,9 +1,9 @@
 const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
-    config = require('../config'),
-    helpers = require('../courses-helpers');
-    
+config = require('../config'),
+    course_helpers = require('../courses-helpers');
+
 
 module.exports = (function () {
     'use strict';
@@ -12,35 +12,34 @@ module.exports = (function () {
 
     // Adds course {name, number} to the database
     coursesroute.post('/courses', (req, res) => {
-       
-       // Validates input
-       helpers.validateCourse(req.body.course)
-       .then(({errors, isValid}) => {
-           if(isValid) {
-               const {name, number} = req.body.course;
-               
-               // Create course
-               models.Course.create({
-                   name: name,
-                   number: number,
-                   
-               })
-               .then(course => {
-                   // Returns course object as json
-                   res.json(course);
-               })
-               .catch(err => res.status(500).json({error: err}));
 
-
-           } else{
-               res.status(400).json(errors);
-           }
-
-
-       })
-        
+        // Validates input
+        course_helpers.validateCourse(req.body.course)
+            .then(({errors, isValid}) => {
+                if (isValid) {
+                    const {name, number} = req.body.course;
+                    var username = req.body.user.username;
+                    var user = models.User.findOne({ where: { username: username } })
+                        .then(user => {
+                            // Create course
+                            models.Course.create({
+                                name: name,
+                                number: number,
+                            })
+                                .then(course => {
+                                    //Add the course to the class table
+                                    user.addCourses(course);
+                                    // Returns course object as json
+                                    res.json(course);
+                                })
+                                .catch(err => res.status(500).json({ error: err }));
+                        })
+                } else {
+                    res.status(400).json(errors);
+                }
+            })
     })
+    
     return coursesroute;
 
 })();
-    

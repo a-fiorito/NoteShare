@@ -15,6 +15,8 @@ module.exports = function (sequelize) {
         
     });
 
+    const Class = User.belongsToMany(Course, {as: 'courses', through: 'class'});
+
     return {
         User: User,
         Course: Course
