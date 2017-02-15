@@ -1,0 +1,84 @@
+.nav-bar {
+  background-color: #f3fff2;
+  color: #333333;
+  // width: 80%;
+  // position: relative;
+  // left: 20%;
+  font-variant: small-caps;
+
+  .brand {
+    letter-spacing: 5px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 100;
+    font-size: 72px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+  }
+
+  .menu {
+
+    ul {
+      background-color: #333333;
+      display: flex;          // inline-flex?
+      // width: 80%;
+      // position: relative;
+      // left: 20%;
+      list-style-type: none;
+      justify-content: center;
+      padding: 0;
+      margin: 0;              // important
+      flex-wrap: wrap;        // important
+
+      li {
+        padding: 10px 0px;
+        // transition-duration: 0.4s;
+        // vertical-align: middle;
+        // transform: perspective(1px) translateZ(0);
+        // box-shadow: 0 0 1px transparent;
+        // position: relative;
+        // overflow: hidden;
+
+        a {
+          color: white;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          font-weight: 100;
+          letter-spacing: 1px;
+          font-size: 24px;
+          text-decoration: none;
+          padding: 10px 30px;
+          transition-duration: 0.4s;
+
+          &:hover {
+            background-color: black;
+          }
+        }
+
+        // growing box effect
+        // &:hover, &:focus, &:active {
+        //   background-color: black;
+        //   box-shadow: 0px 10px 25px -5px black;
+        //   transform: scale(1.05);
+        // }
+
+        // underline effect
+        // &:before {
+        //   content: "";
+        //   position: absolute;
+        //   z-index: -1;
+        //   left: 0;
+        //   right: 100%;
+        //   bottom: 0;
+        //   background-color: white;
+        //   height: 4px;
+        //   transition-property: right;
+        //   transition-duration: 0.3s;
+        //   transition-timing-function: ease-out;
+        // }
+        // &:hover:before, &:focus:before, &:active:before {
+        //   right: 0;
+        // }
+      }
+    }
+  }
+}
