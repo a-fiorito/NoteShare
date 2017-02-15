@@ -1,8 +1,10 @@
+$background-color: #f3fff2;
+
 .doc-wrapper {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  background: #f3fff2;
+  background: $background-color;
 
     .doc-thumbnail{
       font-family: arial;
@@ -28,7 +30,7 @@
         p {
           margin: 0;
           text-align: center;
-        } 
+        }
       }
     }
 

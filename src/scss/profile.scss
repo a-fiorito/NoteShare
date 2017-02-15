@@ -1,0 +1,18 @@
+.profile-area{
+  background: $background-color;
+  padding-top: 25px;
+}
+
+.name-button-wrapper{
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+
+  h1, h2{
+    margin: 0;
+  }
+}
+
+.explanation{
+  padding-left: 10px;
+}
