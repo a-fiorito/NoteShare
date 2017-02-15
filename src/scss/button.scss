@@ -1,0 +1,50 @@
+
+.button-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.button{
+  background: #698EB9;
+  width: 120px;
+  text-align: center;
+  border-bottom: 8px solid #475F7A;
+  border-radius: 3px;
+  padding: 10px;
+  font-family: $form-title;
+  color: white;
+  margin: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span{
+    font-weight: bold;
+
+  }
+
+  span::after{
+    content: "  +";
+    opacity: 0;
+    transition: 0.5s;
+    font-weight: bold;
+  }
+
+  &:hover{
+    background: #475F7A;
+    cursor: pointer;
+    transition: 0.5s;
+    transform: translateY(2px);
+    border-bottom: 6px solid #324356;
+
+    span::after{
+      opacity: 1;
+    }
+  }
+
+  &:active{
+    transform: translateY(4px);
+    border-bottom: 2px solid #324356;
+    transition: 0.1s;
+  }
+}
