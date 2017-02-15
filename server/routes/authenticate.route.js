@@ -12,7 +12,7 @@ module.exports = (function() {
     let authenticate = express.Router();
 
     // adds user to database on signup
-    authenticate.post('/signup', (req, res) => {
+    authenticate.post('/signup', function(req, res) {
         // validate input
         helpers.validateSignUp(req.body.user)
         .then(({errors, isValid}) => {
