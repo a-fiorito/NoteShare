@@ -3,8 +3,8 @@
 .home-page {    
     box-sizing: border-box;
     .homepage-top {
-        height: 100vh;
-        background-image: url('http://tinyurl.com/j82sxdh');
+        height: calc(100vh - 90px);
+        background-image: url('/assets/images/table.jpg');
         background-position: center;
         background-size: cover;
         display: flex;
