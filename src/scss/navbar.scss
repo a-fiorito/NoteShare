@@ -1,29 +1,40 @@
+$brand-font: 'Sansita', Helvetica, Arial;
+
 .nav-bar {
-  background-color: #f3fff2;
+  box-sizing: border-box;
+  background-color: white;
   color: #333333;
   // width: 80%;
   // position: relative;
   // left: 20%;
   font-variant: small-caps;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid mediumseagreen;
 
   .brand {
-    letter-spacing: 5px;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-weight: 100;
-    font-size: 72px;
+    font-family: $brand-font;
+    font-weight: 300;
+    color: mediumseagreen;
+    font-size: 40px;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 20px 0px;
+
+    img {
+      margin-left: 20px;
+      margin-top: 10px;
+      margin-right: 5px;
+      height: 40px; width: 40px;
+    }
   }
 
   .menu {
 
     ul {
-      background-color: #333333;
-      display: flex;          // inline-flex?
-      // width: 80%;
-      // position: relative;
-      // left: 20%;
+      display: flex;
       list-style-type: none;
       justify-content: center;
       padding: 0;
@@ -32,6 +43,8 @@
 
       li {
         padding: 10px 0px;
+        margin-right: 10px;
+        cursor: pointer;
         // transition-duration: 0.4s;
         // vertical-align: middle;
         // transform: perspective(1px) translateZ(0);
@@ -39,9 +52,13 @@
         // position: relative;
         // overflow: hidden;
 
+        .active {
+          background: rgba(60,179,113, 0.2);
+        }
+
         a {
-          color: white;
-          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          color: mediumseagreen;
+          font-family: 'Roboto';
           font-weight: 100;
           letter-spacing: 1px;
           font-size: 24px;
@@ -50,7 +67,7 @@
           transition-duration: 0.4s;
 
           &:hover {
-            background-color: black;
+            background-color: rgba(60,179,113, 0.2);
           }
         }
 
