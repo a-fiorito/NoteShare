@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import auth from './utils/auth';
 
+import Navbar from './Navbar';
+
 /**
  * Main container component
  * Place all child components within the div tags
@@ -31,9 +33,8 @@ class NoteShare extends Component {
     render() {
         return (
             <div className="app-container">
-            {/* NAVBAR GOES HERE*/}
-            {this.state.user ? <div onClick={this.logout}>Logout</div> : <div>No access</div>} 
-            {this.props.children}
+                <Navbar signOut={this.logout} user={this.state.user} />
+                {this.props.children}
             </div>
         );
     }

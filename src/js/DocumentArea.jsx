@@ -50,7 +50,8 @@ export default class DocumentArea extends Component {
       super(props);
       this.state = {
         documents: notes,
-        order: "Newest", numPerRow: 6
+        order: "Newest",
+        numPerRow: 6
       };
     }
 
