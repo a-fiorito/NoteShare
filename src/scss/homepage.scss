@@ -1,7 +1,63 @@
 @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
 
-.home-page {    
+.home-page {
     box-sizing: border-box;
+    /* the following container and col codes is for the feature part of the homepage*/
+    #big-container{
+      width: 80%;
+      margin: 0 auto;
+    }
+    #container3 {
+        float:left;
+        width:100%;
+        background:white;
+        overflow:hidden;
+        position:relative;
+        padding-bottom: 30px;//only once is needed for all containers
+        padding-top: 50px;
+
+    }
+    #container2 {
+        float:left;
+        width:100%;
+        background:white;
+        position:relative;
+        right:30%;
+    }
+    #container1 {
+        float:left;
+        width:100%;
+        background:white;
+        position:relative;
+        right:40%;
+    }
+    #col1 {
+        float:left;
+        width:26%;
+        position:relative;
+        left:72%;
+        overflow:hidden;
+    }
+    #col2 {
+        float:left;
+        width:36%;
+        position:relative;
+        left:76%;
+        overflow:hidden;
+    }
+    #col3 {
+        float:left;
+        width:26%;
+        position:relative;
+        left:80%;
+        overflow:hidden;
+    }
+    h3 {
+      font-family: 'Helvetica';
+    }
+    p {
+      font-family: 'Helvetica';
+    }
     .homepage-top {
         height: calc(100vh - 90px);
         background-image: url('/assets/images/table.jpg');
