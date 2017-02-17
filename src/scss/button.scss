@@ -1,14 +1,8 @@
-
-.button-wrapper{
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .button{
-  background: #698EB9;
+  background: mediumseagreen;
   width: 120px;
   text-align: center;
-  border-bottom: 8px solid #475F7A;
+  border-bottom: 8px solid mediumseagreen * 0.8;
   border-radius: 3px;
   padding: 10px;
   font-family: $form-title;
@@ -17,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
 
   span{
     font-weight: bold;
@@ -31,11 +27,11 @@
   }
 
   &:hover{
-    background: #475F7A;
-    cursor: pointer;
+    background: mediumseagreen * 0.8;
     transition: 0.5s;
     transform: translateY(2px);
-    border-bottom: 6px solid #324356;
+    // was moving the page down in a weird way
+    //border-bottom: 6px solid #324356;
 
     span::after{
       opacity: 1;
@@ -44,7 +40,7 @@
 
   &:active{
     transform: translateY(4px);
-    border-bottom: 2px solid #324356;
+    //border-bottom: 2px solid #324356;
     transition: 0.1s;
   }
 }
