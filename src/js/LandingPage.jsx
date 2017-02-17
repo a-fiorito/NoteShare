@@ -23,8 +23,8 @@ export default class LandingPage extends Component {
                 <div className="landing-page-form-container">
                     {path == "/login" ? <LoginForm /> : <SignUpForm />}
                     <div className="form-choice-buttons">
-                        <Link to="/login"><div className={"choice" + (path == "/login" ? " selected" : "")}>SIGN IN</div></Link>
-                        <Link to="/signup"><div className={"choice" + (path == "/signup" ? " selected" : "")}>SIGN UP</div></Link>
+                        <Link to="/login" activeClassName="active"><div className={"choice" + (path == "/login" ? " selected" : "")}>SIGN IN</div></Link>
+                        <Link to="/signup" activeClassName="active"><div className={"choice" + (path == "/signup" ? " selected" : "")}>SIGN UP</div></Link>
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@ class LoginForm extends Component {
                     />
                 <div className="form-group">
                     <button disabled={this.state.isLoading} className="form-button">
-                        Login
+                        LOGIN
                     </button>
                 </div>
             </form>
@@ -178,7 +178,7 @@ class SignUpForm extends Component {
                     />
                 <div className="form-group">
                     <button disabled={this.state.isLoading} className="form-button">
-                        Register
+                        REGISTER
                     </button>
                 </div>
             </form>
