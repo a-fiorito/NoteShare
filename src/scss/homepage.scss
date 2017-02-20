@@ -1,64 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
+$brand-font: 'Sansita', Helvetica, Arial;
+
 
 .home-page {
     box-sizing: border-box;
-    /* the following container and col codes is for the feature part of the homepage*/
-    #big-container{
-      width: 80%;
-      margin: 0 auto;
-    }
-    #container3 {
-        float:left;
-        width:100%;
-        background:white;
-        overflow:hidden;
-        position:relative;
-        padding-bottom: 30px;//only once is needed for all containers
-        padding-top: 50px;
+    height: auto !important;
 
-    }
-    #container2 {
-        float:left;
-        width:100%;
-        background:white;
-        position:relative;
-        right:30%;
-    }
-    #container1 {
-        float:left;
-        width:100%;
-        background:white;
-        position:relative;
-        right:40%;
-    }
-    #col1 {
-        float:left;
-        width:26%;
-        position:relative;
-        left:72%;
-        overflow:hidden;
-    }
-    #col2 {
-        float:left;
-        width:36%;
-        position:relative;
-        left:76%;
-        overflow:hidden;
-    }
-    #col3 {
-        float:left;
-        width:26%;
-        position:relative;
-        left:80%;
-        overflow:hidden;
-    }
-    h3 {
-      font-family: 'Helvetica';
-    }
-    p {
-      font-family: 'Helvetica';
-    }
+    /* the following container and col codes is for the feature part of the homepage*/
+
     .homepage-top {
+      margin:0;
+      padding:0;
         height: calc(100vh - 90px);
         background-image: url('/assets/images/table.jpg');
         background-position: center;
@@ -121,4 +73,105 @@
             }
         }
     }
+    .footer {
+      background-color: mediumseagreen;
+       width:100%;
+       position: absolute;
+        bottom: 0 ;
+        height:80px;
+
+
+      .brand {
+        font-family: $brand-font;
+        font-weight: 400;
+        color: white;
+        font-size: 40px;
+        display: flex;
+        align-items: center;
+        padding: 20px 0px;
+        position: relative;
+        left: 1%;
+        bottom: 10%;
+
+        img {
+          margin-left: 20px;
+          margin-top: 10px;
+          margin-right: 5px;
+          height: 40px; width: 40px;
+        }
+      }
+      .copyright{
+        position: relative;
+        left: 75%;
+        bottom: 110%;
+        font-family: $brand-font;
+        font-weight: 400;
+        color: white;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        padding: 20px 0px;
+      }
+    }
+
+}
+.big-container{
+  //padding:10px;
+  //padding-bottom:80px;
+  //height: 100%;
+  width: 80%;
+  margin: 0 auto;
+}
+#container3 {
+    float:left;
+    width:100%;
+    background:white;
+    overflow:hidden;
+    position:relative;
+    padding-bottom: 30px;//only once is needed for all containers
+    padding-top: 50px;
+
+}
+#container2 {
+    float:left;
+    width:100%;
+    background:white;
+    position:relative;
+    right:30%;
+}
+#container1 {
+    float:left;
+    width:100%;
+    background:white;
+    position:relative;
+    right:40%;
+}
+#col1 {
+    float:left;
+    width:26%;
+    position:relative;
+    left:72%;
+    overflow:hidden;
+}
+#col2 {
+    float:left;
+    width:36%;
+    position:relative;
+    left:76%;
+    overflow:hidden;
+}
+#col3 {
+    float:left;
+    width:26%;
+    position:relative;
+    left:80%;
+    overflow:hidden;
+}
+h3 {
+  font-family: 'Helvetica';
+  font-weight: bold;
+  color: mediumseagreen;
+}
+p {
+  font-family: 'Helvetica';
 }
