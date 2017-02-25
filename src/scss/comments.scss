@@ -1,0 +1,77 @@
+@import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
+$brand-font: 'Sansita', Helvetica, Arial;
+
+.comment-section {
+  width: 450px;
+  border: 1px solid powderblue; //remove when it becomes a popup
+  margin-top: 5% !important;
+  margin: 0 auto;
+  max-height: 550px;
+  background-color: white;
+  .pdf-container{
+    top: 15px;
+    position: relative;
+    font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8em;
+      .pdf-name{
+        position: relative;
+        bottom: 15px;
+      }
+  }
+  .comment-container{
+    position:relative;
+    top: -10px;
+    bottom: 40px;
+    max-height: 270px;
+    overflow-y: scroll;
+    .cmt{
+      max-width: 300px;
+      max-height: 55px;
+      display: block;
+      vertical-align: middle;
+      position: relative;
+      left: 15%;
+      img{
+        position: relative;
+        right: 51px;
+        top: 50px;
+      }
+      h1{//h1 is for username
+        color: mediumseagreen;
+        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8em;
+      }
+      h2{//h2 is for time
+        position: relative;
+        bottom: 7px;
+        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8em;
+      }
+      p{//actual comment
+        position: relative;
+        bottom: 17px;
+        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  .cmtBox{
+    position: relative;
+    left: 15%;
+    top: -10px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+    font-size: 0.8em;
+    img{
+      position: relative;
+      right: 51px;
+      top: 40px;
+    }
+    #comment{
+      width: 325px;
+      height: 46px;
+    }
+  }
+}
