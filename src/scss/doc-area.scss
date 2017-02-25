@@ -1,22 +1,33 @@
-$background-color: #f3fff2;
+$background-color: white;
 
 .doc-wrapper {
+  align-content: flex-start;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   background: $background-color;
+  overflow-y: scroll;
 
     .doc-thumbnail{
       font-family: arial;
       margin: 10px 0px 10px 15px;
       width: 150px;
+      background: white;
 
       .doc-holder {
         display: flex;
-        justify-content: center;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'Roboto';
+        font-weight: 300;
+        flex-direction: column;
         height: 50px;
-        border: 1px solid black;
+        border: 1px solid mediumseagreen;
         height: 200px;
+
+        p {
+          text-align: center;
+        }
 
         img {
           margin-top: 20px;
@@ -26,10 +37,15 @@ $background-color: #f3fff2;
       }
 
       .document-info {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
         padding: 2px;
         p {
+          font-size: 11px;
+          font-family: 'Roboto';
+          font-weight: 300;
           margin: 0;
-          text-align: center;
         }
       }
     }
