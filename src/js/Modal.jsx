@@ -18,7 +18,7 @@ class BlockingDiv extends Component{
   }
 }
 
-class Upload extends Component {
+class Modal extends Component {
 
   constructor(props){
     super(props);
@@ -34,6 +34,7 @@ class Upload extends Component {
 
   closeModal = () => {
     this.setState({isOpen: false});
+    this.state.files.length > 0 && this.setState({files: []}); //if we close the modal without uploading files, the files do not persist in the modal
   }
 
   onDrop = (acceptedFiles, rejectedFiles) => {
@@ -55,7 +56,7 @@ class Upload extends Component {
                 {this.state.files.length > 0 ? <div>
                 <div>{this.state.files.map((file, index) => <img key={index} src={file.preview} /> )}</div></div>
                  : <img src="./assets/images/book.svg"></img>}
-              <button type = "submit">Upload</button>
+              <Button className="uploadButton" label = "Upload" />
             </div>
           </div>
         </div>
@@ -63,4 +64,4 @@ class Upload extends Component {
     }
 }
 
-export default Upload;
+export default Modal;
