@@ -1,7 +1,12 @@
 language: node_js
 nodejs:
-  - 6
-
-script: 
- - npm run test
- - npm run build
+- 6
+script:
+- npm run test
+- npm run build
+deploy:
+  provider: heroku
+  app: e-learning-noteshare
+  skip_cleanup: true
+  api_key:
+    secure: PB6wwMGAQI4vO25AAbjGMOlYqIoXTl6OXJYwoH+4WrdYIWy5nZ45SIEBG5+OngtbsFtvX6VuE5Nj75XeH4bpCOgFO44FJ0DfdA3kcMpKTSO6CXKE1KJcgfr5mwHR39eZnf9mmahr8LeL0ZUlwFogGjTxKG84VQKMa8zjBysY6ghv/Dk7YpKioYuMvA0J8kX8ASUehraP7J/ct60g3Ide9vnV0qqxCk8h4TP+izVj40p0ytuk0sYsroWnSTHd4dSW+fKtA+u/OUgQf9yG5Lr/rjS5lLULqSAPXORGlYi9UOd1sQlVwpy1XQwFByXGJbj6EIDjSdJnz/uEsF7cvTLBIpMG6hF/UebqC4URzb+qJbinLuBrh4NKCvcDTDeLYcqHGmkWVhfu9Vi95y2QqAnELoyhQnH6+AyFniXJsJAQS6lB1N8eqLXPF/nD8jv5gxhczuW+0ZWflBGtrQTSC/sP+DcXfa1bOPDIR1nwR5N34uy0+sWTHtu5JP89EDuKvmj9suQ7hzWIFPZUFHYhmS2a58Bky+kNrFP64QmE0g3wVRKSnU3EwQCLntunYGMNOfsmqzpzZc/ERAUrCbgSEaA4TbuyA+ZozH+ITPr4V3/ulrEFeNqhjIY2lGz5FxyHh95zt6fPzVhXMZvdsQVRloK+Wx3V4v+TBGEP15Z8O/tSpe8=

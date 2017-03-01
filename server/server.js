@@ -22,10 +22,6 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// initialize db tables
-const initialize = require('./db/initialize');
-initialize(false);
-
 // public folder
 app.use('/', express.static(__dirname + '/../dist'));
 
@@ -39,4 +35,8 @@ app.get('*', (req, res) => {
 
 
 const port = process.env.PORT || 3000;
-app.listen(port);
+// initialize db tables
+const initialize = require('./db/initialize');
+initialize(false).then(() => {
+  app.listen(port);
+});
