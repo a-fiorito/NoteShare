@@ -16,6 +16,7 @@
     "bcryptjs": "^1.0.2",
     "body-parser": "^1.16.0",
     "express": "^4.14.0",
+    "fs-extra": "^2.0.0",
     "jsonwebtoken": "^7.2.1",
     "jwt-decode": "^2.1.0",
     "lodash": "^4.17.4",

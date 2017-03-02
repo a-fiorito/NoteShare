@@ -1,6 +1,8 @@
 const sequelize = require('./db/connect'),
     models = require('./db/models')(sequelize)
     Validator = require('validator'),
+    fs = require('fs-extra'),
+    path = require('path'),
     _ = require('lodash');
 
 /*
@@ -69,7 +71,21 @@ function validateLogin(input) {
     }
 }
 
+function moveFile(oldPath, newPath) {
+    return new Promise((resolve, reject) => {
+        // move the file to the proper course folder
+        fs.rename(oldPath, newPath, err => {
+            if(err) reject();
+            // after file is move, empty tmp directory
+            fs.emptyDir(path.join(__dirname, '/documents/tmp'), err => {
+                err ? reject(err) : resolve();
+            })
+        });
+    });
+}
+
 module.exports = {
     validateSignUp: validateSignUp,
-    validateLogin: validateLogin
+    validateLogin: validateLogin,
+    moveFile: moveFile
 }

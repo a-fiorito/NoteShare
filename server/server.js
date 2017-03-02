@@ -28,6 +28,7 @@ app.use('/', express.static(__dirname + '/../dist'));
 // express routes
 app.use('/authenticate', require('./routes/authenticate.route'));
 app.use('/courseroute', require('./routes/courses.route'));
+app.use('/pdf', require('./routes/pdf.route'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
