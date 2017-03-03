@@ -21,7 +21,7 @@ module.exports = function (sequelize) {
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
-
+    User.hasMany(Document, {as: 'documents'});
     Course.hasMany(Document, {as: 'documents'});
     
 
