@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Button from './Button';
 import Dropzone from 'react-dropzone';
+import axios from 'axios';
 
 
 class BlockingDiv extends Component{
@@ -11,9 +12,7 @@ class BlockingDiv extends Component{
 
   render() {
     return(
-
       <div className = 'blockingDiv' onClick={this.props.close}> </div>
-
     )
   }
 }
@@ -24,7 +23,7 @@ class Modal extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      files: []
+      file: null
     }
   }
 
@@ -41,6 +40,24 @@ class Modal extends Component {
     this.setState({files: acceptedFiles});
   }
 
+  //for now you can only upload one file at a time. I will change this hardcoded stuff soon.
+  onUpload = () => {
+
+    axios.get('pdf/upload', {
+      document : this.state.files[0],
+      courseId : '0',
+      courseName : 'COEN331',
+      userId : '2',
+      username : 'daniel',
+      fileName : this.state.files[0].name
+    }).then(function (response) {
+      console.log(response);
+    }).catch(function (error){
+      console.log(error);
+    })
+  }
+
+
     render() {
       return(
         <div>
@@ -51,12 +68,12 @@ class Modal extends Component {
               <h1>Drag files to upload.</h1>
             </div>
             <div className = "modalBody">
-              <Dropzone onDrop={this.onDrop} accept={'application/pdf,image/*'} multiple={true} />
+              <Dropzone onDrop={this.onDrop} accept={'application/pdf,image/*'} multiple={false} />
               <p>Drag files here to upload. Accepted formats: PDF, JPG, PNG</p>
-                {this.state.files.length > 0 ? <div>
+                {this.state.files ? <div>
                 <div>{this.state.files.map((file, index) => <img key={index} src={file.preview} /> )}</div></div>
                  : <img src="./assets/images/book.svg"></img>}
-              <Button className="uploadButton" label = "Upload" />
+              <Button className="uploadButton" label = "Upload" func={this.onUpload} />
             </div>
           </div>
         </div>
