@@ -37,6 +37,19 @@ module.exports = (function () {
         });
     });
     
+    pdf.get('/documents', (req, res) => {
+        var username = req.get('username');
+        var courseId = req.get('courseId')
+        models.User.findOne({ where: {username: username}})
+            .then(user => {
+                user.getDocuments({where: {courseId: courseId} })
+                    .then(docs => {
+                        res.json(docs);
+                    })
+            })
+    })
+
+
     return pdf;
 
 })();

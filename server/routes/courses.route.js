@@ -19,7 +19,7 @@ module.exports = (function () {
                 if (isValid) {
                     const {name, number} = req.body.course;
                     var username = req.body.user.username;
-                    var user = models.User.findOne({ where: { username: username } })
+                    models.User.findOne({ where: { username: username } })
                         .then(user => {
                             // Create course
                             models.Course.create({
@@ -39,7 +39,19 @@ module.exports = (function () {
                 }
             })
     })
-    
+
+
+    coursesroute.get('/courses', (req, res) => {
+        var username = req.get('username');
+        models.User.findOne({ where: { username: username } })
+            .then(user => {
+                user.getCourses()
+                    .then(courses => {
+                        res.json(courses);
+                    })
+            })
+    })
+
     return coursesroute;
 
 })();
