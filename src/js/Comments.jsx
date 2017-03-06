@@ -24,13 +24,21 @@ export default class Comments extends Component{
     this.state = {
       comments: comments,
       order: "Newest",
-      numPerRow: 5
-    };
+      numPerRow: 5,
+      isOpen: false,
+    }
   }
     displayComments() {
       return this.state.comments.map(d => {
           return <OtherComments key={d.id} {...d} /> // dump all the props
       });
+    }
+    openComments = () => {
+      this.setState({isOpen: true});
+    }
+
+    closeComments = () => {
+      this.setState({isOpen: false});
     }
 
     render() {
@@ -43,6 +51,19 @@ export default class Comments extends Component{
               <AddComment />
             </div>
         );
+    }
+  }
+
+  class BlockingDiv extends Component{
+
+    constructor(props){
+      super(props);
+    }
+
+    render() {
+      return(
+        <div className = 'blockingDiv' onClick={this.props.close}> </div>
+      )
     }
   }
 

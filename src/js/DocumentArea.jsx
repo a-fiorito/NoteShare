@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import Comments from './Comments';
+import SkyLight from 'react-skylight';
+
 
 /*
 Component for the area which will display the available notes on the user dashboard.
@@ -31,7 +34,15 @@ class DocThumbnail extends Component {
     }
 
     render() {
+      var CommentPopup = {
+        height: '550px',
+        width: '450px',
+        position: 'absolute',
+        left: '850px',
+        top: '330px',
+      };
         return (
+          <div>
           <div className = "doc-thumbnail">
             <div className="doc-holder">
               <img src="./assets/images/pdf-icon.svg"></img>
@@ -44,10 +55,14 @@ class DocThumbnail extends Component {
             </div>
 
             <div className="action-buttons">
-                <div className="commentbubble"><img src="./assets/commentbubble.png"></img></div>
+                <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
                 <div className="downloadicon"><img src="./assets/downloadicon.png"></img></div>
             </div>
           </div>
+          <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
+          <Comments />
+          </SkyLight>
+        </div>
         );
     }
 }
