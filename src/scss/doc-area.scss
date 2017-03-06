@@ -25,7 +25,11 @@ $background-color: white;
         border: 1px solid mediumseagreen;
         height: 200px;
 
+
         p {
+          position: relative;
+          bottom: 25px;
+          font-size: 14px;
           text-align: center;
         }
 
@@ -48,6 +52,34 @@ $background-color: white;
           margin: 0;
         }
       }
-    }
+      .action-buttons {
+        display: flex;
+        cursor: pointer;
+        transition: opacity 300ms ease-in-out;
+          img{
+            width: 20px;
+            height: 20px;
+            position: relative;
+            bottom: 45px;
+          }
+          .commentbubble{
+            position: relative;
+            left: 70%;
+            &:hover {
+              opacity: 0.5;
+              transition: opacity 300ms ease-in-out;
+              }
+          }
+          .downloadicon{
+            position: relative;
+            right: 2%;
+            &:hover {
+              opacity: 0.5;
+              transition: opacity 300ms ease-in-out;
+              }
 
+          }
+
+            }
+      }
 }

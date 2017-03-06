@@ -37,9 +37,15 @@ class DocThumbnail extends Component {
               <img src="./assets/images/pdf-icon.svg"></img>
               <p className="course-title">{this.props.name}</p>
             </div>
+
             <div className="document-info">
               <p>Comments: {this.props.comments}</p>
               <p>by: {this.props.user.username}</p>
+            </div>
+
+            <div className="action-buttons">
+                <div className="commentbubble"><img src="./assets/commentbubble.png"></img></div>
+                <div className="downloadicon"><img src="./assets/downloadicon.png"></img></div>
             </div>
           </div>
         );

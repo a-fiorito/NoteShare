@@ -1,17 +1,50 @@
 import React, { Component } from 'react';
-import Button from './Button';
+
+
+let comments = [
+
+  {id : 2, comment : "Good stuff!", user: {username: "Anthony"}, time: "May 22th, 2016"},
+  {id : 3, comment : "Works out very well!", user: {username: "Fozail"}, time: "May 23th, 2016"},
+  {id : 4, comment : "I love how you explain this stuff!", user: {username: "Daniel"}, time: "May 24th, 2016"},
+  {id : 5, comment : "Great work!", user: {username: "Vartan"}, time: "May 25th, 2016"},
+  {id : 6, comment : "Good job!", user: {username: "Francois"}, time: "May 26th, 2016"},
+  {id : 7, comment : "Helped me a lot", user: {username: "Charbel"}, time: "May 27th, 2016"},
+  {id : 8, comment : "Lovely!", user: {username: "Mohamed"}, time: "May 30th, 2016"},
+
+
+];
+
+
+
+
 
 export default class Comments extends Component{
-  render() {
-      return (
-        <div className="comment-section">
-              <Pdf />
-              <OtherComments />
-              <AddComment />
-        </div>
-      );
+  constructor(props) {
+    super(props);
+    this.state = {
+      comments: comments,
+      order: "Newest",
+      numPerRow: 5
+    };
   }
-}
+    displayComments() {
+      return this.state.comments.map(d => {
+          return <OtherComments key={d.id} {...d} /> // dump all the props
+      });
+    }
+
+    render() {
+        return (
+            <div className="comment-section">
+              <Pdf />
+              <div className="comment-container">
+              {this.displayComments()}
+              </div>
+              <AddComment />
+            </div>
+        );
+    }
+  }
 
 class Pdf extends Component { //pdf on top
   render() {
@@ -27,50 +60,24 @@ class Pdf extends Component { //pdf on top
 }
 
 class OtherComments extends Component { //previous comments
+  constructor(props){
+    super(props);
+  }
+
   render() {
       return (
-        <div className="comment-container">
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
-        <Cmt
-            username="Adam"
-            time="2 months ago"
-            body="Love these notes!"
-        />
+        <div className="cmt">
+        <img src="./assets/images/user.svg" width="35" height="35"></img>
+        <h1>{this.props.user.username}</h1>
+        <h2>{this.props.time}</h2>
+        <p>{this.props.comment}</p>
         </div>
+
       );
   }
 }
 
-const Cmt = ({photo, username,time,body}) => {
+/*const Cmt = ({photo, username,time,body}) => {
     return (
         <div className="cmt">
             <img src="./assets/images/user.svg" width="35" height="35"></img>
@@ -79,7 +86,7 @@ const Cmt = ({photo, username,time,body}) => {
             <p>{body}</p>
         </div>
     );
-}
+}*/
 
 class AddComment extends Component { //Add a comment
   render() {
@@ -92,7 +99,7 @@ class AddComment extends Component { //Add a comment
 
           <input type='hidden' name='articleid' id='articleid' value='<? echo $_GET["id"]; ?>' />
 
-          <input type='submit' value='Post' />
+          <input type='submit' id='post' value='Post' />
           </form>
         </div>
       );

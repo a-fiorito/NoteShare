@@ -46,6 +46,8 @@ $brand-font: 'Sansita', Helvetica, Arial;
         bottom: 7px;
         font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
         font-size: 0.8em;
+        color: grey;
+        font-weight: normal;
       }
       p{//actual comment
         position: relative;
@@ -70,8 +72,19 @@ $brand-font: 'Sansita', Helvetica, Arial;
       top: 40px;
     }
     #comment{
+      border-radius: 7px;
+      border-color: darkgrey;
       width: 325px;
       height: 46px;
+    }
+    #post{
+      height: 25px;
+      width: 55px;
+      background-color: mediumseagreen;
+      border-radius: 5px;
+      border-style: none;;
+      color: white;
+
     }
   }
 }
