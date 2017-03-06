@@ -22,16 +22,13 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-// initialize db tables
-const initialize = require('./db/initialize');
-initialize(false);
-
 // public folder
 app.use('/', express.static(__dirname + '/../dist'));
 
 // express routes
 app.use('/authenticate', require('./routes/authenticate.route'));
-app.use('/courseroute', require('./routes/courses.route'));
+app.use('/courses', require('./routes/courses.route'));
+app.use('/pdfs', require('./routes/pdf.route'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
@@ -39,4 +36,8 @@ app.get('*', (req, res) => {
 
 
 const port = process.env.PORT || 3000;
-app.listen(port);
+// initialize db tables
+const initialize = require('./db/initialize');
+initialize(false).then(() => {
+  app.listen(port);
+});
