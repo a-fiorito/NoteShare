@@ -12,9 +12,9 @@ const express = require('express'),
 module.exports = (function () {
     'use strict';
 
-    let pdf = express.Router();
+    let pdfs = express.Router();
 
-    pdf.post('/upload', upload.single('document'), (req, res) => {
+    pdfs.post('/upload', upload.single('document'), (req, res) => {
         console.log(req.file);
         let { courseName, fileName, userId, username, courseId } = req.body; 
         console.log(req.body);
@@ -37,19 +37,14 @@ module.exports = (function () {
         });
     });
     
-    pdf.get('/documents', (req, res) => {
-        var username = req.get('username');
-        var courseId = req.get('courseId')
-        models.User.findOne({ where: {username: username}})
-            .then(user => {
-                user.getDocuments({where: {courseId: courseId} })
-                    .then(docs => {
-                        res.json(docs);
-                    })
-            })
+    pdfs.get('/:courseId', (req, res) => {
+        let { courseId } = req.params;
+        models.Document.findAll({where: {courseId: courseId}})
+            .then(docs => {
+                res.json(docs);
+            });
     })
 
-
-    return pdf;
+    return pdfs;
 
 })();
