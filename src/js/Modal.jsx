@@ -82,7 +82,7 @@ class Modal extends Component {
             </div>
             <div className = "modalBody">
               <Dropzone onDrop={this.onDrop} accept={'application/pdf'} multiple={false} />
-              <p>Drag files here to upload. Accepted formats: PDF, JPG, PNG</p>
+              <p>Drag files here to upload. Accepted format: PDF</p>
                 {this.state.files ? <div>
                 <div>{this.state.files.map((file, index) => <img key={index} src={file.preview} /> )}</div></div>
                  : <img src="./assets/images/book.svg"></img>}
