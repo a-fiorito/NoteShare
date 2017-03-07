@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Button from './Button';
 import DocumentArea from './DocumentArea';
 import Sidebar from './Sidebar';
+import Modal from './Modal';
 
 /*
     Main app view for viewing/uploading pdfs
@@ -23,10 +24,13 @@ export default class Dashboard extends Component {
 
     render() {
         return (
+          <div>
+            <Modal />
             <div className="dashboard">
-                <Sidebar />
-                <DocumentArea />
+              <Sidebar />
+              <DocumentArea />
             </div>
+          </div>
         );
     }
 }
