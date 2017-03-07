@@ -69,7 +69,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea />}
+                            {this.state.showDocuments && <DocumentArea documents={[]} selectedCourse={true} />}
                         </div>
                     </div>
                 </div>

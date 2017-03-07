@@ -16,6 +16,7 @@ import Dashboard from './Dashboard';
 import authenticate from './Authenticate';
 import Profile from './Profile';
 
+
 /**
  * Bootstraps the app by linking it to the div with id=app in index.html
  */
@@ -34,6 +35,7 @@ render((
             <Route path="signup" component={LandingPage} />
             <Route path="dashboard" component={authenticate(Dashboard)} />
             <Route path="profile" component={Profile} />
+
         </Route>
     </Router>
 

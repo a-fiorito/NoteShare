@@ -1,45 +1,53 @@
 const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
-config = require('../config'),
+    config = require('../config'),
     course_helpers = require('../courses-helpers');
 
 
 module.exports = (function () {
     'use strict';
 
-    let coursesroute = express.Router();
+    let courses = express.Router();
 
     // Adds course {name, number} to the database
-    coursesroute.post('/courses', (req, res) => {
+    courses.post('/', (req, res) => {
+        const {name, number} = req.body.course;
+        var username = req.body.user.username;
+        models.User.findOne({ where: { username: username } })
+            .then(user => {
+                // Create course
+                models.Course.findOrCreate({ 
+                    where: {
+                        name: name,
+                        number: number,
+                    }
+                })
+                .spread(course => {
+                    // Add the course to the class table
+                    // wont add if its a duplicate
+                    user.addCourse(course);
+                    // Returns course object as json
+                    res.json(course);
+                })
+                .catch(err => res.status(500).json({ error: err }));
+            })
+        })
 
-        // Validates input
-        course_helpers.validateCourse(req.body.course)
-            .then(({errors, isValid}) => {
-                if (isValid) {
-                    const {name, number} = req.body.course;
-                    var username = req.body.user.username;
-                    var user = models.User.findOne({ where: { username: username } })
-                        .then(user => {
-                            // Create course
-                            models.Course.create({
-                                name: name,
-                                number: number,
-                            })
-                                .then(course => {
-                                    //Add the course to the class table
-                                    user.addCourses(course);
-                                    // Returns course object as json
-                                    res.json(course);
-                                })
-                                .catch(err => res.status(500).json({ error: err }));
-                        })
-                } else {
-                    res.status(400).json(errors);
-                }
+    /**
+     * Loads courses for a specific user
+     */
+    courses.get('/:username', (req, res) => {
+        let username = req.params.username;
+        models.User.findOne({ where: { username: username } })
+            .then(user => {
+                user.getCourses()
+                .then(courses => {
+                    res.json(courses);
+                })
             })
     })
-    
-    return coursesroute;
+
+    return courses;
 
 })();
