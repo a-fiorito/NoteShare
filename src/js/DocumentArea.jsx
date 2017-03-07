@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Comments from './Comments';
+import CommentsModal from './CommentsModal';
 import SkyLight from 'react-skylight';
 
 
@@ -37,9 +37,12 @@ class DocThumbnail extends Component {
       var CommentPopup = {
         height: '550px',
         width: '450px',
+        margin: '0 auto',
         position: 'absolute',
-        left: '850px',
-        top: '330px',
+        left: '0',
+        top: '10%',
+        right: '0',
+        bottom: '0'
       };
         return (
           <div>
@@ -60,7 +63,7 @@ class DocThumbnail extends Component {
             </div>
           </div>
           <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
-          <Comments />
+          <CommentsModal />
           </SkyLight>
         </div>
         );

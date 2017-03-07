@@ -2,89 +2,103 @@
 $brand-font: 'Sansita', Helvetica, Arial;
 
 .comment-section {
-  width: 450px;
-  //border: 1px solid powderblue; //remove when it becomes a popup
-  margin-top: 5% !important;
-  margin: 0 auto;
-  max-height: 550px;
-  background-color: white;
-  .pdf-container{
-    top: 15px;
-    position: relative;
-    font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-    font-size: 0.8em;
-      .pdf-name{
-        position: relative;
-        bottom: 15px;
-      }
+  .comments-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+
+    img {
+      height: 50px;
+      width: 50px;
+    }
+
+    h4 {
+      padding: 0; margin: 0;
+      margin-left: 10px;
+      font-size: 20px;
+      font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+    }
   }
-  .comment-container{
-    position:relative;
-    top: -10px;
-    bottom: 40px;
+
+  .comment-container {
     max-height: 270px;
     overflow-y: scroll;
-    .cmt{
-      max-width: 300px;
-      max-height: 55px;
-      display: block;
-      vertical-align: middle;
-      position: relative;
-      left: 15%;
-      img{
-        position: relative;
-        right: 51px;
-        top: 50px;
+    border-bottom: 1px solid mediumseagreen;
+
+    .comment {
+      display: flex;
+      padding: 10px;
+
+      .info {
+        margin-left: 15px;
       }
-      h1{//h1 is for username
+
+      h1, h2, p {
+        padding: 0; margin: 0;
+        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
+      }
+
+      h1 {
         color: mediumseagreen;
-        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-        font-size: 0.8em;
+        font-size: 14px;
       }
-      h2{//h2 is for time
-        position: relative;
-        bottom: 7px;
-        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-        font-size: 0.8em;
+
+      h2 {
         color: grey;
-        font-weight: normal;
+        font-size: 10px;
+        font-weight: 400;
       }
-      p{//actual comment
-        position: relative;
-        bottom: 17px;
-        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-        font-size: 0.8em;
+
+      p {
+        padding-top: 5px;
+        font-size: 12px;
+      }
+
+      img {
+        height: 30px;
+        width: 30px;
       }
     }
   }
 
-  .cmtBox{
-    position: relative;
-    left: 15%;
-    top: -10px;
-    color: black;
-    font-weight: bold;
-    font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-    font-size: 0.8em;
-    img{
-      position: relative;
-      right: 51px;
-      top: 40px;
+  .new-comment {
+    box-sizing: border-box;
+    padding: 10px;
+    font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    flex-grow: 1;
+    h3 {
+      padding: 0; margin: 0;
+      font-size: 22px;
+      padding-bottom: 10px;
     }
-    #comment{
-      border-radius: 7px;
-      border-color: darkgrey;
-      width: 325px;
-      height: 46px;
+    textarea {
+      padding: 5px;
+      resize: vertical;
+      border-radius: 8px;
+      height: 50px;
+
+      &:focus {
+        border: 1px solid mediumseagreen;
+        outline: none;
+      }
     }
-    #post{
-      height: 25px;
-      width: 55px;
+
+    .submit-comment {
+      height: 30px;
+      font-size: 12px;
+      line-height: 30px;
+      vertical-align: middle;
+      text-align: center;
+      width: 60px;
       background-color: mediumseagreen;
       border-radius: 5px;
-      border-style: none;;
       color: white;
-
+      align-self: flex-end;
+      margin-top: 10px;
     }
+
   }
 }

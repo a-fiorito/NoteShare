@@ -15,7 +15,6 @@ import Homepage from './Homepage';
 import Dashboard from './Dashboard';
 import authenticate from './Authenticate';
 import Profile from './Profile';
-import Comments from './Comments'; //make sure this works - adam
 
 
 /**
@@ -36,7 +35,6 @@ render((
             <Route path="signup" component={LandingPage} />
             <Route path="dashboard" component={authenticate(Dashboard)} />
             <Route path="profile" component={Profile} />
-            <Route path="comments" component={Comments} /> //make sure this works - adam
 
         </Route>
     </Router>

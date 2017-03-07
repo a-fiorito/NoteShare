@@ -18,7 +18,7 @@ let comments = [
 
 
 
-export default class Comments extends Component{
+export default class CommentsModal extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ export default class Comments extends Component{
   }
     displayComments() {
       return this.state.comments.map(d => {
-          return <OtherComments key={d.id} {...d} /> // dump all the props
+          return <Comments key={d.id} {...d} /> // dump all the props
       });
     }
     openComments = () => {
@@ -44,7 +44,7 @@ export default class Comments extends Component{
     render() {
         return (
             <div className="comment-section">
-              <Pdf />
+              <Header />
               <div className="comment-container">
               {this.displayComments()}
               </div>
@@ -54,74 +54,44 @@ export default class Comments extends Component{
     }
   }
 
-  class BlockingDiv extends Component{
-
-    constructor(props){
-      super(props);
-    }
-
-    render() {
-      return(
-        <div className = 'blockingDiv' onClick={this.props.close}> </div>
-      )
-    }
-  }
-
-class Pdf extends Component { //pdf on top
+class Header extends Component { //pdf on top
   render() {
       return (
-        <div className="pdf-container">
-        <center>
+        <div className="comments-header">
           <img src="./assets/images/pdf-icon.svg" width="50" height="50" ></img>
           <h4 className="pdf-name">ScrumNotes.pdf</h4>
-        </center>
         </div>
       );
   }
 }
 
-class OtherComments extends Component { //previous comments
+class Comments extends Component { //previous comments
   constructor(props){
     super(props);
   }
 
   render() {
       return (
-        <div className="cmt">
-        <img src="./assets/images/user.svg" width="35" height="35"></img>
-        <h1>{this.props.user.username}</h1>
-        <h2>{this.props.time}</h2>
-        <p>{this.props.comment}</p>
+        <div className="comment">
+          <img src="./assets/images/user.svg" width="35" height="35"></img>
+          <div className="info">
+            <h1>{this.props.user.username}</h1>
+            <h2>{this.props.time}</h2>
+            <p>{this.props.comment}</p>
+          </div>
         </div>
 
       );
   }
 }
 
-/*const Cmt = ({photo, username,time,body}) => {
-    return (
-        <div className="cmt">
-            <img src="./assets/images/user.svg" width="35" height="35"></img>
-            <h1>{username}</h1>
-            <h2>{time}</h2>
-            <p>{body}</p>
-        </div>
-    );
-}*/
-
 class AddComment extends Component { //Add a comment
   render() {
       return (
-        <div className="cmtBox">
-        <img src="./assets/images/user.svg" width="35" height="35"></img>
-          <form method="post">
-          Comment:<br />
-          <textarea name='comment' id='comment'></textarea><br />
-
-          <input type='hidden' name='articleid' id='articleid' value='<? echo $_GET["id"]; ?>' />
-
-          <input type='submit' id='post' value='Post' />
-          </form>
+        <div className="new-comment">
+          <h3>Submit a new Comment</h3>
+          <textarea></textarea>
+          <div className="submit-comment">Post</div>
         </div>
       );
   }
