@@ -74,7 +74,7 @@ class Modal extends Component {
     render() {
       return(
         <div className='modalComponent'>
-          <Button func={this.openModal} label={"Upload a document"}/>{/*open the modal by clicking on the button, close by clicking on background*/}
+          {this.props.canUpload && <Button func={this.openModal} label={"Upload a document"}/>} {/*open the modal by clicking on the button, close by clicking on background*/}
           {this.state.isOpen && <BlockingDiv display={this.state.isOpen ? 'flex' : 'none'} close={this.closeModal}/>}
           <div className = 'uploadModal' style = {{display: this.state.isOpen ? 'flex' : 'none'}}>
             <div className = "modalTitle">

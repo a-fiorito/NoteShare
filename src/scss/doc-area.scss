@@ -8,6 +8,16 @@ $background-color: white;
   background: $background-color;
   overflow-y: scroll;
 
+    .no-docs {
+      font-family: 'Roboto';
+      align-self: center;
+      margin: 0 auto;
+      color: mediumseagreen;
+      font-weight: 400;
+      font-size: 22px;
+      padding: 10px;
+    }
+
     .doc-thumbnail{
       font-family: arial;
       margin: 10px 0px 10px 15px;

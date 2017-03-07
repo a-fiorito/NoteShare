@@ -117,9 +117,15 @@ export default class DocumentArea extends Component {
     }*/
 
     displayNotes() {
-      return this.state.documents.map(d => {
-          return <DocThumbnail key={d.id} {...d} /> // dump all the props
-      });
+      if(this.props.documents.length) {
+        return this.props.documents.map(d => {
+            return <DocThumbnail key={d.id} {...d} /> // dump all the props
+        });
+      } else if(this.props.selectedCourse == null) {
+        return <div className="no-docs">No course selected.</div>;
+      } else {
+        return <div className="no-docs">No documents :(</div>;
+      }
     }
 
     render() {

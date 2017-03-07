@@ -1,5 +1,6 @@
 .sidebar {
     min-width: 200px;
+    max-width: 300px;
     overflow-y: scroll;
     background-color: rgba(60,179,113, 0.01);
     h2 {
@@ -16,16 +17,23 @@
         padding: 0;
 
         li {
-            padding-left: 10px;
+            padding: 15px 0px 15px 10px;
             cursor: click;
             font-family: 'Roboto';
             font-size: 20px;
-            line-height: 60px;
+            line-height: 30px;
             color: mediumseagreen;
             background-color: rgba(60,179,113, 0.05);
             border-top: 1px solid mediumseagreen;
             border-bottom: 1px solid mediumseagreen;
             margin-top: 5px;
+
+            &.warning {
+                background: lemonchiffon;
+                font-size: 12px;
+                max-width: 200px;
+                line-height: 20px;
+            }
 
             &.selected {
                 background: mediumseagreen;
