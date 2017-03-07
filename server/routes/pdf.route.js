@@ -16,7 +16,7 @@ module.exports = (function () {
 
     pdf.post('/upload', upload.single('document'), (req, res) => {
         console.log(req.file);
-        let { courseName, fileName, userId, username, courseId } = req.body; 
+        let { courseName, fileName, userId, username, courseId } = req.body;
         console.log(req.body);
         let oldPath = req.file.path;
         let newPath = path.join(__dirname, `../documents/${courseName}/`);
@@ -36,7 +36,7 @@ module.exports = (function () {
             });
         });
     });
-    
+
     return pdf;
 
 })();

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Modal from './Modal';
 
 /*
 Component for the area which will display the available notes on the user dashboard.
@@ -100,9 +101,11 @@ export default class DocumentArea extends Component {
 
     render() {
         return (
+          <div>
             <div id="doc-wrapper" className="doc-wrapper">
               {this.displayNotes()}
             </div>
+          </div>
         );
     }
 }

@@ -1,15 +1,31 @@
+.modalComponent{
+  justify-content:center;
+  display: flex;
+
+  .button{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+
+  }
+
 .uploadModal{
   width: 50%;
   background: #F8F8F8;
   margin: 5% auto;
   z-index: 10;
-  position: relative;
+  position: absolute;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   box-shadow: 5px 5px 15px black;
   font-family: 'Roboto', arial;
 
+  .button{
+    position: relative;
+    right: 0;
+    bottom: 0;
+  }
 }
 .modalTitle{
   background: #fff;
@@ -37,11 +53,8 @@
 
     .button{
       margin-top: 20px;
-
     }
 }
-
-
 
 .blockingDiv{
   position: absolute;
@@ -49,5 +62,5 @@
   height: 100%;
   width:100%;
   background: rgba(0,0,0,0.7);
-
+  }
 }
