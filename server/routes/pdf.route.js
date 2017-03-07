@@ -39,7 +39,7 @@ module.exports = (function () {
     
     pdfs.get('/:courseId', (req, res) => {
         let { courseId } = req.params;
-        models.Document.findAll({where: {courseId: courseId}})
+        models.Document.findAll({where: {courseId: courseId}, include: { model: models.User, as: 'user', attributes: ['id', 'name', 'username']}})
             .then(docs => {
                 res.json(docs);
             });
