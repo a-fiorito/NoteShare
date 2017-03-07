@@ -8,7 +8,7 @@ export default class Button extends Component {
 
     render() {
       return(
-        <div className = "button" onClick={this.handleClick}>
+        <div className = "button" onClick={this.props.func}>
           <span>{this.props.label}</span>
         </div>
       );
