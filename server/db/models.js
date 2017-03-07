@@ -17,11 +17,11 @@ module.exports = function (sequelize) {
 
     const Document = sequelize.define('document', {
         name: Sequelize.TEXT,
-        dest: Sequelize.TEXT,
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
     User.hasMany(Document, {as: 'documents'});
+    Document.belongsTo(User, {as: 'user'});
     Course.hasMany(Document, {as: 'documents'});
     
 

@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import CommentsModal from './CommentsModal';
+import SkyLight from 'react-skylight';
+
 
 /*
 Component for the area which will display the available notes on the user dashboard.
@@ -31,17 +34,38 @@ class DocThumbnail extends Component {
     }
 
     render() {
+      var CommentPopup = {
+        height: '550px',
+        width: '450px',
+        margin: '0 auto',
+        position: 'absolute',
+        left: '0',
+        top: '10%',
+        right: '0',
+        bottom: '0'
+      };
         return (
+          <div>
           <div className = "doc-thumbnail">
             <div className="doc-holder">
               <img src="./assets/images/pdf-icon.svg"></img>
               <p className="course-title">{this.props.name}</p>
             </div>
+
             <div className="document-info">
               <p>Comments: {this.props.comments}</p>
               <p>by: {this.props.user.username}</p>
             </div>
+
+            <div className="action-buttons">
+                <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
+                <div className="downloadicon"><img src="./assets/downloadicon.png"></img></div>
+            </div>
           </div>
+          <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
+          <CommentsModal />
+          </SkyLight>
+        </div>
         );
     }
 }
@@ -93,9 +117,15 @@ export default class DocumentArea extends Component {
     }*/
 
     displayNotes() {
-      return this.state.documents.map(d => {
-          return <DocThumbnail key={d.id} {...d} /> // dump all the props
-      });
+      if(this.props.documents.length) {
+        return this.props.documents.map(d => {
+            return <DocThumbnail key={d.id} {...d} /> // dump all the props
+        });
+      } else if(this.props.selectedCourse == null) {
+        return <div className="no-docs">No course selected.</div>;
+      } else {
+        return <div className="no-docs">No documents :(</div>;
+      }
     }
 
     render() {
