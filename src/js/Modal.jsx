@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Button from './Button';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-const user = { id: '1', fname: 'daniel', lname: 'Stroppolo', username: 'dstroppolo', type: 'student' };
 
 class BlockingDiv extends Component{
 
@@ -48,10 +47,10 @@ class Modal extends Component {
 
     let upload = {
       document : this.state.files[0],
-      courseId : 1,
-      courseName : 'COEN331',
-      userId : user.id,
-      username : user.fname ,
+      courseId : this.props.selectedCourse.id,
+      courseName : this.props.selectedCourse.name + this.props.selectedCourse.number,
+      userId : this.props.user.id,
+      username : this.props.user.username ,
       fileName : this.state.files[0].name
     };
 

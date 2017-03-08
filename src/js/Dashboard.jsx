@@ -32,7 +32,7 @@ export default class Dashboard extends Component {
         // only get documents if a course is selected
         // TODO: save selected course in local storage
         if(this.state.selectedCourse) {
-            promises.push(this.fetchDocumentsForCourse(this.state.selectedCourse));
+            promises.push(this.fetchDocumentsForCourse(this.state.selectedCourse.id));
         }
         // load courses for sidebar and documents for document area
         Promise.all(promises)
@@ -60,13 +60,13 @@ export default class Dashboard extends Component {
             this.setState({documents: []});
         }
         this.setState({selectedCourse: c});
-        this.fetchDocumentsForCourse(c);
+        this.fetchDocumentsForCourse(c.id);
     }
 
     render() {
         return (
           <div>
-            <Modal canUpload={this.state.selectedCourse} />
+            <Modal user={this.props.user} selectedCourse={this.state.selectedCourse} canUpload={this.state.selectedCourse} />
             <div className="dashboard">
               <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
               <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} />
