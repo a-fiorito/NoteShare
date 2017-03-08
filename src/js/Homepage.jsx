@@ -4,12 +4,6 @@ var Scroll = require('react-scroll');
 var Element = Scroll.Element;
 var scroller = Scroll.scroller;
 
-scroller.scrollTo('ScrollToElement', {
-  duration: 1500,
-  delay: 100,
-  smooth: true,
-})
-
 /*
     Splash page to introduce website
 */
@@ -19,6 +13,7 @@ export default class Homepage extends Component {
         return (
             <div className="home-page">
                 <Header />
+                <Element name="feature"></Element>
                 <Features />
                 <Footer />
             </div>
@@ -27,6 +22,15 @@ export default class Homepage extends Component {
 }
 
 class Header extends Component {
+
+    scrollToFeatures = () => {
+        scroller.scrollTo('feature', {
+            duration: 1500,
+            delay: 100,
+            smooth: true,
+        });
+    }
+
     render() {
         return (
             <div className="home-page">
@@ -36,7 +40,7 @@ class Header extends Component {
                         <p>Share notes with classmates, get your assignments graded</p>
                         <div className="action-buttons">
                             <div className="btn">Get Started</div>
-                            <div className="btn"><a onClick={this.scrollTo}>Learn More</a></div>
+                            <div className="btn"><a onClick={this.scrollToFeatures}>Learn More</a></div>
                         </div>
                     </div>
                 </header>
