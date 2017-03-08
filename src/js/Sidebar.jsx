@@ -8,7 +8,7 @@ class Sidebar extends Component {
 
     selectCourse = (course) => {
         let newVal = course;
-        if(course == this.props.selectedCourse) {
+        if(this.props.selectedCourse && course.id == this.props.selectedCourse.id) {
             newVal = null;
         }
         this.props.selectCourse(newVal);
@@ -18,10 +18,10 @@ class Sidebar extends Component {
         if(this.props.courses.length) {
             return this.props.courses.map((c, i) => {
                 let className = "";
-                if(c.id == this.props.selectedCourse) {
+                if(this.props.selectedCourse && c.id == this.props.selectedCourse.id) {
                     className="selected";
                 }
-                return <Course isSelected={className} key={i} {...c} selectCourse={this.selectCourse}/>;
+                return <Course isSelected={className} key={i} course={c} selectCourse={this.selectCourse}/>;
             });
         } else {
             return this.props.isLoading ? null : <li className="warning">You belong to no courses. Please add a course from your profile.</li>
@@ -46,11 +46,11 @@ class Course extends Component {
 
     selectCourse = () => {
         // pass name for now, pass id later
-        this.props.selectCourse(this.props.id);
+        this.props.selectCourse(this.props.course);
     }
 
     render() {
-        return <li onClick={this.selectCourse} className={this.props.isSelected}>{`${this.props.name} ${this.props.number}`}</li>;
+        return <li onClick={this.selectCourse} className={this.props.isSelected}>{`${this.props.course.name} ${this.props.course.number}`}</li>;
     }
 }
 
