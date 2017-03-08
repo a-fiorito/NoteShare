@@ -40,7 +40,7 @@ class Header extends Component {
                         <p>Share notes with classmates, get your assignments graded</p>
                         <div className="action-buttons">
                             <div className="btn">Get Started</div>
-                            <div className="btn"><a onClick={this.scrollToFeatures}>Learn More</a></div>
+                            <div className="btn" onClick={this.scrollToFeatures}>Learn More</div>
                         </div>
                     </div>
                 </header>
@@ -92,7 +92,6 @@ class Features extends Component {
 const Feature = ({imgSrc, header, body}) => {
     return (
         <div className="feature">
-            <Element name="ScrollToElement"></Element>
             <img src={imgSrc} width="50" height="50"></img>
             <h3>{header}</h3>
             <p>{body}</p>
