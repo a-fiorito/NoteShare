@@ -45,6 +45,12 @@ module.exports = (function () {
             });
     })
 
+    pdfs.get('/download/:username/:courseName/:id', (req, res) => {
+        let {username, courseName, id} = req.params;
+        var doc = path.join(__dirname , `../documents/${courseName}/${username}${id}.pdf`);
+        res.download(doc);
+    })
+
     return pdfs;
 
 })();
