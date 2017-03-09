@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import DocumentArea from './DocumentArea';// have a doc area showing notes that you uploaded
 import Button from './Button';
-
+import CourseModal from './CourseModal';
+import SkyLight from 'react-skylight';
 
 /*
 Profile component which should appear when a user clicks on the 'view profile' button
@@ -31,12 +32,17 @@ export default class Profile extends Component {
         super(props);
 
         this.state = {
-            showDocuments: false
+            showDocuments: false,
+            isAdding: false
         }
     }
 
     toggleBar = (e) => {
         this.setState({showDocuments: !this.state.showDocuments});
+    }
+
+    addClass = () => {
+        this.setState({isAdding: true});
     }
 
     /*My idea for this section is to eventually add a DocumentArea which displays
@@ -46,6 +52,18 @@ export default class Profile extends Component {
     feel free to remove the DocumentArea, I just didn't know what else to put on
     the page.*/
     render() {
+        
+        var CoursePopup = {
+        height: '350px',
+        width: '450px',
+        margin: '0 auto',
+        position: 'absolute',
+        left: '0',
+        top: '10%',
+        right: '0',
+        bottom: '0'
+      };
+
         return (
             <div className='profile-area'>
                 <div className="profile">
@@ -55,8 +73,11 @@ export default class Profile extends Component {
                             <Name {...user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                         <div className='button-wrapper'>
-                            <Button label="Add a note" />
-                            <Button label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            {/*<Button label="Add a note" />*/}
+                            <Button label="Add a class" func={() => this.refs.simpleDialog.show()} /*you will pass the action here eventually action={} */ />
+                            <SkyLight dialogStyles={CoursePopup} hideOnOverlayClicked ref="simpleDialog">
+                            {this.state.isAdding && <CourseModal />}<CourseModal />
+                            </SkyLight>
                         </div>
                     </div>
                     <div className="profile-body">
