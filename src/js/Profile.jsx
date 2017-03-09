@@ -8,7 +8,7 @@ import axios from 'axios';
 Profile component which should appear when a user clicks on the 'view profile' button
 */
 
-const user = { id: '2', fname: 'Daniel', lname: 'Stroppolo', username: 'dstroppolo', type: 'student' };
+//const user = { id: '2', fname: 'Daniel', lname: 'Stroppolo', username: 'dstroppolo', type: 'student' };
 
 
 class Name extends Component {
@@ -20,8 +20,8 @@ class Name extends Component {
     render() {
         return (
             <div className="name-container">
-                <h1>{this.props.fname} {this.props.lname}</h1>
-                <h2>{this.props.username} | {this.props.type}</h2>
+                <h1>{this.props.name || '-'}</h1>
+                <h2>{this.props.username} | {this.props.type || '-'}</h2>
             </div>
         );
     }
@@ -33,8 +33,16 @@ export default class Profile extends Component {
 
         this.state = {
             showDocuments: false,
-            showAdd: false
+            showAdd: false,
+            documents: []
         }
+    }
+
+    componentDidMount() {
+        axios.get(`/pdfs/profile/${this.props.user.id}`)
+        .then(res => {
+            this.setState({documents: res.data});
+        })
     }
 
     toggleBar = (e) => {
@@ -46,11 +54,15 @@ export default class Profile extends Component {
     }
 
     addCourse = (c) => {
-        axios.post('/courses', {
-            course: c,
-            user: this.props.user
-        });
-        this.setState({showAdd: false});
+        if(c.name && c.number) {
+            axios.post('/courses', {
+                course: c,
+                user: this.props.user
+            });
+            this.setState({showAdd: false});
+        } else {
+            console.log('invalid')
+        }
     }
 
     addCourseCancelled = () => {
@@ -64,25 +76,13 @@ export default class Profile extends Component {
     feel free to remove the DocumentArea, I just didn't know what else to put on
     the page.*/
     render() {
-        
-        var CoursePopup = {
-        height: '350px',
-        width: '450px',
-        margin: '0 auto',
-        position: 'absolute',
-        left: '0',
-        top: '10%',
-        right: '0',
-        bottom: '0'
-      };
-
         return (
             <div className='profile-area'>
                 <div className="profile">
                     <div className='profile-top'>
                         <div className="name-image-container">
                             <img src="/assets/images/user.svg" />
-                            <Name {...user} />{/*pass the user object we will eventually get from the db*/}
+                            <Name {...this.props.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                         <div className='button-wrapper'>
                             <Button isDisabled={this.state.showAdd} func={this.showAddPopup}label="Add or join a class" /*you will pass the action here eventually action={} */ />
@@ -99,7 +99,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea documents={[]} selectedCourse={true} />}
+                            {this.state.showDocuments && <DocumentArea documents={this.state.documents} selectedCourse={true} />}
                         </div>
                     </div>
                 </div>

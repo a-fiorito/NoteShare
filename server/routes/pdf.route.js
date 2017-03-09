@@ -45,6 +45,16 @@ module.exports = (function () {
             });
     })
 
+    pdfs.get('/profile/:userId', (req, res) => {
+        let userId = req.params.userId;
+
+        models.Document.findAll({where: {userId: userId}, include: { model: models.User, as: 'user', attributes: ['id', 'name', 'username']}})
+            .then(docs => {
+                res.json(docs);
+            });
+
+    });
+
     pdfs.get('/download/:username/:courseName/:id', (req, res) => {
         let {username, courseName, id} = req.params;
         var doc = path.join(__dirname , `../documents/${courseName}/${username}${id}.pdf`);
