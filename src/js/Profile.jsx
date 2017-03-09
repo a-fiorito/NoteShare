@@ -4,7 +4,6 @@ import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
 
-
 /*
 Profile component which should appear when a user clicks on the 'view profile' button
 */
@@ -65,6 +64,18 @@ export default class Profile extends Component {
     feel free to remove the DocumentArea, I just didn't know what else to put on
     the page.*/
     render() {
+        
+        var CoursePopup = {
+        height: '350px',
+        width: '450px',
+        margin: '0 auto',
+        position: 'absolute',
+        left: '0',
+        top: '10%',
+        right: '0',
+        bottom: '0'
+      };
+
         return (
             <div className='profile-area'>
                 <div className="profile">
