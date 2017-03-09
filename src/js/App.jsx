@@ -34,7 +34,7 @@ render((
             <Route path="login" component={LandingPage} />
             <Route path="signup" component={LandingPage} />
             <Route path="dashboard" component={authenticate(Dashboard)} />
-            <Route path="profile" component={Profile} />
+            <Route path="profile" component={authenticate(Profile)} />
 
         </Route>
     </Router>

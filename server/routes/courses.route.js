@@ -26,10 +26,14 @@ module.exports = (function () {
                 .spread(course => {
                     // Add the course to the class table
                     // wont add if its a duplicate
-                    fs.ensureDir(path.join(__dirname, `../documents/${name}${number}`), function(err) {
-                        user.addCourse(course);
-                        // Returns course object as json
-                        res.json(course);
+                    fs.ensureDir(path.join(__dirname, '../documents'), function(err) {
+                        fs.ensureDir(path.join(__dirname, '../documents/tmp'), function(err) {
+                            fs.ensureDir(path.join(__dirname, `../documents/${name}${number}`), function(err) {
+                                user.addCourse(course);
+                                // Returns course object as json
+                                res.json(course);
+                            });
+                        });
                     });
                 })
                 .catch(err => res.status(500).json({ error: err }));

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DocumentArea from './DocumentArea';// have a doc area showing notes that you uploaded
 import Button from './Button';
+import AddCourse from './AddCourse';
+import axios from 'axios';
 
 
 /*
@@ -31,12 +33,29 @@ export default class Profile extends Component {
         super(props);
 
         this.state = {
-            showDocuments: false
+            showDocuments: false,
+            showAdd: false
         }
     }
 
     toggleBar = (e) => {
         this.setState({showDocuments: !this.state.showDocuments});
+    }
+
+    showAddPopup = () => {
+        this.setState({showAdd: true});
+    }
+
+    addCourse = (c) => {
+        axios.post('/courses', {
+            course: c,
+            user: this.props.user
+        });
+        this.setState({showAdd: false});
+    }
+
+    addCourseCancelled = () => {
+        this.setState({showAdd: false});
     }
 
     /*My idea for this section is to eventually add a DocumentArea which displays
@@ -55,8 +74,8 @@ export default class Profile extends Component {
                             <Name {...user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                         <div className='button-wrapper'>
-                            <Button label="Add a note" />
-                            <Button label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup}label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
                         </div>
                     </div>
                     <div className="profile-body">

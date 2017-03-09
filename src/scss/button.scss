@@ -8,12 +8,17 @@
   padding: 10px;
   font-family: $form-title;
   color: white;
-  margin: 0 10px;
+  //margin: 0 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: 0.5s;
+
+  &.disabled {
+    pointer-events: none;
+    background: mediumseagreen * 0.8;
+  }
 
   span{
     font-weight: bold;

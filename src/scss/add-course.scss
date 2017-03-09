@@ -1,0 +1,70 @@
+.add-course {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+    background: rgba(60,179,113, 0.8);
+    padding: 20px;
+    left: -70px;
+    top: 80px;
+
+    &::before{
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: calc(50% - 20px);
+        border-width: 20px;
+        border-style: solid;
+        border-color: transparent transparent rgba(60,179,113, 0.8) transparent;
+    }
+
+    .title {
+        font-family: 'Sansita', Arial, Helvetica, sans-serif;
+        color: white;
+        font-size: 16px;
+        padding-bottom: 10px;
+    }
+
+    label {
+        font-family: 'Roboto';
+        color: white;
+        border-bottom: 1px solid white;
+    }
+
+    input {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        background: none;
+        border: none;
+        line-height: 20px;
+        color: white;
+        font-size: 12px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            border: 1px solid mediumseagreen;
+            border-radius: 16px;
+            font-family: 'Sansita', 'Roboto', 'Helvetica';
+            padding: 5px 30px 10px 30px;
+            background: rgba(255, 255, 255, 0.8);
+            color: mediumseagreen;
+            cursor: pointer;
+            transition: background 300ms ease;
+
+            &:hover {
+                background: rgba(255, 255, 255, 1);
+                transition: background 300ms ease;
+            }
+        }
+
+    }
+}

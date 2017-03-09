@@ -6,9 +6,13 @@ export default class Button extends Component {
     super(props);
   }
 
+  isDisabled() {
+    return this.props.isDisabled ? "disabled" : "";
+  }
+
     render() {
       return(
-        <div className = "button" onClick={this.props.func}>
+        <div className={`button ${this.isDisabled()}`} onClick={this.props.func}>
           <span>{this.props.label}</span>
         </div>
       );
