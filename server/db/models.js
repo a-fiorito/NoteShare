@@ -17,17 +17,28 @@ module.exports = function (sequelize) {
 
     const Document = sequelize.define('document', {
         name: Sequelize.TEXT,
+    }, {
+        timestamps: true
+    });
+
+    const Comment = sequelize.define('comment', {
+        body: Sequelize.TEXT
+    }, {
+        timestamps: true
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
     User.hasMany(Document, {as: 'documents'});
     Document.belongsTo(User, {as: 'user'});
     Course.hasMany(Document, {as: 'documents'});
+    User.hasMany(Comment, {as: 'comments'});
+    Document.hasMany(Comment, {as: 'comment'});
     
 
     return {
         User: User,
         Course: Course,
-        Document: Document
+        Document: Document,
+        Comment: Comment
     }
 }

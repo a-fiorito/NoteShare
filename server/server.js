@@ -29,6 +29,7 @@ app.use('/', express.static(__dirname + '/../dist'));
 app.use('/authenticate', require('./routes/authenticate.route'));
 app.use('/courses', require('./routes/courses.route'));
 app.use('/pdfs', require('./routes/pdf.route'));
+app.use('/comments', require('./routes/comment.route'));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
