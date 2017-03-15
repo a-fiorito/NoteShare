@@ -17,11 +17,15 @@ module.exports = function (sequelize) {
 
     const Document = sequelize.define('document', {
         name: Sequelize.TEXT,
+    }, {
+        timestamps: true
     });
 
     const Comment = sequelize.define('comment', {
-        name: Sequelize.TEXT
-    })
+        body: Sequelize.TEXT
+    }, {
+        timestamps: true
+    });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
     User.hasMany(Document, {as: 'documents'});

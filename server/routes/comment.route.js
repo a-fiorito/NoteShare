@@ -10,10 +10,10 @@ module.exports = (function () {
     let comment = express.Router();
 
     comment.post('/', (req, res) => {
-        let {commentName, userId, documentId} = req.body;
+        let {commentBody, userId, documentId} = req.body;
 
         models.Comment.create({
-            name: commentName,
+            body: commentBody,
             userId: userId,
             documentId: documentId
         })
@@ -24,7 +24,7 @@ module.exports = (function () {
 
     comment.get('/:documentId', (req, res) => {
         let {documentId} = req.params;
-        models.Comment.findAll({where : {documentId: documentId}})
+        models.Comment.findAll({where : {documentId: documentId}, attributes: ['body', 'createdAt']})
             .then(comments => {
                 res.json(comments);
             })
