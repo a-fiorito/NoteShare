@@ -1,36 +1,83 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import $ from 'jquery';
 
-class Navbar extends Component {
+/**
+ * I made a did a very hacky mobile navigation system. Not code I am proud of. Don't look at the way I did it to learn.
+ */
+export default class Navbar extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			showNav: false
+		}
+	}
 
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired
+	}
+
+	showMenu = () => {
+		this.setState({showNav: true});
+	}
+
+	hideMenu = () => {
+		$('#slider').toggleClass('open');
+		$('#cover').toggleClass('open');
+		setTimeout(() => {
+			this.setState({showNav: false});
+		}, 500);
 	}
 
 	render() {
 		let user = this.props.user;
 		let location = this.context.router.location.pathname;
+		let nav = <Nav user={this.props.user} signOut={this.props.signOut} />;
+
 		return (
-			<div className="nav-bar">
-				<div className="brand"><img src="/assets/images/book.svg" />NOTESHARE</div>
-				<div className="menu">
-					<ul>
-						<li><Link to="/" onlyActiveOnIndex activeClassName="active">home</Link></li>
-						{user ? <li><Link to="/dashboard" activeClassName="active">dashboard</Link></li> : null}
-						{user ? <li><Link to="/profile" activeClassName="active">profile</Link></li> : null}
-						{/*<li><Link>FAQ</Link></li>*/}
-						{/*<li><Link>Contact</Link></li>*/}
-						{user ? <li onClick={this.props.signOut.bind(this)}><Link to="/login">log out</Link></li> : <li><Link to="/login" className={location == "/signup" ? "active" : null} activeClassName="active">sign in / sign up</Link></li>}
-					</ul>
+			<div>
+				<div className="nav-bar">
+					<div className="brand"><img src="/assets/images/book.svg" />NOTESHARE</div>
+					<div className="menu">{nav}</div>
+					<div onClick={this.state.showNav ? this.hideMenu : this.showMenu} className="mobile-nav-button"><img src="/assets/images/menu.svg" /></div>
 				</div>
+				{this.state.showNav && <MobileNav toggleMenu={this.hideMenu}>
+					{nav}	
+				</MobileNav>}
 			</div>
 		);
 	}
 
 }
 
-Navbar.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
+class MobileNav extends Component {
 
-export default Navbar;
+	componentDidMount() {
+		setTimeout(() => {
+			$('#cover').toggleClass('open');
+		}, 0)
+		$('#slider').toggleClass('open');
+	}
+
+	render() {
+		return (
+			<div className="mobile-nav">
+				<div onClick={this.props.toggleMenu} id="cover" className="cover"></div>
+				<div id="slider" className="slider">
+					{this.props.children}
+				</div>
+			</div>
+		);
+	}
+};
+
+const Nav = ({ user, signOut }) => {
+	return (
+		<ul className="navbar">
+			<li><Link to="/" onlyActiveOnIndex activeClassName="active">HOME</Link></li>
+			{user ? <li><Link to="/dashboard" activeClassName="active">DASHBOARD</Link></li> : null}
+			{user ? <li><Link to="/profile" activeClassName="active">PROFILE</Link></li> : null}
+			{user ? <li onClick={signOut}><Link to="/login">LOG OUT</Link></li> : <li><Link to="/login" className={location == "/signup" ? "active" : null} activeClassName="active">SIGN IN / SIGN UP</Link></li>}
+		</ul>
+	);
+};
