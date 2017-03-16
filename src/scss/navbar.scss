@@ -1,22 +1,125 @@
 $brand-font: 'Sansita', Helvetica, Arial;
 
+$nav-background-color: white;
+$active-nav-color: rgba(60,179,113, 0.2);
+
+.navbar-styling-base {
+  .navbar {
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    padding: 0; margin: 0;
+    flex-wrap: wrap;
+
+    li {
+      margin-right: 10px;
+      cursor: pointer;
+
+      .active {
+        background: $active-nav-color;
+      }
+
+      a {
+        color: $noteshare-color;
+        padding: 5px 15px 5px 15px;
+        font-family: 'Roboto';
+        font-weight: 100;
+        font-size: 20px;
+        text-decoration: none;
+        transition: background 300ms ease;
+
+        &:hover {
+          background-color: $active-nav-color;
+        }
+      }
+    }
+  }
+}
+
+.mobile-nav {
+  position: relative;
+  width: 100%;
+  top: 0;
+
+  .cover {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    opacity: 0;
+    background: rgba(0,0,0, 0.5);
+    transition: opacity 300ms ease;
+
+    &.open {
+      opacity: 1;
+      transition: opacity 300ms ease;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    background: white;
+    padding-top: 20px;
+    width: 250px;
+    transform: translateX(300px);
+    //transition: all 300ms ease-out 100ms;
+    animation: slideBack 300ms ease;
+
+    @extend .navbar-styling-base;
+
+    .navbar {
+      flex-direction: column;
+
+      li {
+        margin-top: 20px;
+        margin-left: 10px;
+
+        a {
+          padding-left: 5px;
+        }
+      }
+    }
+
+    &.open {
+      animation: slide 300ms ease forwards;
+    }
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(300px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slideBack {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(300px);
+  }
+}
+
 .nav-bar {
   box-sizing: border-box;
-  background-color: white;
-  color: #333333;
-  // width: 80%;
-  // position: relative;
-  // left: 20%;
-  font-variant: small-caps;
+  background-color: $nav-background-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid mediumseagreen;
+  border-bottom: 2px solid $noteshare-color;
 
   .brand {
     font-family: $brand-font;
     font-weight: 300;
-    color: mediumseagreen;
+    color: $noteshare-color;
     font-size: 40px;
     display: flex;
     justify-content: center;
@@ -24,78 +127,42 @@ $brand-font: 'Sansita', Helvetica, Arial;
     padding: 20px 0px;
 
     img {
-      margin-left: 20px;
-      margin-top: 10px;
-      margin-right: 5px;
+      margin: 10px 5px 0px 20px;
       height: 40px; width: 40px;
     }
   }
 
+  .mobile-nav-button {
+    display: none;
+    cursor: pointer;
+    z-index: 20;
+
+    img {
+      width: 40px; height: 40px;
+      margin-right: 20px;
+    }
+  }
+
   .menu {
+    opacity: 1;
+    visibility: visible;
+    transition: all 200ms ease-in-out;
 
-    ul {
-      display: flex;
-      list-style-type: none;
-      justify-content: center;
-      padding: 0;
-      margin: 0;              // important
-      flex-wrap: wrap;        // important
+    @extend .navbar-styling-base;
 
-      li {
-        padding: 10px 0px;
-        margin-right: 10px;
-        cursor: pointer;
-        // transition-duration: 0.4s;
-        // vertical-align: middle;
-        // transform: perspective(1px) translateZ(0);
-        // box-shadow: 0 0 1px transparent;
-        // position: relative;
-        // overflow: hidden;
+  }
 
-        .active {
-          background: rgba(60,179,113, 0.2);
-        }
+  /** RESPONSIVE AREA **/
+  @media screen and (max-width : 768px) {
+    .mobile-nav-button {
+      display: initial;
+    }
 
-        a {
-          color: mediumseagreen;
-          font-family: 'Roboto';
-          font-weight: 100;
-          letter-spacing: 1px;
-          font-size: 24px;
-          text-decoration: none;
-          padding: 10px 30px;
-          transition-duration: 0.4s;
-
-          &:hover {
-            background-color: rgba(60,179,113, 0.2);
-          }
-        }
-
-        // growing box effect
-        // &:hover, &:focus, &:active {
-        //   background-color: black;
-        //   box-shadow: 0px 10px 25px -5px black;
-        //   transform: scale(1.05);
-        // }
-
-        // underline effect
-        // &:before {
-        //   content: "";
-        //   position: absolute;
-        //   z-index: -1;
-        //   left: 0;
-        //   right: 100%;
-        //   bottom: 0;
-        //   background-color: white;
-        //   height: 4px;
-        //   transition-property: right;
-        //   transition-duration: 0.3s;
-        //   transition-timing-function: ease-out;
-        // }
-        // &:hover:before, &:focus:before, &:active:before {
-        //   right: 0;
-        // }
-      }
+    .menu {
+      opacity: 0;
+      display: none;
+      transition: all 200ms ease-in-out;
+      flex-direction: column;
     }
   }
 }
