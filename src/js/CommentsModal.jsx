@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
-
-let comments = [
+let comments_def = [
 
   {id : 2, comment : "Good stuff!", user: {username: "Anthony"}, time: "May 22th, 2016"},
   {id : 3, comment : "Works out very well!", user: {username: "Fozail"}, time: "May 23th, 2016"},
@@ -14,23 +14,25 @@ let comments = [
 
 ];
 
-
-
-
-
 export default class CommentsModal extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      comments: comments,
+      comments: [],
       order: "Newest",
       numPerRow: 5,
       isOpen: false,
     }
   }
+
+    loadComments = () => {
+      axios.get('/comments/'+this.props.docId)
+        .then((resJson) => {this.setState({comments: resJson.data})})
+    }
+
     displayComments() {
-      return this.state.comments.map(d => {
-          return <Comments key={d.id} {...d} /> // dump all the props
+      return this.state.comments.map((d, index) => {
+          return <Comments key={index} {...d} /> // dump all the props
       });
     }
     openComments = () => {
@@ -48,7 +50,8 @@ export default class CommentsModal extends Component{
               <div className="comment-container">
               {this.displayComments()}
               </div>
-              <AddComment />
+              <AddComment user={this.props.user} docId={this.props.docId}/>
+              <button onClick={this.loadComments} />
             </div>
         );
     }
@@ -86,13 +89,49 @@ class Comments extends Component { //previous comments
 }
 
 class AddComment extends Component { //Add a comment
+  constructor(props){
+    super(props);
+    this.state = {
+      commentToUpload: '',
+    };
+  }
+
+  handleChange = (e) => {
+    this.setState({commentToUpload: e.target.value});
+  }
+
+  handleUpload = (e) => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+    let comment = {
+      commentBody : this.state.commentToUpload,
+      userId : this.props.user.id,
+      documentId : this.props.docId,
+    };
+
+    axios.post('/comments', comment
+     ).then(function (response) {
+      alert( 'Comment Uploaded');
+    }).catch(function (error){
+      console.log(error);
+    })
+  }
+
+
   render() {
       return (
-        <div className="new-comment">
+        <form className="new-comment" onSubmit={this.onSubmit}>
           <h3>Submit a new Comment</h3>
-          <textarea></textarea>
-          <div className="submit-comment">Post</div>
-        </div>
+          <textarea 
+            value = {this.state.commentToUpload}
+            onChange = {this.handleChange}
+            /><div>{}</div>
+          <div 
+            onClick = {this.handleUpload}
+            className = "submit-comment"
+            >Submit
+            </div>
+       </form>
       );
   }
 }
