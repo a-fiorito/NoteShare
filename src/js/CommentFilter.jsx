@@ -354,6 +354,6 @@ var profanityDict = ["2g1c",
     for (i = 0; i < foundprofanity.length; i++) {
       a[foundprofanity[i]] = "*****";
     }
-  output = a.join();
+  output = a.join(" ");
   return output;
 }
