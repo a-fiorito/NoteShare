@@ -113,8 +113,10 @@ class SignUpForm extends Component {
         super(props);
 
         this.state = {
+            name: '',
             username: '',
             email: '',
+            type: '',
             password: '',
             errors: {},
             isLoading: false
@@ -124,6 +126,10 @@ class SignUpForm extends Component {
     _onChange = (e) => {
         // update input field
         this.setState({ [e.target.name]: e.target.value }); 
+    }
+
+    _onSelect = (e) => {
+        this.setState({type: e.target.value});
     }
 
     _onSubmit = (e) => {
@@ -151,6 +157,15 @@ class SignUpForm extends Component {
                 <h1>Create an Account</h1>
                 <FormGroup
                     type="text"
+                    label="name"
+                    error={this.state.errors.name}
+                    value={this.state.name}
+                    name="name"
+                    placeholder="Enter your name"
+                    onChange={this._onChange}
+                    />
+                <FormGroup
+                    type="text"
                     label="username"
                     error={this.state.errors.username}
                     value={this.state.username}
@@ -166,6 +181,12 @@ class SignUpForm extends Component {
                     name="email"
                     placeholder="Enter your email"
                     onChange={this._onChange}
+                    />
+                <SelectGroup
+                    label="What best describes you?"
+                    error={this.state.errors.type}
+                    value={this.state.type}
+                    onSelect={this._onSelect}
                     />
                 <FormGroup
                     type="password"
@@ -209,6 +230,52 @@ const FormGroup = ({name, value, label, error, type, placeholder, onChange}) => 
         </div>
     );
 }
+
+/**
+ * Component to render a drop-down menu
+ */
+const SelectGroup = ({label, error, value, onSelect}) => {
+    return (
+        <div className={"form-group" + (error ? " error" : "")}>
+            <label className="form-label">{label.toUpperCase()}</label>
+            <select id="type" defaultValue="" required onChange={onSelect}>
+                <option disabled value="">Select</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="TA">Teaching Assistant</option>
+            </select>
+            {error && <span className="form-error">{error}</span>}
+        </div>
+    );
+}
+
+/*class SelectGroup extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { value: '' };
+
+        this.onChange = this.onChange.bind(this);
+    }
+
+    onChange(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    render() {
+        return (
+            <div className={"form-group" + (error ? " error" : "")}>
+                <label className="form-label">{label.toUpperCase()}</label>
+                <select value={this.state.value} onChange={onChange}>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="TA">TA (Teaching Assistant)</option>
+                </select>
+                {error && <span className="form-error">{error}</span>}
+            </div>
+        );
+    }
+}*/
 
 FormGroup.propTypes = {
     name: React.PropTypes.string.isRequired,
