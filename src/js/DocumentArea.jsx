@@ -64,7 +64,7 @@ class DocThumbnail extends Component {
             </div>
           </div>
           <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
-          <CommentsModal user={this.props.user} docId={this.props.id}/>
+          <CommentsModal user={this.props.user} docId={this.props.id} docName={this.props.name}/>
           </SkyLight>
         </div>
         );
@@ -85,7 +85,7 @@ export default class DocumentArea extends Component {
     displayNotes() {
       if(this.props.documents.length) {
         return this.props.documents.map(d => {
-            return <DocThumbnail selectedCourse={this.props.selectedCourse} key={d.id} {...d} /> // dump all the props
+            return <DocThumbnail selectedCourse={this.props.selectedCourse} key={d.id} {...d} user={this.props.user}/> // dump all the props
         });
       } else if(this.props.selectedCourse == null) {
         return <div className="no-docs">No course selected.</div>;
