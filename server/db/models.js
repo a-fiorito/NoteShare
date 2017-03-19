@@ -7,7 +7,8 @@ module.exports = function (sequelize) {
         name: Sequelize.TEXT,
         type: Sequelize.TEXT,
         email: Sequelize.TEXT,
-        password: Sequelize.TEXT
+        password: Sequelize.TEXT,
+        bio: Sequelize.TEXT
     });
 
     const Course = sequelize.define('course', {
