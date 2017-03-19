@@ -23,18 +23,28 @@ export default class CommentsModal extends Component{
       this.setState({comments: this.state.comments.concat(newComment)});
       this.scrollToBottom();
     }
-  
+    
+    //I couldn't find a more elegant solution than this. When a new comment are stored in the comments[] array, it does not store the username.
+    //thus it would throw an error saying d.user.username is undefined. Maybe I'm not doing something right in the implementation but I left comments
+    //for my old implementation if you want to take a look.
     displayComments = () => {
-      if(this.state.comments){
-        return this.state.comments.map(d => {
+      //OLD: did not have a try/catch
+      try{
+        return this.state.comments.map((d, index) => {
             return <Comments 
-            key={d.id} 
+            key={index} 
             username={d.user.username} 
             time={d.createdAt} 
             comment={d.body}
             /> 
         });
+      }//end of displayComments()
+      catch(error) {
+         axios.get('/comments/' + this.props.docId)
+        .then((resJson) => {this.setState({comments: resJson.data})})
+        .then(()=> {this.scrollToBottom()});
       }
+    
     }
     
     openComments = () => {
