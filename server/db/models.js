@@ -5,6 +5,7 @@ module.exports = function (sequelize) {
     const User = sequelize.define('user', {
         username: {type: Sequelize.TEXT, unique: true},
         name: Sequelize.TEXT,
+        type: Sequelize.TEXT,
         email: Sequelize.TEXT,
         password: Sequelize.TEXT
     });
