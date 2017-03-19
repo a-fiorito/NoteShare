@@ -43,7 +43,7 @@ module.exports = (function () {
                 { model: models.User, as: 'user', attributes: ['id', 'name', 'username']},
             ],
             attributes: [ 'id', 'name', 'createdAt',
-                [sequelize.literal('(SELECT COUNT("documentId") from comments where "comments"."documentId" = 1)'), 'commentsCount']
+                [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = Document.id)`), 'commentsCount']
             ]
         })
         .then(docs => {
@@ -65,7 +65,7 @@ module.exports = (function () {
                 ]
             }],
             attributes: [ 'id', 'name', 'createdAt',
-                [sequelize.literal('(SELECT COUNT("documentId") from comments where "comments"."documentId" = 1)'), 'commentsCount']
+                [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = Document.id)`), 'commentsCount']
             ]
         })
         .then(docs => {
