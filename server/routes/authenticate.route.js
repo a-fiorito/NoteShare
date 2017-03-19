@@ -17,10 +17,12 @@ module.exports = (function() {
         helpers.validateSignUp(req.body.user)
         .then(({errors, isValid}) => {
             if(isValid) {
-                const { username, password, email } = req.body.user;
+                const { name, type, username, password, email } = req.body.user;
                 const password_digest = bcrypt.hashSync(password, 10);
                 // create user
                 models.User.create({
+                    name: name,
+                    type: type,
                     username: username,
                     password: password_digest,
                     email: email
@@ -30,6 +32,8 @@ module.exports = (function() {
                     const token = jwt.sign({
                         id: user.id,
                         username: user.username,
+                        name: user.name,
+                        type: user.type
                     }, config.jwtSecret);
                     res.json({token})
                 })
@@ -53,6 +57,8 @@ module.exports = (function() {
                     const token = jwt.sign({
                         id: user.id,
                         username: user.username,
+                        name: user.name,
+                        type: user.type
                     }, config.jwtSecret);
                     res.json({token})
                 } else {

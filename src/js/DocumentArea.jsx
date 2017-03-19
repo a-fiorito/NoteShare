@@ -54,7 +54,7 @@ class DocThumbnail extends Component {
             </div>
 
             <div className="document-info">
-              <p>Comments: {this.props.comments}</p>
+              <p>Comments: {this.props.commentsCount}</p>
               <p>by: {this.props.user.username}</p>
             </div>
 
