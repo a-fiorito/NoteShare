@@ -34,7 +34,7 @@ module.exports = function (sequelize) {
     Course.hasMany(Document, {as: 'documents'});
     User.hasMany(Comment, {as: 'comments'});
     Comment.belongsTo(User, {as: 'user'});
-    Document.hasMany(Comment, {as: 'comment'});
+    Document.hasMany(Comment, {as: 'comments'});
     
 
     return {

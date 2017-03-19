@@ -15,9 +15,7 @@ module.exports = (function () {
     let pdfs = express.Router();
 
     pdfs.post('/upload', upload.single('document'), (req, res) => {
-        console.log(req.file);
         let { courseName, fileName, userId, username, courseId } = req.body; 
-        console.log(req.body);
         let oldPath = req.file.path;
         let newPath = path.join(__dirname, `../documents/${courseName}/`);
 
@@ -39,27 +37,48 @@ module.exports = (function () {
     
     pdfs.get('/:courseId', (req, res) => {
         let { courseId } = req.params;
-        models.Document.findAll({where: {courseId: courseId}, include: { model: models.User, as: 'user', attributes: ['id', 'name', 'username']}})
-            .then(docs => {
-                res.json(docs);
-            });
+        models.Document.findAll({
+            where: {courseId: courseId}, 
+            include: [
+                { model: models.User, as: 'user', attributes: ['id', 'name', 'username']},
+            ],
+            attributes: [ 'id', 'name', 'createdAt',
+                [sequelize.literal('(SELECT COUNT("documentId") from comments where "comments"."documentId" = 1)'), 'commentsCount']
+            ]
+        })
+        .then(docs => {
+            res.json(docs);
+        });
     })
 
     pdfs.get('/profile/:userId', (req, res) => {
         let userId = req.params.userId;
 
-        models.Document.findAll({where: {userId: userId}, include: { model: models.User, as: 'user', attributes: ['id', 'name', 'username']}})
-            .then(docs => {
-                res.json(docs);
-            });
+        models.Document.findAll({
+            where: {userId: userId}, 
+            include: [{ 
+                model: models.User, as: 'user', 
+                attributes: [
+                    'id', 
+                    'name', 
+                    'username'
+                ]
+            }],
+            attributes: [ 'id', 'name', 'createdAt',
+                [sequelize.literal('(SELECT COUNT("documentId") from comments where "comments"."documentId" = 1)'), 'commentsCount']
+            ]
+        })
+        .then(docs => {
+            res.json(docs);
+        });
 
     });
 
     pdfs.get('/download/:username/:courseName/:id', (req, res) => {
         let {username, courseName, id} = req.params;
         var doc = path.join(__dirname , `../documents/${courseName}/${username}${id}.pdf`);
-        res.download(doc);
-    })
+        res.download(doc, `${courseName}-${username}.pdf`);
+    });
 
     return pdfs;
 
