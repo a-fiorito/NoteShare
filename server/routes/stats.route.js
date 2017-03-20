@@ -15,21 +15,15 @@ module.exports = (function () {
         Promise.all([
             models.Comment.findAndCountAll({where: {userId: userId}}),
 
-            models.User.findOne({where: {id: userId}})
-            .then(user => {
-               return user.getCourses();
-            }),
-
-            models.User.findOne({where: {id: userId}})
+            models.User.findOne({where: {id: userId}, include: [{model: models.Document, as: 'documents'}, {model: models.Course, as: 'courses'}]})
         ])
-        .spread((numberOfComments, courses, user) => {
-            
+        .spread((numberOfComments, user) => {
             res.json({
                 statistics:{
                     numberOfComments: numberOfComments.count,
-                    numberOfCourses: courses.length
+                    numberOfDocuments: user.documents.length
                 },
-                courses: courses,
+                courses: user.courses,
                 bio: user.bio
             });
         });

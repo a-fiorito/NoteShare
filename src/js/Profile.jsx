@@ -36,65 +36,65 @@ export default class Profile extends Component {
             showDocuments: false,
             showAdd: false,
             documents: [],
-         statistics :{   
-            numberOfComments: 5,
-            numberOfDocuments: 7,
-        },
-         courses: [{name: "COEN", number: "346"}, {name: " COEN", number: "346"}, {name: "COMP",number: "249"}],
-        bio: "Hey welcome to my profile, Im currently a 3rd year Software Engineering student and learning is my passion, I have completed many classes, but My favorite one was Comp352, because I learned so much." 
-       
-};
+            statistics: {
+                numberOfComments: null,
+                numberOfDocuments: null,
+            },
+            courses: [],
+            bio: ""
 
-    
-        
-
+        };
     }
 
-    componentDidMount() 
-
-    {
+    componentDidMount() {
         axios.get(`/pdfs/profile/${this.props.user.id}`)
         .then(res => {
-            this.setState({documents: res.data});
+            this.setState({ documents: res.data });
+        });
+
+        axios.get(`stats/${this.props.user.id}`)
+        .then(res => {
+            this.setState({...res.data});
         })
 
-        axios.get(/* Missing Url here*/)
-        .then(res => {
-            this.setState({documents: res.data});
-        })
-    
     }
 
     toggleBar = (e) => {
-        this.setState({showDocuments: !this.state.showDocuments});
+        this.setState({ showDocuments: !this.state.showDocuments });
     }
 
     showAddPopup = () => {
-        this.setState({showAdd: true});
+        this.setState({ showAdd: true });
     }
 
     addCourse = (c) => {
-        if(c.name && c.number) {
+        if (c.name && c.number) {
             axios.post('/courses', {
                 course: c,
                 user: this.props.user
-            });
-            this.setState({showAdd: false});
+            })
+            .then(res => {
+                this.setState({ showAdd: false, courses: this.state.courses.concat([res.data])});
+            })
         } else {
             console.log('invalid')
         }
     }
 
     addCourseCancelled = () => {
-        this.setState({showAdd: false});
+        this.setState({ showAdd: false });
     }
 
-    /*My idea for this section is to eventually add a DocumentArea which displays
-    the notes that you have uploaded, so you can delete them? or update them? For
-    example, for the thumbnail component have a state called edit where these
-    options appear.
-    feel free to remove the DocumentArea, I just didn't know what else to put on
-    the page.*/
+    loadCourses() {
+        return this.state.courses.map((c, i) => {
+            return (
+                <div key={i} className="subcourses">
+                    {`${c.name} ${c.number}`}
+                </div>
+            )
+        });
+    }
+
     render() {
         return (
             <div className='profile-area'>
@@ -105,14 +105,15 @@ export default class Profile extends Component {
                             <Name {...this.props.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                         <div className='button-wrapper'>
-                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup}label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" /*you will pass the action here eventually action={} */ />
                             {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
                         </div>
                     </div>
                     <div className="profile-body">
-                        <div className="bibliography">
-                           <p>{this.state.bio}</p>
-                        </div>
+                        {this.state.bio && <div className="bibliography">
+                            <h3>Bio</h3>
+                            <p>{this.state.bio}</p>
+                        </div>}
 
                         <div className="statistics">
                             <h3>Statistics</h3>
@@ -123,15 +124,8 @@ export default class Profile extends Component {
                         <div className="my-courses">
                             <h3>Courses</h3>
                             <div className="course-list">
-                        {this.state.courses.map((c, i) => {
-                            return(
-                            <div key={i} className="subcourses">
-
-                             {`${c.name} ${c.number}`}
+                                {this.loadCourses()}
                             </div>
-                            )
-                        })}
-                        </div>
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
