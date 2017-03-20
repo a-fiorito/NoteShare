@@ -48,11 +48,42 @@
     }
 
     .profile-body {
+    
       h3 {
         font-family: 'Sansita';
         color: mediumseagreen;
       }
+      .bibliography{
+      p{
+      font-family:'Roboto';
+      }
+     
+    
 
+      }
+
+        .my-courses{
+       
+
+
+
+      }
+       .statistics{
+      font-family:'Roboto';
+    
+      }
+      .course-list {
+    display:flex;
+    background: #ccffcc;
+    padding: 10px;
+    margin: 10px;
+     font-family:'Roboto';
+
+     .subcourses{
+
+     margin:10px;
+     }
+}
       .document-container {
 
         .toggle-bar {
@@ -83,6 +114,13 @@
           //padding: 10px;
         }
       }
+    }
+    .statistics {
+
+
+
+
+
     }
 
   }

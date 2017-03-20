@@ -4,6 +4,7 @@ import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
 
+
 /*
 Profile component which should appear when a user clicks on the 'view profile' button
 */
@@ -34,15 +35,34 @@ export default class Profile extends Component {
         this.state = {
             showDocuments: false,
             showAdd: false,
-            documents: []
-        }
+            documents: [],
+         statistics :{   
+            numberOfComments: 5,
+            numberOfDocuments: 7,
+        },
+         courses: [{name: "COEN", number: "346"}, {name: " COEN", number: "346"}, {name: "COMP",number: "249"}],
+        bio: "Hey welcome to my profile, Im currently a 3rd year Software Engineering student and learning is my passion, I have completed many classes, but My favorite one was Comp352, because I learned so much." 
+       
+};
+
+    
+        
+
     }
 
-    componentDidMount() {
+    componentDidMount() 
+
+    {
         axios.get(`/pdfs/profile/${this.props.user.id}`)
         .then(res => {
             this.setState({documents: res.data});
         })
+
+        axios.get(/* Missing Url here*/)
+        .then(res => {
+            this.setState({documents: res.data});
+        })
+    
     }
 
     toggleBar = (e) => {
@@ -91,11 +111,27 @@ export default class Profile extends Component {
                     </div>
                     <div className="profile-body">
                         <div className="bibliography">
-                            <h3>Bibliography</h3>
+                           <p>{this.state.bio}</p>
                         </div>
 
                         <div className="statistics">
                             <h3>Statistics</h3>
+                            <p>Number of notes uploaded: {this.state.statistics.numberOfDocuments} </p>
+                            <p>Number of comments made: {this.state.statistics.numberOfComments}</p>
+                        </div>
+
+                        <div className="my-courses">
+                            <h3>Courses</h3>
+                            <div className="course-list">
+                        {this.state.courses.map((c, i) => {
+                            return(
+                            <div key={i} className="subcourses">
+
+                             {`${c.name} ${c.number}`}
+                            </div>
+                            )
+                        })}
+                        </div>
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
