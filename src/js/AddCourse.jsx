@@ -11,7 +11,7 @@ export default class AddCouse extends Component {
 
     _onChange = (e) => {
         // update input field
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value.toUpperCase() });
     }
 
     add = () => {

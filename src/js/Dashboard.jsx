@@ -15,7 +15,7 @@ export default class Dashboard extends Component {
         super(props);
         this.state = {
             courses: [],
-            selectedCourse: null,
+            selectedCourse: JSON.parse(localStorage.getItem('selectedCourse')),
             isLoading: true,
             showModal: false,
             documents: []
@@ -38,15 +38,16 @@ export default class Dashboard extends Component {
         // load courses for sidebar and documents for document area
         Promise.all(promises)
         .spread((courses, documents) => {
-            this.setState({courses: courses.data, documents: documents == null ? [] : documents.data, isLoading: false});
+            this.setState({
+                courses: courses.data, 
+                documents: documents == null ? [] : documents.data, isLoading: false
+            });
         });
+
     }
 
     fetchDocumentsForCourse(c) {
         return axios('/pdfs/' + c)
-            .then(res => {
-                this.setState({documents: res.data});
-            });
     }
 
     updateDocuments = (doc) => {
@@ -70,9 +71,15 @@ export default class Dashboard extends Component {
     setSelectedCourse = (c) => {
         if(c == null) {
             this.setState({documents: []});
+            localStorage.removeItem('selectedCourse');
+        } else {
+            this.fetchDocumentsForCourse(c.id)
+            .then(res => {
+                this.setState({documents: res.data});
+            });;
         }
         this.setState({selectedCourse: c});
-        this.fetchDocumentsForCourse(c.id);
+        localStorage.setItem('selectedCourse', JSON.stringify(c));
     }
 
     render() {
@@ -88,7 +95,7 @@ export default class Dashboard extends Component {
             {this.state.selectedCourse && <Button func={this.toggleModal} label={"Upload a document"} />}
             <div className="dashboard-content">
                 <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
-                <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} user={this.props.user} />
+                <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} user={this.props.user} location={this.props.location.pathname} /> 
             </div>
           </div>
         );

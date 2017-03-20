@@ -62,12 +62,18 @@ export default class CommentsModal extends Component{
 
     render() {
         return (
+            <div className="comment-area">
+            <div onClick={this.props.closeModal} className="blocking"></div>
             <div className="comment-section">
-              <Header docName={this.props.docName}/>
+              <div className="top">
+                <Header docName={this.props.docName}/>
+                <div onClick={this.props.closeModal} className="close-modal"><i className="fa fa-times" aria-hidden="true"></i></div>
+              </div>
               <div className="comment-container">
                 {this.displayComments()}
               </div>
               <AddComment updateComments={this.updateComments} user={this.props.user} docId={this.props.docId}/>
+            </div>
             </div>
         );
       }
@@ -77,7 +83,7 @@ class Header extends Component { //pdf on top
   render() {
       return (
         <div className="comments-header">
-          <img src="./assets/images/pdf-icon.svg" width="50" height="50" ></img>
+          <img src="/assets/images/pdf-icon.svg" width="50" height="50" ></img>
           <h4 className="pdf-name">{this.props.docName}</h4>
         </div>
       );
@@ -92,7 +98,7 @@ class Comments extends Component { //previous comments
   render() {
       return (
         <div className="comment">
-          <img src="./assets/images/user.svg" width="35" height="35"></img>
+          <img src="/assets/images/user.svg" width="35" height="35"></img>
           <div className="info">
             <h1>{this.props.username}</h1>
             <h2>{this.props.time}</h2>

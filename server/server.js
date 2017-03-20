@@ -15,6 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,
+    stats: {
+      historyApiFallback: true
+    }
   }));
 }
 
@@ -33,7 +36,7 @@ app.use('/comments', require('./routes/comment.route'));
 app.use('/stats', require('./routes/stats.route'));
 
 
-app.get('*', (req, res) => {
+app.all('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 

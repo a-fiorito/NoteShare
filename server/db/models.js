@@ -26,7 +26,12 @@ module.exports = function (sequelize) {
     const Comment = sequelize.define('comment', {
         body: Sequelize.TEXT
     }, {
-        timestamps: true
+        timestamps: true,
+        getterMethods: {
+            createdAt: function() {
+                return new Date(this.getDataValue('createdAt')).toDateString();
+            }
+        }
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});

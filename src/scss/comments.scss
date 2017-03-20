@@ -1,105 +1,130 @@
 @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
-$brand-font: 'Sansita', Helvetica, Arial;
-
-.comment-section {
-  .comments-header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 20px;
-
-    img {
-      height: 50px;
-      width: 50px;
-    }
-
-    h4 {
-      padding: 0; margin: 0;
-      margin-left: 10px;
-      font-size: 20px;
-      font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-    }
+$brand-font: 'Sansita',Helvetica,Arial;
+.comment-area {
+  .blocking {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
   }
+  .comment-section {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 30;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
+    min-width: 400px;
+    background: white;
 
-  .comment-container {
-    max-height: 270px;
-    overflow-y: scroll;
-    border-bottom: 1px solid mediumseagreen;
-
-    .comment {
+    .top {
       display: flex;
-      padding: 10px;
+      justify-content: space-between;
 
-      .info {
-        margin-left: 15px;
+      .close-modal {
+        cursor: pointer;
+        padding: 5px 10px;
+        font-family: 'Roboto', 'Helvetica';
+        font-size: 20px;
       }
+    }
 
-      h1, h2, p {
-        padding: 0; margin: 0;
-        font-family: 'Questrial','Helvetica Neue', Arial, sans-serif;
-      }
-
-      h1 {
-        color: mediumseagreen;
-        font-size: 14px;
-      }
-
-      h2 {
-        color: grey;
-        font-size: 10px;
-        font-weight: 400;
-      }
-
-      p {
-        padding-top: 5px;
-        font-size: 12px;
-      }
-
+    .comments-header {
+      display: flex;
+      align-items: center;
+      padding: 10px 5px 20px 5px;
       img {
+        height: 50px;
+        width: 50px;
+      }
+      h4 {
+        padding: 0;
+        margin: 0;
+        margin-left: 10px;
+        font-size: 20px;
+        font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+      }
+    }
+    .comment-container {
+      max-height: 270px;
+      overflow-y: scroll;
+      border-bottom: 1px solid mediumseagreen;
+      border-top: 1px solid mediumseagreen;
+      .comment {
+        display: flex;
+        padding: 10px;
+        .info {
+          margin-left: 15px;
+        }
+        h1,
+        h2,
+        p {
+          padding: 0;
+          margin: 0;
+          font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+        }
+        h1 {
+          color: mediumseagreen;
+          font-size: 14px;
+        }
+        h2 {
+          color: grey;
+          font-size: 10px;
+          font-weight: 400;
+        }
+        p {
+          padding-top: 5px;
+          font-size: 12px;
+        }
+        img {
+          height: 30px;
+          width: 30px;
+        }
+      }
+    }
+    .new-comment {
+      box-sizing: border-box;
+      padding: 10px;
+      font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
+      display: inline-flex;
+      flex-direction: column;
+      width: 100%;
+      flex-grow: 1;
+      h3 {
+        padding: 0;
+        margin: 0;
+        font-size: 22px;
+        padding-bottom: 10px;
+      }
+      textarea {
+        padding: 5px;
+        resize: vertical;
+        border-radius: 8px;
+        height: 50px;
+        &:focus {
+          border: 1px solid mediumseagreen;
+          outline: none;
+        }
+      }
+      .submit-comment {
         height: 30px;
-        width: 30px;
+        font-size: 12px;
+        line-height: 30px;
+        vertical-align: middle;
+        text-align: center;
+        width: 60px;
+        background-color: mediumseagreen;
+        border-radius: 5px;
+        color: white;
+        align-self: flex-end;
+        margin-top: 10px;
+        cursor: pointer;
       }
     }
-  }
-
-  .new-comment {
-    box-sizing: border-box;
-    padding: 10px;
-    font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
-    display: inline-flex;
-    flex-direction: column;
-    width: 100%;
-    flex-grow: 1;
-    h3 {
-      padding: 0; margin: 0;
-      font-size: 22px;
-      padding-bottom: 10px;
-    }
-    textarea {
-      padding: 5px;
-      resize: vertical;
-      border-radius: 8px;
-      height: 50px;
-
-      &:focus {
-        border: 1px solid mediumseagreen;
-        outline: none;
-      }
-    }
-
-    .submit-comment {
-      height: 30px;
-      font-size: 12px;
-      line-height: 30px;
-      vertical-align: middle;
-      text-align: center;
-      width: 60px;
-      background-color: mediumseagreen;
-      border-radius: 5px;
-      color: white;
-      align-self: flex-end;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
   }
 }

@@ -31,29 +31,36 @@ class DocThumbnail extends Component {
 
     constructor(props){
       super(props);
+      this.state= {
+        showModal: false
+      }
+    }
+
+    showModal = () => {
+      this.setState({showModal: true})
+      this.props.showComments({
+        user: this.props.user,
+        docId: this.props.id,
+        docName: this.props.name,
+        closeModal: this.closeModal
+      });
+    }
+
+    closeModal = () => {
+      this.setState({showModal: false});
+      this.props.closeModal();
     }
 
     render() {
-      var CommentPopup = {
-        height: '550px',
-        width: '450px',
-        margin: '0 auto',
-        position: 'absolute',
-        left: '0',
-        top: '10%',
-        right: '0',
-        bottom: '0'
-        
-      };
         return (
           <div>
           <div className = "doc-thumbnail">
             <div className="doc-holder">
-              <img src="./assets/images/pdf-icon.svg"></img>
+              <img src="/assets/images/pdf-icon.svg"></img>
               <p className="course-title">{this.props.name}</p>
               <div className="action-buttons">
-                <div className="downloadicon"><a href={`http://localhost:3000/pdfs/download/${this.props.user.username}/${this.props.selectedCourse.name + this.props.selectedCourse.number}/${this.props.id}`} target="_blank"><img src="./assets/downloadicon.png"></img></a></div>
-                <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
+                <div className="downloadicon"><a href={`http://localhost:3000/pdfs/download/${this.props.user.username}/${this.props.selectedCourse.name + this.props.selectedCourse.number}/${this.props.id}`} target="_blank"><img src="/assets/downloadicon.png"></img></a></div>
+                <div className="commentbubble"><img src="/assets/commentbubble.png" onClick={this.showModal}></img></div>
               </div>
             </div>
 
@@ -62,9 +69,6 @@ class DocThumbnail extends Component {
               <p>by: {this.props.user.username}</p>
             </div>
           </div>
-          <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
-          <CommentsModal user={this.props.user} docId={this.props.id} docName={this.props.name}/>
-          </SkyLight>
         </div>
         );
     }
@@ -77,14 +81,25 @@ export default class DocumentArea extends Component {
       this.state = {
         documents: notes,
         order: "Newest",
-        numPerRow: 6
+        numPerRow: 6,
+        modalInfo: {}
       };
+    }
+
+    showComments = (modalInfo) => {
+        let location = this.context.router.getCurrentLocation().pathname;
+        this.context.router.push(`${location}/document`);
+        this.setState({modalInfo: modalInfo})
+    }
+
+    hideComments = () => {
+        this.context.router.goBack();
     }
 
     displayNotes() {
       if(this.props.documents.length) {
         return this.props.documents.map(d => {
-            return <DocThumbnail selectedCourse={this.props.selectedCourse} key={d.id} {...d} user={this.props.user}/> // dump all the props
+            return <DocThumbnail closeModal={this.hideComments} showComments={this.showComments} selectedCourse={this.props.selectedCourse} key={d.id} {...d} user={this.props.user}/> // dump all the props
         });
       } else if(this.props.selectedCourse == null) {
         return <div className="no-docs">No course selected.</div>;
@@ -95,9 +110,16 @@ export default class DocumentArea extends Component {
 
     render() {
         return (
-            <div id="doc-wrapper" className="doc-wrapper">
-              {this.displayNotes()}
+            <div className="doc-area">
+              <div id="doc-wrapper" className="doc-wrapper">
+                {this.displayNotes()}
+              </div>
+            {this.props.location.includes('/document') && <CommentsModal {...this.state.modalInfo} />}
             </div>
         );
+    }
+
+    static contextTypes = {
+      router: React.PropTypes.object.isRequired
     }
 }
