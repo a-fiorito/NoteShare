@@ -13,14 +13,21 @@ export default class CommentsModal extends Component{
     }
   }
 
-    componentWillMount = () => {
+    componentDidMount() {
+    }
+    componentWillMount() {
     axios.get('/comments/' + this.props.docId)
-      .then((resJson) => {this.setState({comments: resJson.data})})
+      .then((res) => {
+        this.setState({comments: res.data});
+        this.scrollToBottom();
+      })
       //.then(() => {this.displayComments()});
     }
 
-    onNewComment = (newComment) => {
-      this.setState({comments: this.state.comments.concat(newComment)});
+    updateComments = (newComment) => {
+      let comment = {...newComment};
+      comment.user = this.props.user;
+      this.setState({comments: this.state.comments.concat(comment)});
       this.scrollToBottom();
     }
     
@@ -29,7 +36,6 @@ export default class CommentsModal extends Component{
     //for my old implementation if you want to take a look.
     displayComments = () => {
       //OLD: did not have a try/catch
-      try{
         return this.state.comments.map((d, index) => {
             return <Comments 
             key={index} 
@@ -38,13 +44,6 @@ export default class CommentsModal extends Component{
             comment={d.body}
             /> 
         });
-      }//end of displayComments()
-      catch(error) {
-         axios.get('/comments/' + this.props.docId)
-        .then((resJson) => {this.setState({comments: resJson.data})})
-        .then(()=> {this.scrollToBottom()});
-      }
-    
     }
     
     openComments = () => {
@@ -68,7 +67,7 @@ export default class CommentsModal extends Component{
               <div className="comment-container">
                 {this.displayComments()}
               </div>
-              <AddComment display={this.onNewComment} user={this.props.user} docId={this.props.docId}/>
+              <AddComment updateComments={this.updateComments} user={this.props.user} docId={this.props.docId}/>
             </div>
         );
       }
@@ -109,30 +108,33 @@ class AddComment extends Component { //Add a comment
   constructor(props){
     super(props);
     this.state = {
-      commentToUpload: '',
+      comment: '',
     };
   }
 
   handleChange = (e) => {
-    this.setState({commentToUpload: e.target.value});
+    this.setState({comment: e.target.value});
   }
 
   handleSubmit = (e) => {
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-
     let comment = {
-      commentBody : this.state.commentToUpload,
+      commentBody : this.state.comment,
       userId : this.props.user.id,
       documentId : this.props.docId,
     };
 
     axios.post('/comments', comment)
-     .then((response) => 
-        this.props.display([response.data]))
-     .catch(function (error){
-        console.log(error);
-    })
-    this.setState({commentToUpload: ''});
+     .then((res) => {
+        this.props.updateComments(res.data);
+     });
+    this.setState({comment: ''});
+  }
+
+  handleEnter = (e) => {
+    if(e.key == "Enter") {
+      e.preventDefault();
+      this.handleSubmit(e);
+    }
   }
 
   render() {
@@ -140,8 +142,9 @@ class AddComment extends Component { //Add a comment
         <form className="new-comment" onSubmit={this.handleSubmit}>
           <h3>Submit a new Comment</h3>
           <textarea 
-            value = {this.state.commentToUpload}
-            onChange = {this.handleChange}
+            value={this.state.comment}
+            onChange={this.handleChange}
+            onKeyPress={this.handleEnter}
             />
           <div 
             onClick = {this.handleSubmit}
