@@ -55,7 +55,8 @@ module.exports = (function () {
         let userId = req.params.userId;
 
         models.Document.findAll({
-            where: {userId: userId}, 
+            where: {userId: userId},
+            order: '"updatedAt" DESC', 
             include: [{ 
                 model: models.User, as: 'user', 
                 attributes: [

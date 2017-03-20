@@ -17,6 +17,7 @@
 
   &.disabled {
     pointer-events: none;
+    cursor: not-allowed;
     background: mediumseagreen * 0.8;
   }
 

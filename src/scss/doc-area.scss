@@ -1,95 +1,71 @@
 $background-color: white;
 
 .doc-wrapper {
-  align-content: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  background: $background-color;
-  overflow-y: scroll;
-
+    align-content: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background: $background-color;
+    overflow-y: scroll;
     .no-docs {
-      font-family: 'Roboto';
-      align-self: center;
-      margin: 0 auto;
-      color: mediumseagreen;
-      font-weight: 400;
-      font-size: 22px;
-      padding: 10px;
-    }
-
-    .doc-thumbnail{
-      font-family: arial;
-      margin: 10px 0px 10px 15px;
-      width: 150px;
-      background: white;
-
-      .doc-holder {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         font-family: 'Roboto';
-        font-weight: 300;
-        flex-direction: column;
-        height: 50px;
-        border: 1px solid mediumseagreen;
-        height: 200px;
-
-
-        p {
-          position: relative;
-          bottom: 25px;
-          font-size: 14px;
-          text-align: center;
-        }
-
-        img {
-          margin-top: 20px;
-          width: 100px;
-          height: 100px;
-        }
-      }
-
-      .document-info {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-between;
-        padding: 2px;
-        p {
-          font-size: 11px;
-          font-family: 'Roboto';
-          font-weight: 300;
-          margin: 0;
-        }
-      }
-      .action-buttons {
-        display: flex;
-        cursor: pointer;
-        transition: opacity 300ms ease-in-out;
-          img{
-            width: 20px;
-            height: 20px;
-            position: relative;
-            bottom: 45px;
-          }
-          .commentbubble{
-            position: relative;
-            left: 70%;
-            &:hover {
-              opacity: 0.5;
-              transition: opacity 300ms ease-in-out;
-              }
-          }
-          .downloadicon{
-            position: relative;
-            right: 2%;
-            &:hover {
-              opacity: 0.5;
-              transition: opacity 300ms ease-in-out;
-              }
-
-          }
-
+        align-self: center;
+        margin: 0 auto;
+        color: mediumseagreen;
+        font-weight: 400;
+        font-size: 22px;
+        padding: 10px;
+    }
+    .doc-thumbnail {
+        font-family: arial;
+        margin: 10px 0px 10px 15px;
+        width: 150px;
+        background: white;
+        .doc-holder {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Roboto';
+            font-weight: 300;
+            flex-direction: column;
+            height: 50px;
+            border: 1px solid mediumseagreen;
+            height: 200px;
+            padding-bottom: 10px;
+            p {
+                font-size: 14px;
+                text-align: center;
+                padding: 2px;
             }
-      }
+            img {
+                margin-top: 20px;
+                width: 100px;
+                height: 100px;
+            }
+            .action-buttons {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                cursor: pointer;
+                transition: opacity 300ms ease-in-out;
+                img {
+                    margin: 0;
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+        .document-info {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            padding: 2px;
+            p {
+                font-size: 11px;
+                font-family: 'Roboto';
+                font-weight: 300;
+                margin: 0;
+            }
+        }
+    }
 }

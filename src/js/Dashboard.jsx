@@ -17,6 +17,7 @@ export default class Dashboard extends Component {
             courses: [],
             selectedCourse: null,
             isLoading: true,
+            showModal: false,
             documents: []
         };
     }
@@ -48,10 +49,21 @@ export default class Dashboard extends Component {
             });
     }
 
+    updateDocuments = (doc) => {
+        let newDoc = {...doc};
+        newDoc.user = {...this.props.user};
+        newDoc.commentsCount = 0;
+        this.setState({documents: [newDoc].concat(this.state.documents)});
+    }
+
     componentWillUnmount() {
         // allow other pages to scroll
         let body = document.getElementsByTagName('body');
         body[0].style.overflow = "";
+    }
+
+    toggleModal = () => {
+        this.setState({showModal: !this.state.showModal});
     }
 
 
@@ -65,11 +77,18 @@ export default class Dashboard extends Component {
 
     render() {
         return (
-          <div>
-            <Modal user={this.props.user} selectedCourse={this.state.selectedCourse} canUpload={this.state.selectedCourse} />
-            <div className="dashboard">
-              <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
-              <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} />
+          <div className="dashboard">
+            <Modal 
+                user={this.props.user} 
+                selectedCourse={this.state.selectedCourse} 
+                showModal={this.state.showModal}
+                closeModal={this.toggleModal}
+                updateDocuments={this.updateDocuments}
+            />
+            {this.state.selectedCourse && <Button func={this.toggleModal} label={"Upload a document"} />}
+            <div className="dashboard-content">
+                <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
+                <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} />
             </div>
           </div>
         );

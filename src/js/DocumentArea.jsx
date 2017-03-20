@@ -51,16 +51,15 @@ class DocThumbnail extends Component {
             <div className="doc-holder">
               <img src="./assets/images/pdf-icon.svg"></img>
               <p className="course-title">{this.props.name}</p>
+              <div className="action-buttons">
+                <div className="downloadicon"><a href={`http://localhost:3000/pdfs/download/${this.props.user.username}/${this.props.selectedCourse.name + this.props.selectedCourse.number}/${this.props.id}`} target="_blank"><img src="./assets/downloadicon.png"></img></a></div>
+                <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
+              </div>
             </div>
 
             <div className="document-info">
               <p>Comments: {this.props.commentsCount}</p>
               <p>by: {this.props.user.username}</p>
-            </div>
-
-            <div className="action-buttons">
-                <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
-                <div className="downloadicon"><a href={`http://localhost:3000/pdfs/download/${this.props.user.username}/${this.props.selectedCourse.name + this.props.selectedCourse.number}/${this.props.id}`} target="_blank"><img src="./assets/downloadicon.png"></img></a></div>
             </div>
           </div>
           <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">

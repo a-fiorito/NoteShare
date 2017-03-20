@@ -1,4 +1,11 @@
 .dashboard {
-    display: flex;
-    height: calc(100vh - 90px);
+    .button {
+        position: absolute;
+        bottom: 10px; right: 10px;
+    }
+
+    .dashboard-content {
+        display: flex;
+        height: calc(100vh - 90px);
+    }
 }
