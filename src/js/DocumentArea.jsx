@@ -64,7 +64,7 @@ class DocThumbnail extends Component {
             </div>
           </div>
           <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
-          <CommentsModal />
+          <CommentsModal user={this.props.user} docId={this.props.id} docName={this.props.name}/>
           </SkyLight>
         </div>
         );
@@ -82,45 +82,10 @@ export default class DocumentArea extends Component {
       };
     }
 
-    /* Not really needed anymore but ill keep it here just incase
-    _onRowChange = (select) => {
-      //update the state to reflect the change in the dropdown
-      //because setState is async, call the setState only after it has been processed
-      this.setState({numPerRow: select.target.value}, this._setNumPerRow); // DONT DO THIS
-    }
-
-    _setNumPerRow = () => {
-
-      switch(this.state.numPerRow){
-
-        case '3':
-          this.__setWidth('28%', 'doc-thumbnail');
-        break;
-
-        case '6':
-          this.__setWidth('12%', 'doc-thumbnail');
-        break;
-
-        case '10':
-          this.__setWidth('6%', 'doc-thumbnail');
-        break;
-
-      }
-    }
-
-    __setWidth = (width, className) => {
-      //returns an array- like object so we have to change it to an array
-      var obj = document.getElementsByClassName(className);
-      Array.from(obj).forEach(obj=>{
-        obj.style.width=width;
-      });
-
-    }*/
-
     displayNotes() {
       if(this.props.documents.length) {
         return this.props.documents.map(d => {
-            return <DocThumbnail selectedCourse={this.props.selectedCourse} key={d.id} {...d} /> // dump all the props
+            return <DocThumbnail selectedCourse={this.props.selectedCourse} key={d.id} {...d} user={this.props.user}/> // dump all the props
         });
       } else if(this.props.selectedCourse == null) {
         return <div className="no-docs">No course selected.</div>;

@@ -24,7 +24,7 @@ module.exports = (function () {
 
     comment.get('/:documentId', (req, res) => {
         let {documentId} = req.params;
-        models.Comment.findAll({where : {documentId: documentId}, include: {model: models.User, as: 'user', attributes: ['id', 'name', 'username']}, attributes: ['body', 'createdAt']})
+        models.Comment.findAll({where : {documentId: documentId}, include: {model: models.User, as: 'user', attributes: ['id', 'name', 'username']}, attributes: ['body', 'createdAt'], order: '"createdAt" ASC' })
             .then(comments => {
                 res.json(comments);
             })
