@@ -3,6 +3,8 @@ import DocumentArea from './DocumentArea';// have a doc area showing notes that 
 import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
+import EditProfile from './EditProfile';
+
 
 
 /*
@@ -74,6 +76,10 @@ export default class Profile extends Component {
         this.setState({ showAdd: true });
 
     }
+    
+    showEditPopup = () => {
+        this.setState({ showEdit: true });
+    }
 
     addCourse = (c) => {
         if (c.name && c.number) {
@@ -91,6 +97,10 @@ export default class Profile extends Component {
 
     addCourseCancelled = () => {
         this.setState({ showAdd: false });
+    }
+    
+     editProfileCancelled = () => {
+        this.setState({ showEdit: false });
     }
 
     loadCourses() {
@@ -116,6 +126,7 @@ export default class Profile extends Component {
                             <img src="/assets/images/user.svg" />
                             <Name {...this.state.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
+                    {/*    <div className="settings-icon"><img src="./assets/settingsicon.png"></img></div> */}
                         <div className='button-wrapper'>
                             <div className="buttons">
                                 {this.props.params.username == this.props.user.username && <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class"/>}
