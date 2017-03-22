@@ -17,6 +17,21 @@
         flex-wrap: wrap;
         position: relative;
       }
+        .settings-icon {
+            img{
+            width: 60px;
+            height: 60px;
+            position: relative;
+          }
+        left: 5%;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+            &:hover {
+              opacity: 0.5;
+              transition: opacity 300ms ease-in-out;
+              }
+      }
       .name-image-container {
         display: flex;
         align-items: center;

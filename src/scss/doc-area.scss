@@ -87,7 +87,15 @@ $background-color: white;
               opacity: 0.5;
               transition: opacity 300ms ease-in-out;
               }
-
+          }
+          .deleteicon{
+            position: relative;
+            left: 85px;
+            bottom: 169px;
+            &:hover {
+              opacity: 0.5;
+              transition: opacity 300ms ease-in-out;
+              }
           }
 
             }

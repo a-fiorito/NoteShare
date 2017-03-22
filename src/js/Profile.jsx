@@ -3,6 +3,8 @@ import DocumentArea from './DocumentArea';// have a doc area showing notes that 
 import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
+import EditProfile from './EditProfile';
+
 
 
 /*
@@ -66,6 +68,10 @@ export default class Profile extends Component {
     showAddPopup = () => {
         this.setState({ showAdd: true });
     }
+    
+    showEditPopup = () => {
+        this.setState({ showEdit: true });
+    }
 
     addCourse = (c) => {
         if (c.name && c.number) {
@@ -83,6 +89,10 @@ export default class Profile extends Component {
 
     addCourseCancelled = () => {
         this.setState({ showAdd: false });
+    }
+    
+     editProfileCancelled = () => {
+        this.setState({ showEdit: false });
     }
 
     loadCourses() {
@@ -104,9 +114,13 @@ export default class Profile extends Component {
                             <img src="/assets/images/user.svg" />
                             <Name {...this.props.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
+                    {/*    <div className="settings-icon"><img src="./assets/settingsicon.png"></img></div> */}
                         <div className='button-wrapper'>
-                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" /*you will pass the action here eventually action={} */ />
-                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
+                            <Button isDisabled={this.state.showEdit} func={this.showEditPopup} label="Edit Profile" /*you will pass the action here eventually action={} */ /> 
+                            {this.state.showEdit && <EditProfile cancelled={this.editProfileCancelled} />} 
+                         &nbsp;
+                           <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />} 
                         </div>
                     </div>
                     <div className="profile-body">

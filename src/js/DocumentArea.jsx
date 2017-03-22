@@ -61,6 +61,7 @@ class DocThumbnail extends Component {
             <div className="action-buttons">
                 <div className="commentbubble"><img src="./assets/commentbubble.png" onClick={() => this.refs.CommentPopup.show()}></img></div>
                 <div className="downloadicon"><a href={`http://localhost:3000/pdfs/download/${this.props.user.username}/${this.props.selectedCourse.name + this.props.selectedCourse.number}/${this.props.id}`} target="_blank"><img src="./assets/downloadicon.png"></img></a></div>
+                <div className="deleteicon"><img src="./assets/deleteicon.png"></img></div>
             </div>
           </div>
           <SkyLight dialogStyles={CommentPopup} hideOnOverlayClicked ref="CommentPopup">
