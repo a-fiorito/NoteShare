@@ -103,7 +103,7 @@
 }
 
 .modal-enter {
-  transform: translateY(-600px);
+  transform: translateY(-1000px);
 }
 
 .modal-enter.modal-enter-active {
@@ -116,6 +116,6 @@
 }
 
 .modal-leave.modal-leave-active {
-  transform: translateY(-600px);
+  transform: translateY(-1000px);
   transition: transform 400ms ease-in-out;
 }

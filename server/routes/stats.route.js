@@ -10,21 +10,33 @@ module.exports = (function () {
 
     let stats = express.Router();
 
-    stats.get('/:userId', (req, res) => {
-        let {userId} = req.params;
-        Promise.all([
-            models.Comment.findAndCountAll({where: {userId: userId}}),
+    stats.get('/:username', (req, res) => {
+        let {username} = req.params;
+        models.User.findOne({
+            where: {username: username}, 
+            include: [
+                {
+                    model: models.Document, as: 'documents', 
+                    attributes: [ 'id', 'name', 'createdAt',
+                        [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = documents.id)`), 'commentsCount']
+                    ],
+                    include: {model: models.User, as: 'user', attributes: ['id', 'name', 'username', 'type']}
+                }, 
+                {model: models.Course, as: 'courses'},
+                {model: models.Comment, as: 'comments'}
 
-            models.User.findOne({where: {id: userId}, include: [{model: models.Document, as: 'documents'}, {model: models.Course, as: 'courses'}]})
-        ])
-        .spread((numberOfComments, user) => {
+            ]
+        })
+        .then((user) => {
             res.json({
                 statistics:{
-                    numberOfComments: numberOfComments.count,
+                    numberOfComments: user.comments.length,
                     numberOfDocuments: user.documents.length
                 },
+                documents: user.documents,
                 courses: user.courses,
-                bio: user.bio
+                bio: user.bio,
+                user: {id: user.id, username: user.username, name: user.name, type: user.type}
             });
         });
 

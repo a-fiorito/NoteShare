@@ -25,6 +25,7 @@ class NoteShare extends Component {
     logout = (e) => {
         e.preventDefault();
         localStorage.removeItem('jwtToken');
+        localStorage.removeItem('selectedCourse');
         auth.setAuthToken(null);
         this.setState({user: null});
         this.context.router.push('/login');

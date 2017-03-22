@@ -16,6 +16,27 @@
         display: flex;
         flex-wrap: wrap;
         position: relative;
+        .buttons {
+          display: flex;
+          flex-direction: column;
+          .edit-profile {
+            background: $noteshare-color;
+            margin-top: 5px;
+            color: white;
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            padding: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            border-bottom: 8px solid mediumseagreen * 0.8;
+            transition: 0.5s;
+            &:hover {
+              background: mediumseagreen * 0.8;
+              transition: 0.5s;
+              transform: translateY(2px);
+            }
+          }
+        }
       }
       .name-image-container {
         display: flex;
@@ -46,7 +67,9 @@
         margin: 0;
         margin-top: 10px;
       }
-      .bibliography, .statistics, .my-courses {
+      .bibliography,
+      .statistics,
+      .my-courses {
         p {
           font-family: 'Roboto';
           margin: 0;

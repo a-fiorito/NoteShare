@@ -31,13 +31,9 @@ class DocThumbnail extends Component {
 
     constructor(props){
       super(props);
-      this.state= {
-        showModal: false
-      }
     }
 
     showModal = () => {
-      this.setState({showModal: true})
       this.props.showComments({
         user: this.props.user,
         docId: this.props.id,
@@ -47,14 +43,18 @@ class DocThumbnail extends Component {
     }
 
     closeModal = () => {
-      this.setState({showModal: false});
       this.props.closeModal();
+    }
+
+    deleteDocument = () => {
+      console.log("delete");
     }
 
     render() {
         return (
           <div>
-          <div className = "doc-thumbnail">
+          <div className="doc-thumbnail">
+            {this.props.editing && <div onClick={this.deleteDocument} className="delete-doc"><i className="fa fa-times" aria-hidden="true"></i></div>}
             <div className="doc-holder">
               <img src="/assets/images/pdf-icon.svg"></img>
               <p className="course-title">{this.props.name}</p>
@@ -82,13 +82,13 @@ export default class DocumentArea extends Component {
         documents: notes,
         order: "Newest",
         numPerRow: 6,
-        modalInfo: {}
+        modalInfo: {docId: 0}
       };
     }
 
     showComments = (modalInfo) => {
         let location = this.context.router.getCurrentLocation().pathname;
-        this.context.router.push(`${location}/document`);
+        this.context.router.push(`${location}/${modalInfo.docName}/${modalInfo.docId}`);
         this.setState({modalInfo: modalInfo})
     }
 
@@ -99,7 +99,7 @@ export default class DocumentArea extends Component {
     displayNotes() {
       if(this.props.documents.length) {
         return this.props.documents.map(d => {
-            return <DocThumbnail closeModal={this.hideComments} showComments={this.showComments} selectedCourse={this.props.selectedCourse} key={d.id} {...d} user={this.props.user}/> // dump all the props
+            return <DocThumbnail editing={this.props.editing} showComments={this.showComments} selectedCourse={this.props.selectedCourse} key={d.id} {...d}/> // dump all the props
         });
       } else if(this.props.selectedCourse == null) {
         return <div className="no-docs">No course selected.</div>;
@@ -114,7 +114,7 @@ export default class DocumentArea extends Component {
               <div id="doc-wrapper" className="doc-wrapper">
                 {this.displayNotes()}
               </div>
-            {this.props.location.includes('/document') && <CommentsModal {...this.state.modalInfo} />}
+            <CommentsModal closeModal={this.hideComments} params={this.props.params} user={this.props.user} />
             </div>
         );
     }

@@ -2,7 +2,7 @@
 $brand-font: 'Sansita',Helvetica,Arial;
 .comment-area {
   .blocking {
-    position: absolute;
+    position: fixed;
     z-index: 20;
     top: 0;
     right: 0;
@@ -12,8 +12,7 @@ $brand-font: 'Sansita',Helvetica,Arial;
   }
   .comment-section {
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 100px;
     z-index: 30;
     left: 0;
     right: 0;
@@ -52,6 +51,7 @@ $brand-font: 'Sansita',Helvetica,Arial;
     }
     .comment-container {
       max-height: 270px;
+      min-height: 270px;
       overflow-y: scroll;
       border-bottom: 1px solid mediumseagreen;
       border-top: 1px solid mediumseagreen;
@@ -127,4 +127,22 @@ $brand-font: 'Sansita',Helvetica,Arial;
       }
     }
   }
+}
+
+.comment-modal-enter {
+  transform: translateY(-800px);
+}
+
+.comment-modal-enter.comment-modal-enter-active {
+  transform: translateY(0px);
+  transition: transform 300ms ease-in-out 100ms;
+}
+
+.comment-modal-leave {
+  transform: translateY(0px);
+}
+
+.comment-modal-leave.comment-modal-leave-active {
+  transform: translateY(-1000px);
+  transition: transform 300ms ease-in-out;
 }

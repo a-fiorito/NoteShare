@@ -76,7 +76,7 @@ const Nav = ({ user, signOut }) => {
 		<ul className="navbar">
 			<li><Link to="/" onlyActiveOnIndex activeClassName="active">HOME</Link></li>
 			{user ? <li><Link to="/dashboard" activeClassName="active">DASHBOARD</Link></li> : null}
-			{user ? <li><Link to="/profile" activeClassName="active">PROFILE</Link></li> : null}
+			{user ? <li><Link to={`/profile/${user.username}`} activeClassName="active">PROFILE</Link></li> : null}
 			{user ? <li onClick={signOut}><Link to="/login">LOG OUT</Link></li> : <li><Link to="/login" className={location == "/signup" ? "active" : null} activeClassName="active">SIGN IN / SIGN UP</Link></li>}
 		</ul>
 	);

@@ -24,6 +24,7 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
         // shouldnt be able to scroll on dashboard
+        console.log(this.props);
         let body = document.getElementsByTagName('body');
         body[0].style.overflow = "hidden";
 
@@ -95,7 +96,7 @@ export default class Dashboard extends Component {
             {this.state.selectedCourse && <Button func={this.toggleModal} label={"Upload a document"} />}
             <div className="dashboard-content">
                 <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
-                <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} user={this.props.user} location={this.props.location.pathname} /> 
+                <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} user={this.props.user} params={this.props.params} /> 
             </div>
           </div>
         );

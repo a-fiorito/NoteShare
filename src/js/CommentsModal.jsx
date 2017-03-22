@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router';
+import CSSTransition from 'react-addons-css-transition-group';
 
 export default class CommentsModal extends Component{
   constructor(props) {
@@ -13,16 +15,27 @@ export default class CommentsModal extends Component{
     }
   }
 
-    componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    if(this.props.params.id != nextProps.params.id) {
+      if(nextProps.params.id != undefined) {
+        axios.get('/comments/' + nextProps.params.id)
+        .then((res) => {
+          this.setState({comments: res.data});
+          this.scrollToBottom();
+        })
+      }
     }
-    componentWillMount() {
-    axios.get('/comments/' + this.props.docId)
-      .then((res) => {
-        this.setState({comments: res.data});
-        this.scrollToBottom();
-      })
-      //.then(() => {this.displayComments()});
+  }
+
+  componentDidMount() {
+    if(this.props.params.id != undefined) {
+      axios.get('/comments/' + this.props.params.id)
+          .then((res) => {
+            this.setState({comments: res.data});
+            //this.scrollToBottom();
+          })
     }
+  }
 
     updateComments = (newComment) => {
       let comment = {...newComment};
@@ -63,17 +76,28 @@ export default class CommentsModal extends Component{
     render() {
         return (
             <div className="comment-area">
-            <div onClick={this.props.closeModal} className="blocking"></div>
+            <CSSTransition 
+                    transitionName="blocking"
+                    transitionEnterTimeout={700}
+                    transitionLeaveTimeout={500}>
+              {this.props.params.id && <div onClick={this.props.closeModal} className="blocking"></div>}
+            </CSSTransition>
+            <CSSTransition 
+                    transitionName="comment-modal"
+                    transitionEnterTimeout={800}
+                    transitionLeaveTimeout={600}>
+            {this.props.params.id &&
             <div className="comment-section">
               <div className="top">
-                <Header docName={this.props.docName}/>
+                <Header docName={this.props.params.name}/>
                 <div onClick={this.props.closeModal} className="close-modal"><i className="fa fa-times" aria-hidden="true"></i></div>
               </div>
               <div className="comment-container">
                 {this.displayComments()}
               </div>
-              <AddComment updateComments={this.updateComments} user={this.props.user} docId={this.props.docId}/>
-            </div>
+              <AddComment updateComments={this.updateComments} user={this.props.user} docId={this.props.params.id}/>
+            </div>}
+            </CSSTransition>
             </div>
         );
       }
@@ -100,7 +124,7 @@ class Comments extends Component { //previous comments
         <div className="comment">
           <img src="/assets/images/user.svg" width="35" height="35"></img>
           <div className="info">
-            <h1>{this.props.username}</h1>
+            <Link to={`/profile/${this.props.username}`}><h1>{this.props.username}</h1></Link>
             <h2>{this.props.time}</h2>
             <p>{this.props.comment}</p>
           </div>

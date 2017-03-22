@@ -41,18 +41,25 @@ export default class Profile extends Component {
                 numberOfDocuments: null,
             },
             courses: [],
-            bio: ""
+            bio: "",
+            user: null
 
         };
     }
 
-    componentDidMount() {
-        axios.get(`/pdfs/profile/${this.props.user.id}`)
-        .then(res => {
-            this.setState({ documents: res.data });
-        });
+    componentWillReceiveProps(nextProps) {
+        if(this.props.params.username != nextProps.username) {
+            console.log("made it")
+            axios.get(`/stats/${nextProps.params.username}`)
+            .then(res => {
+                console.log(res.data);
+                this.setState({...res.data});
+            })
+        }
+    }
 
-        axios.get(`stats/${this.props.user.id}`)
+    componentDidMount() {
+        axios.get(`/stats/${this.props.params.username}`)
         .then(res => {
             this.setState({...res.data});
         })
@@ -65,6 +72,7 @@ export default class Profile extends Component {
 
     showAddPopup = () => {
         this.setState({ showAdd: true });
+
     }
 
     addCourse = (c) => {
@@ -95,6 +103,10 @@ export default class Profile extends Component {
         });
     }
 
+    toggleEdit = () => {
+        this.setState({editing: !this.state.editing});
+    }
+
     render() {
         return (
             <div className='profile-area'>
@@ -102,10 +114,13 @@ export default class Profile extends Component {
                     <div className='profile-top'>
                         <div className="name-image-container">
                             <img src="/assets/images/user.svg" />
-                            <Name {...this.props.user} />{/*pass the user object we will eventually get from the db*/}
+                            <Name {...this.state.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                         <div className='button-wrapper'>
-                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            <div className="buttons">
+                                {this.props.params.username == this.props.user.username && <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class"/>}
+                                {this.props.params.username == this.props.user.username && <div onClick={this.toggleEdit} className="edit-profile">{this.state.editing ? "Finish Editing" : "Edit Profile"}</div>}
+                            </div>
                             {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
                         </div>
                     </div>
@@ -129,7 +144,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea documents={this.state.documents} selectedCourse={true} user={this.props.user} location={this.props.location.pathname} />}
+                            {this.state.showDocuments && <DocumentArea editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>

@@ -33,8 +33,8 @@ render((
             <IndexRoute component={Homepage} />
             <Route path="login" component={LandingPage} />
             <Route path="signup" component={LandingPage} />
-            <Route path="dashboard(/:page)" component={authenticate(Dashboard)} />
-            <Route path="profile(/:page)" component={authenticate(Profile)} />
+            <Route path="dashboard(/:name/:id)" component={authenticate(Dashboard)} />
+            <Route path="profile/:username(/:name/:id)" component={authenticate(Profile)} />
 
         </Route>
     </Router>
