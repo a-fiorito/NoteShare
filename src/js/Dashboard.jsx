@@ -69,7 +69,7 @@ export default class Dashboard extends Component {
             <Modal user={this.props.user} selectedCourse={this.state.selectedCourse} canUpload={this.state.selectedCourse} />
             <div className="dashboard">
               <Sidebar isLoading={this.state.isLoading} selectCourse={this.setSelectedCourse} selectedCourse={this.state.selectedCourse} courses={this.state.courses} user={this.props.user} />
-              <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} />
+              <DocumentArea selectedCourse={this.state.selectedCourse} documents={this.state.documents} user={this.props.user} />  
             </div>
           </div>
         );

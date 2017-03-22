@@ -1,38 +1,51 @@
 import React, { Component } from 'react';
-
-
-let comments = [
-
-  {id : 2, comment : "Good stuff!", user: {username: "Anthony"}, time: "May 22th, 2016"},
-  {id : 3, comment : "Works out very well!", user: {username: "Fozail"}, time: "May 23th, 2016"},
-  {id : 4, comment : "I love how you explain this stuff!", user: {username: "Daniel"}, time: "May 24th, 2016"},
-  {id : 5, comment : "Great work!", user: {username: "Vartan"}, time: "May 25th, 2016"},
-  {id : 6, comment : "Good job!", user: {username: "Francois"}, time: "May 26th, 2016"},
-  {id : 7, comment : "Helped me a lot", user: {username: "Charbel"}, time: "May 27th, 2016"},
-  {id : 8, comment : "Lovely!", user: {username: "Mohamed"}, time: "May 30th, 2016"},
-
-
-];
-
-
-
-
+import axios from 'axios';
 
 export default class CommentsModal extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      comments: comments,
       order: "Newest",
       numPerRow: 5,
       isOpen: false,
+      newComments: false,
+      comments: [],
     }
   }
-    displayComments() {
-      return this.state.comments.map(d => {
-          return <Comments key={d.id} {...d} /> // dump all the props
-      });
+
+    componentDidMount() {
     }
+    componentWillMount() {
+    axios.get('/comments/' + this.props.docId)
+      .then((res) => {
+        this.setState({comments: res.data});
+        this.scrollToBottom();
+      })
+      //.then(() => {this.displayComments()});
+    }
+
+    updateComments = (newComment) => {
+      let comment = {...newComment};
+      comment.user = this.props.user;
+      this.setState({comments: this.state.comments.concat(comment)});
+      this.scrollToBottom();
+    }
+    
+    //I couldn't find a more elegant solution than this. When a new comment are stored in the comments[] array, it does not store the username.
+    //thus it would throw an error saying d.user.username is undefined. Maybe I'm not doing something right in the implementation but I left comments
+    //for my old implementation if you want to take a look.
+    displayComments = () => {
+      //OLD: did not have a try/catch
+        return this.state.comments.map((d, index) => {
+            return <Comments 
+            key={index} 
+            username={d.user.username} 
+            time={d.createdAt} 
+            comment={d.body}
+            /> 
+        });
+    }
+    
     openComments = () => {
       this.setState({isOpen: true});
     }
@@ -41,25 +54,31 @@ export default class CommentsModal extends Component{
       this.setState({isOpen: false});
     }
 
+    scrollToBottom = () => {
+      let comments = document.getElementsByClassName("comment-container");
+      comments = comments[0];
+      comments.scrollTop = comments.scrollHeight;
+    }
+
     render() {
         return (
             <div className="comment-section">
-              <Header />
+              <Header docName={this.props.docName}/>
               <div className="comment-container">
-              {this.displayComments()}
+                {this.displayComments()}
               </div>
-              <AddComment />
+              <AddComment updateComments={this.updateComments} user={this.props.user} docId={this.props.docId}/>
             </div>
         );
+      }
     }
-  }
 
 class Header extends Component { //pdf on top
   render() {
       return (
         <div className="comments-header">
           <img src="./assets/images/pdf-icon.svg" width="50" height="50" ></img>
-          <h4 className="pdf-name">ScrumNotes.pdf</h4>
+          <h4 className="pdf-name">{this.props.docName}</h4>
         </div>
       );
   }
@@ -75,7 +94,7 @@ class Comments extends Component { //previous comments
         <div className="comment">
           <img src="./assets/images/user.svg" width="35" height="35"></img>
           <div className="info">
-            <h1>{this.props.user.username}</h1>
+            <h1>{this.props.username}</h1>
             <h2>{this.props.time}</h2>
             <p>{this.props.comment}</p>
           </div>
@@ -86,13 +105,54 @@ class Comments extends Component { //previous comments
 }
 
 class AddComment extends Component { //Add a comment
+  constructor(props){
+    super(props);
+    this.state = {
+      comment: '',
+    };
+  }
+
+  handleChange = (e) => {
+    this.setState({comment: e.target.value});
+  }
+
+  handleSubmit = (e) => {
+    let comment = {
+      commentBody : this.state.comment,
+      userId : this.props.user.id,
+      documentId : this.props.docId,
+    };
+
+    axios.post('/comments', comment)
+     .then((res) => {
+        this.props.updateComments(res.data);
+     });
+    this.setState({comment: ''});
+  }
+
+  handleEnter = (e) => {
+    if(e.key == "Enter") {
+      e.preventDefault();
+      this.handleSubmit(e);
+    }
+  }
+
   render() {
       return (
-        <div className="new-comment">
+        <form className="new-comment" onSubmit={this.handleSubmit}>
           <h3>Submit a new Comment</h3>
-          <textarea></textarea>
-          <div className="submit-comment">Post</div>
-        </div>
+          <textarea 
+            value={this.state.comment}
+            onChange={this.handleChange}
+            onKeyPress={this.handleEnter}
+            />
+          <div 
+            onClick = {this.handleSubmit}
+            className = "submit-comment"
+          >
+            Submit
+          </div>
+       </form>
       );
   }
 }

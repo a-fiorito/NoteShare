@@ -11,6 +11,9 @@ const sequelize = require('./db/connect'),
 function formValidate(input) {
     let errors = {};
 
+    if(Validator.isEmpty(input.name)) {
+        errors.name = "This field is required.";
+    }
     if(Validator.isEmpty(input.email)) {
         errors.email = "This field is required.";
     } else {

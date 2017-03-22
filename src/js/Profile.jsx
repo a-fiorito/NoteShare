@@ -3,6 +3,9 @@ import DocumentArea from './DocumentArea';// have a doc area showing notes that 
 import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
+import EditProfile from './EditProfile';
+
+
 
 /*
 Profile component which should appear when a user clicks on the 'view profile' button
@@ -34,47 +37,74 @@ export default class Profile extends Component {
         this.state = {
             showDocuments: false,
             showAdd: false,
-            documents: []
-        }
+            documents: [],
+            statistics: {
+                numberOfComments: null,
+                numberOfDocuments: null,
+            },
+            courses: [],
+            bio: ""
+
+        };
     }
 
     componentDidMount() {
         axios.get(`/pdfs/profile/${this.props.user.id}`)
         .then(res => {
-            this.setState({documents: res.data});
+            this.setState({ documents: res.data });
+        });
+
+        axios.get(`stats/${this.props.user.id}`)
+        .then(res => {
+            this.setState({...res.data});
         })
+
     }
 
     toggleBar = (e) => {
-        this.setState({showDocuments: !this.state.showDocuments});
+        this.setState({ showDocuments: !this.state.showDocuments });
     }
 
     showAddPopup = () => {
-        this.setState({showAdd: true});
+        this.setState({ showAdd: true });
+    }
+    
+    showEditPopup = () => {
+        this.setState({ showEdit: true });
     }
 
     addCourse = (c) => {
-        if(c.name && c.number) {
+        if (c.name && c.number) {
             axios.post('/courses', {
                 course: c,
                 user: this.props.user
-            });
-            this.setState({showAdd: false});
+            })
+            .then(res => {
+                this.setState({ showAdd: false, courses: this.state.courses.concat([res.data])});
+            })
         } else {
             console.log('invalid')
         }
     }
 
     addCourseCancelled = () => {
-        this.setState({showAdd: false});
+        this.setState({ showAdd: false });
+    }
+    
+     editProfileCancelled = () => {
+        this.setState({ showEdit: false });
     }
 
-    /*My idea for this section is to eventually add a DocumentArea which displays
-    the notes that you have uploaded, so you can delete them? or update them? For
-    example, for the thumbnail component have a state called edit where these
-    options appear.
-    feel free to remove the DocumentArea, I just didn't know what else to put on
-    the page.*/
+    loadCourses() {
+        return this.state.courses.map((c, i) => {
+            return (
+                <div key={i} className="subcourses">
+                    {`${c.name} ${c.number}`}
+                </div>
+            )
+        });
+    }
+
     render() {
         return (
             <div className='profile-area'>
@@ -84,18 +114,32 @@ export default class Profile extends Component {
                             <img src="/assets/images/user.svg" />
                             <Name {...this.props.user} />{/*pass the user object we will eventually get from the db*/}
                         </div>
+                    {/*    <div className="settings-icon"><img src="./assets/settingsicon.png"></img></div> */}
                         <div className='button-wrapper'>
-                            <Button isDisabled={this.state.showAdd} func={this.showAddPopup}label="Add or join a class" /*you will pass the action here eventually action={} */ />
-                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
+                            <Button isDisabled={this.state.showEdit} func={this.showEditPopup} label="Edit Profile" /*you will pass the action here eventually action={} */ /> 
+                            {this.state.showEdit && <EditProfile cancelled={this.editProfileCancelled} />} 
+                         &nbsp;
+                           <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" /*you will pass the action here eventually action={} */ />
+                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />} 
                         </div>
                     </div>
                     <div className="profile-body">
-                        <div className="bibliography">
-                            <h3>Bibliography</h3>
-                        </div>
+                        {this.state.bio && <div className="bibliography">
+                            <h3>Bio</h3>
+                            <p>{this.state.bio}</p>
+                        </div>}
 
                         <div className="statistics">
                             <h3>Statistics</h3>
+                            <p>Number of notes uploaded: {this.state.statistics.numberOfDocuments} </p>
+                            <p>Number of comments made: {this.state.statistics.numberOfComments}</p>
+                        </div>
+
+                        <div className="my-courses">
+                            <h3>Courses</h3>
+                            <div className="course-list">
+                                {this.loadCourses()}
+                            </div>
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
