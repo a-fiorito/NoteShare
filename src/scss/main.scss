@@ -23,19 +23,20 @@
 
 /* GLOBAL VARS ----------*/
 $noteshare-color: mediumseagreen;
+$brand-font: 'Sansita', Helvetica, Arial;
 /*-----------------------*/
 
-@import 'add-course';
-@import 'landing-page';
-@import 'doc-area';
-@import 'profile';
-@import 'button';
-@import 'homepage';
-@import 'navbar';
-@import 'dashboard';
-@import 'sidebar';
-@import 'comments';
-@import 'modal';
+@import 'abstract/button';
+@import 'dashboard/dashboard';
+@import 'dashboard/sidebar';
+@import 'dashboard/upload-modal';
+@import 'document-area/document-area';
+@import 'document-area/comments-modal';
+@import 'profile/add-course';
+@import 'profile/profile';
+@import 'global/landing-page';
+@import 'global/homepage';
+@import 'global/navbar';
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400|Sansita');
 

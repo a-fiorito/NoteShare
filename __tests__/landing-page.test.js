@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LandingPage from '../src/js/LandingPage';
+import LandingPage from '../src/js/Global/LandingPage';
 
 describe('Landing Page', () => {
     it('Correctly highlights sign in and sign up depending on the path', () => {

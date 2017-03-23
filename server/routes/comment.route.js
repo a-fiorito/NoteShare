@@ -9,6 +9,7 @@ module.exports = (function () {
 
     let comment = express.Router();
 
+    // User posts a comment
     comment.post('/', (req, res) => {
         let {commentBody, userId, documentId} = req.body;
 
@@ -22,12 +23,21 @@ module.exports = (function () {
         })
     })
 
+    // loading comments for a document
     comment.get('/:documentId', (req, res) => {
         let {documentId} = req.params;
-        models.Comment.findAll({where : {documentId: documentId}, include: {model: models.User, as: 'user', attributes: ['id', 'name', 'username']}, attributes: ['body', 'createdAt'], order: '"createdAt" ASC' })
-            .then(comments => {
-                res.json(comments);
-            })
+        models.Comment.findAll({
+            where : {documentId: documentId}, 
+            include: {
+                model: models.User, 
+                as: 'user', 
+                attributes: ['id', 'name', 'username']
+            }, 
+            attributes: ['body', 'createdAt'], order: '"createdAt" ASC' 
+        })
+        .then(comments => {
+            res.json(comments);
+        })
     })
 
     return comment;

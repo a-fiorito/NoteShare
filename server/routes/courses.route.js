@@ -2,7 +2,7 @@ const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize)
     config = require('../config'),
-    course_helpers = require('../courses-helpers');
+    helpers = require('../helpers');
 
 
 module.exports = (function () {
@@ -10,7 +10,7 @@ module.exports = (function () {
 
     let courses = express.Router();
 
-    // Adds course {name, number} to the database
+    // Adds course to the database
     courses.post('/', (req, res) => {
         const {name, number} = req.body.course;
         var username = req.body.user.username;
@@ -40,9 +40,7 @@ module.exports = (function () {
             })
         })
 
-    /**
-     * Loads courses for a specific user
-     */
+    // load a user's courses
     courses.get('/:username', (req, res) => {
         let username = req.params.username;
         models.User.findOne({ where: { username: username } })

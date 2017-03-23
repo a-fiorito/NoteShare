@@ -26,17 +26,22 @@ module.exports = function (sequelize) {
     const Comment = sequelize.define('comment', {
         body: Sequelize.TEXT
     }, {
-        timestamps: true
+        timestamps: true,
+        getterMethods: {
+            createdAt: function() {
+                return new Date(this.getDataValue('createdAt')).toDateString();
+            }
+        }
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
     User.hasMany(Document, {as: 'documents'});
     Document.belongsTo(User, {as: 'user'});
     Course.hasMany(Document, {as: 'documents'});
+    Document.belongsTo(Course, {as: 'course'});
     User.hasMany(Comment, {as: 'comments'});
     Comment.belongsTo(User, {as: 'user'});
-    Document.hasMany(Comment, {as: 'comments'});
-    
+    Document.hasMany(Comment, {as: 'comments', onDelete: 'cascade'});    
 
     return {
         User: User,
