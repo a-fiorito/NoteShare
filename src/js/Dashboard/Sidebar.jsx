@@ -6,6 +6,9 @@ class Sidebar extends Component {
         super(props);
     }
 
+    /**
+     * sets the selected course when user clicks on sidebar
+     */
     selectCourse = (course) => {
         let newVal = course;
         if(this.props.selectedCourse && course.id == this.props.selectedCourse.id) {
@@ -42,10 +45,11 @@ class Sidebar extends Component {
     }
 }
 
-class Course extends Component {
+export default Sidebar;
+
+export class Course extends Component {
 
     selectCourse = () => {
-        // pass name for now, pass id later
         this.props.selectCourse(this.props.course);
     }
 
@@ -53,5 +57,3 @@ class Course extends Component {
         return <li onClick={this.selectCourse} className={this.props.isSelected}>{`${this.props.course.name} ${this.props.course.number}`}</li>;
     }
 }
-
-export default Sidebar;

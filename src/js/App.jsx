@@ -9,12 +9,12 @@ import auth from './utils/auth';
 require('../scss/main.scss');
 
 
-import NoteShare from './NoteShare';
-import LandingPage from './LandingPage';
-import Homepage from './Homepage';
-import Dashboard from './Dashboard';
-import authenticate from './Authenticate';
-import Profile from './Profile';
+import NoteShare from './Global/NoteShare';
+import LandingPage from './Global/LandingPage';
+import Homepage from './Global/Homepage';
+import Dashboard from './Dashboard/Dashboard';
+import authenticate from './Abstract/Authenticate';
+import Profile from './Profile/Profile';
 
 
 /**

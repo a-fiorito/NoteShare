@@ -54,32 +54,32 @@ class Features extends Component {
         return (
             <div className="features-container">
                 <Feature
-                    imgSrc="./assets/HomePageIcons/1.png"
+                    imgSrc="./assets/images/homepage/download.png"
                     header="DOWNLOAD NOTES"
                     body="Download notes from courses that you follow."
                 />
                 <Feature
-                    imgSrc="./assets/HomePageIcons/2.png"
+                    imgSrc="./assets/images/homepage/upload.png"
                     header="UPLOAD NOTES"
                     body="Upload notes to courses that you follow so everyone can see them."
                 />
                 <Feature
-                    imgSrc="./assets/HomePageIcons/3.png"
+                    imgSrc="./assets/images/homepage/comment.png"
                     header="POST DISCUSSION"
                     body="Post comments on notes and get your reviewed."
                 />
                 <Feature
-                    imgSrc="./assets/HomePageIcons/4.png"
+                    imgSrc="./assets/images/homepage/notify.png"
                     header="GET NOTIFIED"
                     body="Get notified when a course that you follow gets a new note or comment."
                 />
                 <Feature
-                    imgSrc="./assets/HomePageIcons/5.png"
+                    imgSrc="./assets/images/homepage/trash.png"
                     header="LANGUAGE MODERATED"
                     body="Posts are automatically moderated to make sure no foul language is used."
                 />
                 <Feature
-                    imgSrc="./assets/HomePageIcons/6.png"
+                    imgSrc="./assets/images/homepage/lock.png"
                     header="FOREVER FREE"
                     body="Made by students and will always remain free."
                 />
@@ -89,7 +89,7 @@ class Features extends Component {
 }
 
 
-const Feature = ({imgSrc, header, body}) => {
+const Feature = ({ imgSrc, header, body }) => {
     return (
         <div className="feature">
             <img src={imgSrc} width="50" height="50"></img>

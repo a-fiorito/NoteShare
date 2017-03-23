@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import axios from 'axios';
-import auth from './utils/auth';
+import auth from '../utils/auth';
 
 /**
  * Displays login and sign up
@@ -47,12 +47,15 @@ class LoginForm extends Component {
         }
     }
 
-    _onChange = (e) => {
+    onChange = (e) => {
         // update input field
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    _onSubmit = (e) => {
+    /**
+     * User submits the login form
+     */
+    onSubmit = (e) => {
         e.preventDefault();
         this.setState({ errors: {}, isLoading: true }); // clear errors
         axios.post('/authenticate/login', {
@@ -72,7 +75,7 @@ class LoginForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <form onSubmit={this._onSubmit} className="landing-form">
+            <form onSubmit={this.onSubmit} className="landing-form">
                 <h1>Welcome, Please Sign in</h1>
                 {errors.form && <div className="global-form-error">{errors.form}</div>}
                 <FormGroup
@@ -81,28 +84,26 @@ class LoginForm extends Component {
                     value={this.state.username}
                     name="username"
                     placeholder="Enter your username"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <FormGroup
                     type="password"
                     label="password"
                     value={this.state.password}
                     name="password"
                     placeholder="Enter your password"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <div className="form-group">
-                    <button disabled={this.state.isLoading} className="form-button">
-                        LOGIN
-                    </button>
+                    <button disabled={this.state.isLoading} className="form-button">LOGIN</button>
                 </div>
             </form>
         );
     }
-}
 
-LoginForm.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
 }
 
 /**
@@ -123,16 +124,19 @@ class SignUpForm extends Component {
         }
     }
 
-    _onChange = (e) => {
+    onChange = (e) => {
         // update input field
-        this.setState({ [e.target.name]: e.target.value }); 
+        this.setState({ [e.target.name]: e.target.value });
     }
 
-    _onSelect = (e) => {
-        this.setState({type: e.target.value});
+    onSelect = (e) => {
+        this.setState({ type: e.target.value });
     }
 
-    _onSubmit = (e) => {
+    /**
+     * User submits the signup form
+     */
+    onSubmit = (e) => {
         e.preventDefault();
         this.setState({ errors: {}, isLoading: true }); // clear errors
 
@@ -153,7 +157,7 @@ class SignUpForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <form onSubmit={this._onSubmit} className="landing-form">
+            <form onSubmit={this.onSubmit} className="landing-form">
                 <h1>Create an Account</h1>
                 <FormGroup
                     type="text"
@@ -162,8 +166,8 @@ class SignUpForm extends Component {
                     value={this.state.name}
                     name="name"
                     placeholder="Enter your name"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <FormGroup
                     type="text"
                     label="username"
@@ -171,8 +175,8 @@ class SignUpForm extends Component {
                     value={this.state.username}
                     name="username"
                     placeholder="Choose a username"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <FormGroup
                     type="text"
                     label="email"
@@ -180,14 +184,14 @@ class SignUpForm extends Component {
                     value={this.state.email}
                     name="email"
                     placeholder="Enter your email"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <SelectGroup
                     label="What best describes you?"
                     error={this.state.errors.type}
                     value={this.state.type}
-                    onSelect={this._onSelect}
-                    />
+                    onSelect={this.onSelect}
+                />
                 <FormGroup
                     type="password"
                     label="password"
@@ -195,26 +199,23 @@ class SignUpForm extends Component {
                     value={this.state.password}
                     name="password"
                     placeholder="Enter your password"
-                    onChange={this._onChange}
-                    />
+                    onChange={this.onChange}
+                />
                 <div className="form-group">
-                    <button disabled={this.state.isLoading} className="form-button">
-                        REGISTER
-                    </button>
+                    <button disabled={this.state.isLoading} className="form-button">REGISTER</button>
                 </div>
             </form>
         );
     }
-}
-
-SignUpForm.contextTypes = {
-    router: React.PropTypes.object.isRequired
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
 }
 
 /**
  * Component to render one field in a form
  */
-const FormGroup = ({name, value, label, error, type, placeholder, onChange}) => {
+const FormGroup = ({ name, value, label, error, type, placeholder, onChange }) => {
     return (
         <div className={"form-group" + (error ? " error" : "")}>
             <label className="form-label">{label.toUpperCase()}</label>
@@ -225,16 +226,27 @@ const FormGroup = ({name, value, label, error, type, placeholder, onChange}) => 
                 className="form-input"
                 placeholder={placeholder}
                 onChange={onChange}
-                />
+            />
             {error && <span className="form-error">{error}</span>}
         </div>
     );
 }
 
+// This is good practice, should have done it for all components for better clarity
+FormGroup.propTypes = {
+    name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
+    label: React.PropTypes.string.isRequired,
+    error: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
+    type: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired,
+}
+
 /**
  * Component to render a drop-down menu
  */
-const SelectGroup = ({label, error, value, onSelect}) => {
+const SelectGroup = ({ label, error, value, onSelect }) => {
     return (
         <div className={"form-group" + (error ? " error" : "")}>
             <label className="form-label">{label.toUpperCase()}</label>
@@ -247,42 +259,4 @@ const SelectGroup = ({label, error, value, onSelect}) => {
             {error && <span className="form-error">{error}</span>}
         </div>
     );
-}
-
-/*class SelectGroup extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { value: '' };
-
-        this.onChange = this.onChange.bind(this);
-    }
-
-    onChange(event) {
-        this.setState({ value: event.target.value });
-    }
-
-    render() {
-        return (
-            <div className={"form-group" + (error ? " error" : "")}>
-                <label className="form-label">{label.toUpperCase()}</label>
-                <select value={this.state.value} onChange={onChange}>
-                    <option value="Student">Student</option>
-                    <option value="Teacher">Teacher</option>
-                    <option value="TA">TA (Teaching Assistant)</option>
-                </select>
-                {error && <span className="form-error">{error}</span>}
-            </div>
-        );
-    }
-}*/
-
-FormGroup.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired,
-    label: React.PropTypes.string.isRequired,
-    error: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    type: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired,
 }

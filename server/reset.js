@@ -4,7 +4,9 @@ const fs = require('fs-extra'),
     models = require('./db/models')(sequelize);
 
 const documentsDir = path.join(__dirname, './documents');
-
+/**
+ * Resets the database and deletes all the uploaded files for testing purposes
+ */
 new Promise((resolve, reject) => {
     fs.emptyDir(documentsDir, err => {
         if (err) reject();

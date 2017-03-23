@@ -70,6 +70,7 @@ module.exports = (function() {
         })
     })
 
+    // update user credentials
     authenticate.post('/update', (req, res) => {
         const {username, name, bio, type} = req.body;
 
@@ -82,6 +83,7 @@ module.exports = (function() {
             return user.save();
         })
         .then(user => {
+            // authentication
             const token = jwt.sign({
                 id: user.id,
                 username: user.username,

@@ -14,6 +14,7 @@ module.exports = (function () {
 
     let pdfs = express.Router();
 
+    // upload a pdf to the server
     pdfs.post('/upload', upload.single('document'), (req, res) => {
         let { courseName, fileName, userId, username, courseId } = req.body; 
         let oldPath = req.file.path;
@@ -25,16 +26,18 @@ module.exports = (function () {
             courseId: courseId
         })
         .then(doc => {
+            // make sure necessary folders are created.
             fs.ensureDir(path.join(__dirname, '../documents'), function(err) {
                 fs.ensureDir(path.join(__dirname, '../documents/tmp'), function(err) {
                     newPath += `${username}${doc.id}.pdf`
                     res.json(doc);
-                    return helpers.moveFile(oldPath, newPath)
+                    return helpers.moveFile(oldPath, newPath)   // save file on the server
                 })
             });
         });
     });
     
+    // get documents for a course
     pdfs.get('/:courseId', (req, res) => {
         let { courseId } = req.params;
         models.Document.findAll({
@@ -51,6 +54,7 @@ module.exports = (function () {
         });
     })
 
+    // get documents for a user
     pdfs.get('/profile/:userId', (req, res) => {
         let userId = req.params.userId;
 
@@ -75,9 +79,10 @@ module.exports = (function () {
 
     });
 
+    // delete a document
     pdfs.post('/delete', (req, res) => {
         let {document, user} = req.body;
-        console.log(path.join(__dirname, `../documents/${document.course.name}${document.course.number}/${user.username}${document.id}`));
+        // delete file
         fs.unlink(path.join(__dirname, `../documents/${document.course.name}${document.course.number}/${user.username}${document.id}.pdf`), err =>{
             console.log(err);
             models.Document.destroy({where: {id: document.id}})

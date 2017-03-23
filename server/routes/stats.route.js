@@ -10,6 +10,7 @@ module.exports = (function () {
 
     let stats = express.Router();
 
+    // get the statistics for a users profile
     stats.get('/:username', (req, res) => {
         let {username} = req.params;
         models.User.findOne({
@@ -18,7 +19,7 @@ module.exports = (function () {
                 {
                     model: models.Document, as: 'documents', 
                     attributes: [ 'id', 'name', 'createdAt',
-                        [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = documents.id)`), 'commentsCount']
+                        [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = documents.id)`), 'commentsCount'] // get comment count using raw query
                     ],
                     include: [{model: models.User, as: 'user', attributes: ['id', 'name', 'username', 'type']}, {model: models.Course, as: 'course'}]
                 }, 

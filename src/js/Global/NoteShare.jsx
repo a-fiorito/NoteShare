@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import auth from './utils/auth';
+import auth from '../utils/auth';
 
 import Navbar from './Navbar';
 
@@ -22,6 +22,9 @@ class NoteShare extends Component {
         }
     }
 
+    /**
+     * User clicks logout in the navbar
+     */
     logout = (e) => {
         e.preventDefault();
         localStorage.removeItem('jwtToken');
@@ -35,22 +38,14 @@ class NoteShare extends Component {
         return (
             <div className="app-container">
                 <Navbar signOut={this.logout} user={this.state.user} />
-                {this.props.children}
+                {this.props.children /* all pages of the app loaded by the router*/}
             </div>
         );
     }
+
+    static contextTypes = {
+        router: React.PropTypes.object.isRequired
+    }
 }
 
-NoteShare.contextTypes = {
-    router: React.PropTypes.object.isRequired
-}
-
-
-// there can only be one "export default" per file
-// if you want to export more than one component in a single file you can just use 
-// export ComponentName;
-// When you use "export default", you import by writing import ComponentName from 'filelocation';
-// When you just use "export" it needs to be before the type declaration (eg. export class NoteShare ...)
-// you import by writing import {ComponentName} from 'filelocation';
-// the file location doesn't need a file extension for both methods of export
 export default NoteShare;
