@@ -3,7 +3,7 @@ import DocumentArea from './DocumentArea';// have a doc area showing notes that 
 import Button from './Button';
 import AddCourse from './AddCourse';
 import axios from 'axios';
-import EditProfile from './EditProfile';
+import auth from './utils/auth';
 
 
 
@@ -18,13 +18,50 @@ class Name extends Component {
 
     constructor(props) {
         super(props);
+
+        this.types = {
+            "Student": 0,
+            "Teacher": 1,
+            "TA": 2
+        };
+        this.typeShuffle = ["Student", "Teacher", "TA"];
+    }
+
+    onChange = (e) => {
+        this.props.updateName(e.target.value);
+    }
+
+    goLeft = () => {
+        let typeNum = this.types[this.props.type];
+        let int = typeNum == 0 ? 2 : typeNum - 1;
+        this.changeType(this.typeShuffle[int]);
+    }
+
+    goRight =() => {
+        let typeNum = this.types[this.props.type];
+        let int = (typeNum + 1) % 3
+        this.changeType(this.typeShuffle[int]);
+    }
+
+
+    changeType = (t) => {
+        this.props.updateType(t);
     }
 
     render() {
         return (
             <div className="name-container">
-                <h1>{this.props.name || '-'}</h1>
-                <h2>{this.props.username} | {this.props.type || '-'}</h2>
+                {this.props.editing ? <input onChange={this.onChange} name="name" type="text" value={this.props.name} /> : <h1>{this.props.name || '-'}</h1>}
+                <div className="sub-name">
+                    <h2>{this.props.username } |</h2> 
+                    {this.props.editing ? 
+                    <div className="select">
+                        <div onClick={this.goLeft} className="left"><i className="fa fa-angle-left" aria-hidden="true"></i></div>
+                        <div className="type">{this.props.type}</div>
+                        <div onClick={this.goRight} className="right"><i className="fa fa-angle-right" aria-hidden="true"></i></div>
+                    </div>
+                    : <h2>{ this.props.type || '-'}</h2>}
+                </div>
             </div>
         );
     }
@@ -44,17 +81,17 @@ export default class Profile extends Component {
             },
             courses: [],
             bio: "",
-            user: null
+            user: null,
+            editing: false,
+            changesMade: false
 
         };
     }
 
     componentWillReceiveProps(nextProps) {
         if(this.props.params.username != nextProps.username) {
-            console.log("made it")
             axios.get(`/stats/${nextProps.params.username}`)
             .then(res => {
-                console.log(res.data);
                 this.setState({...res.data});
             })
         }
@@ -66,6 +103,18 @@ export default class Profile extends Component {
             this.setState({...res.data});
         })
 
+    }
+
+    updateName = (name) => {
+        this.setState({changesMade: true, user: {...this.state.user, name: name}});
+    }
+
+    updateBio = (e) => {
+        this.setState({changesMade: true, bio: e.target.value});
+    }
+
+    updateType = (t) => {
+        this.setState({changesMade: true, user: {...this.state.user, type: t}});
     }
 
     toggleBar = (e) => {
@@ -103,6 +152,12 @@ export default class Profile extends Component {
         this.setState({ showEdit: false });
     }
 
+    deleteDocument = (pos) => {
+        let documents = this.state.documents.slice();
+        documents.splice(pos, 1);
+        this.setState({documents: documents});
+    }
+
     loadCourses() {
         return this.state.courses.map((c, i) => {
             return (
@@ -114,7 +169,23 @@ export default class Profile extends Component {
     }
 
     toggleEdit = () => {
-        this.setState({editing: !this.state.editing});
+        if(this.state.editing && this.state.changesMade) {
+            axios.post('/authenticate/update', {
+                username: this.state.user.username,
+                name: this.state.user.name,
+                bio: this.state.bio,
+                type: this.state.user.type
+            })
+            .then(res => {
+                const token = res.data.token;
+                console.log("token", res.data.token);
+                localStorage.setItem('jwtToken', token);
+                auth.setAuthToken(token);
+                console.log(auth.getCredentials(token))
+                this.props.renewAuth(auth.getCredentials(token));
+            });
+        }
+        this.setState({changesMade: false, editing: !this.state.editing});
     }
 
     render() {
@@ -124,7 +195,7 @@ export default class Profile extends Component {
                     <div className='profile-top'>
                         <div className="name-image-container">
                             <img src="/assets/images/user.svg" />
-                            <Name {...this.state.user} />{/*pass the user object we will eventually get from the db*/}
+                            <Name updateType={this.updateType} updateName={this.updateName} {...this.state.user} editing={this.state.editing} />{/*pass the user object we will eventually get from the db*/}
                         </div>
                     {/*    <div className="settings-icon"><img src="./assets/settingsicon.png"></img></div> */}
                         <div className='button-wrapper'>
@@ -136,10 +207,10 @@ export default class Profile extends Component {
                         </div>
                     </div>
                     <div className="profile-body">
-                        {this.state.bio && <div className="bibliography">
+                        {this.state.editing || this.state.bio ? <div className="bibliography">
                             <h3>Bio</h3>
-                            <p>{this.state.bio}</p>
-                        </div>}
+                            {this.state.editing ? <textarea onChange={this.updateBio} value={this.state.bio || ""}></textarea> : <p>{this.state.bio}</p>}
+                        </div> : null}
 
                         <div className="statistics">
                             <h3>Statistics</h3>
@@ -155,7 +226,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments && <DocumentArea deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>

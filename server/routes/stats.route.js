@@ -20,7 +20,7 @@ module.exports = (function () {
                     attributes: [ 'id', 'name', 'createdAt',
                         [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = documents.id)`), 'commentsCount']
                     ],
-                    include: {model: models.User, as: 'user', attributes: ['id', 'name', 'username', 'type']}
+                    include: [{model: models.User, as: 'user', attributes: ['id', 'name', 'username', 'type']}, {model: models.Course, as: 'course'}]
                 }, 
                 {model: models.Course, as: 'courses'},
                 {model: models.Comment, as: 'comments'}

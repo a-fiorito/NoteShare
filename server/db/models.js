@@ -38,9 +38,11 @@ module.exports = function (sequelize) {
     User.hasMany(Document, {as: 'documents'});
     Document.belongsTo(User, {as: 'user'});
     Course.hasMany(Document, {as: 'documents'});
+    Document.belongsTo(Course, {as: 'course'});
     User.hasMany(Comment, {as: 'comments'});
     Comment.belongsTo(User, {as: 'user'});
-    Document.hasMany(Comment, {as: 'comments'});
+    Document.hasMany(Comment, {as: 'comments', onDelete: 'cascade'});
+    //Comment.belongsTo(Document, {onDelete: 'cascade'});
     
 
     return {

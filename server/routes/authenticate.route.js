@@ -70,5 +70,27 @@ module.exports = (function() {
         })
     })
 
+    authenticate.post('/update', (req, res) => {
+        const {username, name, bio, type} = req.body;
+
+        models.User.findOne({where: {username: username}})
+        .then(user => {
+            user.name = name;
+            user.bio = bio;
+            user.type = type;
+
+            return user.save();
+        })
+        .then(user => {
+            const token = jwt.sign({
+                id: user.id,
+                username: user.username,
+                name: user.name,
+                type: user.type
+            }, config.jwtSecret);
+            res.json({token});
+        })
+    })
+
     return authenticate;
 })();

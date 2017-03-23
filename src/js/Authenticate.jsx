@@ -18,6 +18,10 @@ export default function(Comp) {
 
         componentWillMount() {
             let user = auth.getCredentials(localStorage.getItem('jwtToken'));
+            this.renewAuth(user);
+        }
+
+        renewAuth = (user) => {
             if(user) {
                 this.setState({user: user});
             } else { // access denied
@@ -26,7 +30,7 @@ export default function(Comp) {
         }
 
         render() {
-            let newProps = {user: this.state.user};
+            let newProps = {user: this.state.user, renewAuth: this.renewAuth};
             // if user signed in, give user as props to component
             return <Comp {...this.props} {...newProps} />;
         }

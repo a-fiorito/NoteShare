@@ -75,6 +75,19 @@ module.exports = (function () {
 
     });
 
+    pdfs.post('/delete', (req, res) => {
+        let {document, user} = req.body;
+        console.log(path.join(__dirname, `../documents/${document.course.name}${document.course.number}/${user.username}${document.id}`));
+        fs.unlink(path.join(__dirname, `../documents/${document.course.name}${document.course.number}/${user.username}${document.id}.pdf`), err =>{
+            console.log(err);
+            models.Document.destroy({where: {id: document.id}})
+            .then(() => {
+                res.json({success: true});
+            });
+        })
+        
+    });
+
     pdfs.get('/download/:username/:courseName/:id', (req, res) => {
         let {username, courseName, id} = req.params;
         var doc = path.join(__dirname , `../documents/${courseName}/${username}${id}.pdf`);
