@@ -1,4 +1,4 @@
-{
+module.exports = {
     "env": {
         "browser": true,
         "node": true,
@@ -6,11 +6,12 @@
         "jest": true,
         "jquery": true
     },
+    "extends": "eslint:recommended",
     "parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module",
         "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true,
             "arrowFunctions": true,
             "binaryLiterals": true,
             "blockBindings": true,
@@ -32,14 +33,31 @@
             "templateStrings": true,
             "unicodeCodePointEscapes": true,
             "globalReturn": true,
-            "jsx": true,
             "experimentalObjectRestSpread": true
-        }
+        },
+        "sourceType": "module"
     },
     "plugins": [
         "react"
     ],
     "rules": {
-        "strict": 0
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
     }
-}
+};
