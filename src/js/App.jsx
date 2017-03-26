@@ -31,8 +31,8 @@ render((
     <Router history={browserHistory}>
         <Route path="/" component={NoteShare}>
             <IndexRoute component={Homepage} />
-            <Route path="login" component={LandingPage} />
-            <Route path="signup" component={LandingPage} />
+            <Route path="login" component={LandingPage} onEnter={auth.loggedIn} />
+            <Route path="signup" component={LandingPage} onEnter={auth.loggedIn} />
             <Route path="dashboard(/:name/:id)" component={authenticate(Dashboard)} />
             <Route path="profile/:username(/:name/:id)" component={authenticate(Profile)} />
 

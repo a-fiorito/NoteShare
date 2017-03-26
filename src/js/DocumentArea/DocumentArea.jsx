@@ -14,7 +14,7 @@ export default class DocumentArea extends Component {
     showComments = (modalInfo) => {
         let location = this.context.router.getCurrentLocation().pathname;
         this.context.router.push(`${location}/${modalInfo.docName}/${modalInfo.docId}`);
-        this.setState({ modalInfo: modalInfo })
+        this.setState({ modalInfo: modalInfo });
     }
 
     hideComments = () => {

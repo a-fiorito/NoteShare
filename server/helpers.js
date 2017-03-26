@@ -1,6 +1,6 @@
 const sequelize = require('./db/connect'),
-    models = require('./db/models')(sequelize)
-Validator = require('validator'),
+    models = require('./db/models')(sequelize),
+    Validator = require('validator'),
     fs = require('fs-extra'),
     path = require('path'),
     _ = require('lodash');
@@ -28,7 +28,7 @@ function formValidate(input) {
         errors.password = "This field is required.";
     }
 
-    return errors
+    return errors;
 }
 
 /*
@@ -47,7 +47,7 @@ function validateSignUp(input) {
             return {
                 errors,
                 isValid: _.isEmpty(errors)
-            }
+            };
         });
 }
 
@@ -109,8 +109,28 @@ function moveFile(oldPath, newPath) {
             // after file is move, empty tmp directory
             fs.emptyDir(path.join(__dirname, '/documents/tmp'), err => {
                 err ? reject(err) : resolve();
-            })
+            });
         });
+    });
+}
+
+
+function createCourse(name, number, user) {
+    return models.Course.findOrCreate({ 
+        where: {
+            name: name,
+            number: number
+        }
+    })
+    .spread(course => {
+        fs.ensureDir(path.join(__dirname, '/documents'), function() {
+            fs.ensureDir(path.join(__dirname, '/documents/tmp'), function() {
+                fs.ensureDir(path.join(__dirname, `/documents/${name}${number}`), function() {
+                    user.addCourse(course[0]);
+                });
+            });
+        });
+        return course;
     });
 }
 
@@ -118,5 +138,6 @@ module.exports = {
     validateSignUp: validateSignUp,
     validateLogin: validateLogin,
     validateCourse: validateCourse,
-    moveFile: moveFile
+    moveFile: moveFile,
+    createCourse: createCourse
 }

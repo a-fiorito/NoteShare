@@ -26,7 +26,7 @@ export default class AddCouse extends Component {
     }
 
     add = () => {
-        this.props.add(this.state);
+        this.props.add(this.state, this.props.error ? 'true' : 'false');
     }
 
     render() {
@@ -37,9 +37,10 @@ export default class AddCouse extends Component {
                 <input ref={(input) => { this.courseInput = input; }} onChange={this.onChange} name="name" type="text" />
                 <label>Course Number</label>
                 <input onKeyPress={this.onKeyPress} onChange={this.onChange} name="number" type="text" />
+                {this.props.error && <p>{this.props.error}</p>}
                 <div className="action-buttons">
-                    <div className="cancel" onClick={this.props.cancelled.bind(this)}>Cancel</div>
-                    <div className="add" onClick={this.add}>Add</div>
+                    <div className="cancel" onClick={this.props.cancelled.bind(this)}>{this.props.error ? 'No' : 'Cancel'}</div>
+                    <div className="add" onClick={this.add}>{this.props.error ? 'Yes' : 'Add'}</div>
                 </div>
             </div>
         );

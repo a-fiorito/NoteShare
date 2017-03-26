@@ -26,7 +26,8 @@ export default class Profile extends Component {
             bio: "",
             user: null,
             editing: false,
-            changesMade: false
+            changesMade: false,
+            error: false
 
         };
     }
@@ -68,23 +69,27 @@ export default class Profile extends Component {
         this.setState({ showEdit: true });
     }
 
-    addCourse = (c) => {
+    addCourse = (c, check) => {
         // user should enter a course name and number
         if (c.name && c.number) {
-            axios.post('/courses', {
+            axios.post(`/courses/${check}`, {
                 course: c,
                 user: this.props.user
             })
-                .then(res => {
-                    this.setState({ showAdd: false, courses: this.state.courses.concat([res.data]) });
-                });
+            .then(res => {
+                if(res.data.error) {
+                    this.setState({error: res.data.error});
+                } else {
+                    this.setState({ showAdd: false, courses: this.state.courses.concat([res.data]), error: null });
+                }
+            });
         } else {
-            console.log('invalid')
+            console.log('invalid');
         }
     }
 
     addCourseCancelled = () => {
-        this.setState({ showAdd: false });
+        this.setState({ showAdd: false, error: false });
     }
 
     editProfileCancelled = () => {
@@ -117,10 +122,8 @@ export default class Profile extends Component {
             })
                 .then(res => {
                     const token = res.data.token;
-                    console.log("token", res.data.token);
                     localStorage.setItem('jwtToken', token);
                     auth.setAuthToken(token);
-                    console.log(auth.getCredentials(token))
                     this.props.renewAuth(auth.getCredentials(token));
                 });
         }
@@ -142,7 +145,7 @@ export default class Profile extends Component {
                                 {this.props.params.username == this.props.user.username && <Button isDisabled={this.state.showAdd} func={this.showAddPopup} label="Add or join a class" />}
                                 {this.props.params.username == this.props.user.username && <div onClick={this.toggleEdit} className="edit-profile">{this.state.editing ? "Finish Editing" : "Edit Profile"}</div>}
                             </div>
-                            {this.state.showAdd && <AddCourse add={this.addCourse} cancelled={this.addCourseCancelled} />}
+                            {this.state.showAdd && <AddCourse error={this.state.error} add={this.addCourse} cancelled={this.addCourseCancelled} />}
                         </div>
                     </div>
                     <div className="profile-body">

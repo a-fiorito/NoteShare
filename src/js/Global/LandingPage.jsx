@@ -12,7 +12,7 @@ export default class LandingPage extends Component {
 
         this.state = {
             formType: 'login'
-        }
+        };
     }
 
     render() {

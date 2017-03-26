@@ -15,13 +15,21 @@ function getCredentials(token) {
         try {
             user = decode(token);
         } catch(err) {
-            user = null
+            user = null;
         }
     }
     return user;
 }
 
+function loggedIn(nextState, replace) {
+    if(getCredentials(localStorage.getItem('jwtToken'))) {
+        replace('/dashboard');
+    }
+}
+
 export default {
     setAuthToken: setAuthToken,
-    getCredentials: getCredentials
-}
+    getCredentials: getCredentials,
+    loggedIn: loggedIn
+};
+

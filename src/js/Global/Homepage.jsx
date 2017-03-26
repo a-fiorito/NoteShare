@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router';
 var Scroll = require('react-scroll');
 var Element = Scroll.Element;
 var scroller = Scroll.scroller;
@@ -39,7 +39,7 @@ class Header extends Component {
                         <h1>Note Share</h1>
                         <p>Share notes with classmates, get your assignments graded</p>
                         <div className="action-buttons">
-                            <div className="btn">Get Started</div>
+                            <Link to="/signup"><div className="btn">Get Started</div></Link>
                             <div className="btn" onClick={this.scrollToFeatures}>Learn More</div>
                         </div>
                     </div>

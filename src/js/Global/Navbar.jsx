@@ -10,7 +10,7 @@ export default class Navbar extends Component {
         super(props);
         this.state = {
             showNav: false
-        }
+        };
     }
 
     static contextTypes = {
@@ -32,7 +32,7 @@ export default class Navbar extends Component {
     render() {
         let user = this.props.user;
         let location = this.context.router.location.pathname;
-        let nav = <Nav user={this.props.user} signOut={this.props.signOut} />;
+        let nav = <Nav location={location} user={user} signOut={this.props.signOut} />;
 
         return (
             <div>
@@ -71,7 +71,7 @@ class MobileNav extends Component {
     }
 };
 
-export const Nav = ({ user, signOut }) => {
+export const Nav = ({ user, signOut, location }) => {
     return (
         <ul className="navbar">
             <li><Link to="/" onlyActiveOnIndex activeClassName="active">HOME</Link></li>

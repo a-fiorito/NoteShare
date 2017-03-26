@@ -41,6 +41,10 @@ $brand-font: 'Sansita', Helvetica, Arial;
     }
     .action-buttons {
       display: flex;
+      a {
+          color: inherit;
+          text-decoration: none;
+      }
       .btn {
         font-family: 'Questrial', 'Helvetica Neue', Arial, sans-serif;
         height: 30px;
