@@ -116,21 +116,23 @@ function moveFile(oldPath, newPath) {
 
 
 function createCourse(name, number, user) {
-    return models.Course.findOrCreate({ 
-        where: {
-            name: name,
-            number: number
-        }
-    })
-    .spread(course => {
-        fs.ensureDir(path.join(__dirname, '/documents'), function() {
-            fs.ensureDir(path.join(__dirname, '/documents/tmp'), function() {
-                fs.ensureDir(path.join(__dirname, `/documents/${name}${number}`), function() {
-                    user.addCourse(course[0]);
+    return new Promise((resolve, reject) => {
+        models.Course.findOrCreate({ 
+            where: {
+                name: name,
+                number: number
+            }
+        })
+        .spread(course => {
+            fs.ensureDir(path.join(__dirname, '/documents'), function() {
+                fs.ensureDir(path.join(__dirname, '/documents/tmp'), function() {
+                    fs.ensureDir(path.join(__dirname, `/documents/${name}${number}`), function() {
+                        user.addCourse(course.id);
+                        resolve(course);
+                    });
                 });
             });
         });
-        return course;
     });
 }
 
