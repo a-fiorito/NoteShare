@@ -47,7 +47,19 @@ module.exports = (function () {
                     res.json(courses);
                 })
             })
-    })
+    });
+
+    // delete a course
+    courses.post('/delete/course', (req, res) => {
+        let {course} = req.body;
+        models.Document.destroy({where: {courseId: course.id}})
+        .then(() => {
+            models.Course.destroy({where: {id: course.id}})
+            .then(() => {
+                res.json({success: true});
+            });
+        });
+    });
 
     return courses;
 
