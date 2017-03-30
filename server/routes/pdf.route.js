@@ -93,6 +93,20 @@ module.exports = (function () {
         
     });
 
+    // Rename a document
+    pdfs.post('/rename', (req, res) => {
+        let {id, name} = req.body;
+        models.Document.findOne({where: {id: id}})
+        .then(document => {
+            document.name = name;
+            
+            return document.save();
+        })
+        .then(doc => {
+            res.json(doc);
+        })
+    })
+
     pdfs.get('/download/:username/:courseName/:id', (req, res) => {
         let {username, courseName, id} = req.params;
         var doc = path.join(__dirname , `../documents/${courseName}/${username}${id}.pdf`);
