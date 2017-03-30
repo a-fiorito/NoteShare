@@ -178,7 +178,7 @@ export default class Profile extends Component {
     }
 }
 
-class Name extends Component {
+export class Name extends Component {
     constructor(props) {
         super(props);
 
@@ -223,7 +223,7 @@ class Name extends Component {
                             <div className="type">{this.props.type}</div>
                             <div onClick={this.goRight} className="right"><i className="fa fa-angle-right" aria-hidden="true"></i></div>
                         </div>
-                        : <h2>{this.props.type || '-'}</h2>}
+                        : <h2 className="type">{this.props.type || '-'}</h2>}
                 </div>
             </div>
         );
