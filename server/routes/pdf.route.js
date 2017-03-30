@@ -102,6 +102,9 @@ module.exports = (function () {
             
             return document.save();
         })
+        .then(doc => {
+            res.json(doc);
+        })
     })
 
     pdfs.get('/download/:username/:courseName/:id', (req, res) => {

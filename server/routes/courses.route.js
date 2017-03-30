@@ -51,14 +51,17 @@ module.exports = (function () {
 
     // delete a course
     courses.post('/delete/course', (req, res) => {
-        let {course} = req.body;
-        models.Document.destroy({where: {courseId: course.id}})
-        .then(() => {
-            models.Course.destroy({where: {id: course.id}})
+        let {course, user} = req.body;
+        Promise.all([
+            models.User.findOne({where: {id: user.id}}),
+            models.Course.findOne({where: {id: course.id}})
+        ])
+        .spread((user, course) => {
+            user.removeCourse(course)
             .then(() => {
                 res.json({success: true});
-            });
-        });
+            })
+        }) 
     });
 
     return courses;
