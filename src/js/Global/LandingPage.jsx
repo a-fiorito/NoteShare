@@ -109,7 +109,7 @@ class LoginForm extends Component {
 /**
  * Render the signup form
  */
-class SignUpForm extends Component {
+export class SignUpForm extends Component {
     constructor(props) {
         super(props);
 

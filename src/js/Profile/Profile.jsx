@@ -178,7 +178,7 @@ export default class Profile extends Component {
     }
 }
 
-class Name extends Component {
+export class Name extends Component {
     constructor(props) {
         super(props);
 
@@ -214,7 +214,7 @@ class Name extends Component {
     render() {
         return (
             <div className="name-container">
-                {this.props.editing ? <input onChange={this.onChange} name="name" type="text" value={this.props.name} /> : <h1>{this.props.name || '-'}</h1>}
+                {this.props.editing ? <input onChange={this.onChange} name="name" type="text" value={this.props.name} /> : <h1 className="name">{this.props.name || '-'}</h1>}
                 <div className="sub-name">
                     <h2>{this.props.username} |</h2>
                     {this.props.editing ?
