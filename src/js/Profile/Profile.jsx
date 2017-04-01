@@ -102,13 +102,30 @@ export default class Profile extends Component {
         this.setState({ documents: documents });
     }
 
+    deleteCourse = (pos, course) => {
+        axios.delete(`/courses/${this.props.user.id}/${course.id}`)
+        .then(() => {
+            if(localStorage.getItem('selectedCourse') && course.id == JSON.parse(localStorage.getItem('selectedCourse')).id) {
+                localStorage.removeItem('selectedCourse');
+            }
+            let courses = this.state.courses.slice();
+            courses.splice(pos, 1);
+            this.setState({ courses: courses });
+        });
+    };
+
     loadCourses() {
         return this.state.courses.map((c, i) => {
             return (
                 <div key={i} className="subcourses">
-                    {`${c.name} ${c.number}`}
+                    <div>{`${c.name} ${c.number}`}</div>
+                    {this.state.editing &&
+                        <div className="delete-course"
+                            onClick={this.deleteCourse.bind(null, i, c)}>
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                        </div>}
                 </div>
-            )
+            );
         });
     }
 

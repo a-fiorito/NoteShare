@@ -132,12 +132,19 @@
         flex-wrap: wrap;
         font-family: 'Roboto';
         .subcourses {
+          display: flex;
           background: $noteshare-color;
           color: white;
           padding: 10px;
           border-radius: 32px;
           margin-right: 10px;
           margin-top: 10px;
+
+          .delete-course {
+            margin-left: 10px;
+            color: red;
+            cursor: pointer;
+          }
         }
       }
       .document-container {
