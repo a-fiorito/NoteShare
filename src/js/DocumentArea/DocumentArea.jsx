@@ -61,7 +61,7 @@ export default class DocumentArea extends Component {
 /**
  * Component for the area which will display the available notes on the user dashboard.
  */
-class DocThumbnail extends Component {
+export class DocThumbnail extends Component {
     constructor(props) {
         super(props);
     }
