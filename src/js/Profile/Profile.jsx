@@ -114,6 +114,16 @@ export default class Profile extends Component {
         });
     };
 
+    updateDocumentName = (name, pos, sendToDB=false) => {
+        if(!sendToDB) {
+            let documents = this.state.documents.slice();
+            documents[pos].name = name;
+            this.setState({documents: documents});
+        } else {
+            // make network request
+        }
+    }
+
     loadCourses() {
         return this.state.courses.map((c, i) => {
             return (
@@ -185,7 +195,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/icons/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>
