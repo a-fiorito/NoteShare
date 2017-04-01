@@ -42,6 +42,19 @@ $background-color: white;
         border: 1px solid mediumseagreen;
         height: 200px;
         padding-bottom: 10px;
+        textarea {
+          font-family: 'Roboto';
+          background: none;
+          font-weight: 300;
+          font-size: 14px;
+          text-align: center;
+          border: none;
+          resize: none;
+          width: 90%;
+          &:focus {
+            outline: none;
+          }
+        }
         p {
           font-size: 14px;
           text-align: center;
