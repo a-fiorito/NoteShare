@@ -105,6 +105,9 @@ export default class Profile extends Component {
     deleteCourse = (pos, course) => {
         axios.delete(`/courses/${this.props.user.id}/${course.id}`)
         .then(() => {
+            if(localStorage.getItem('selectedCourse') && course.id == JSON.parse(localStorage.getItem('selectedCourse')).id) {
+                localStorage.removeItem('selectedCourse');
+            }
             let courses = this.state.courses.slice();
             courses.splice(pos, 1);
             this.setState({ courses: courses });
