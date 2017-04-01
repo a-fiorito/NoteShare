@@ -114,8 +114,8 @@ export class DocThumbnail extends Component {
     }
 
     render() {
-        let { pos, document, selectedCourse } = this.props;
-        let downloadLink = `/pdfs/download/${document.user.username}/${selectedCourse.name + selectedCourse.number}/${document.id}`
+        let { pos, document} = this.props;
+        let downloadLink = `/pdfs/download/${document.user.username}/${document.course.name + document.course.number}/${document.id}`;
         return (
             <div>
                 <div className="doc-thumbnail">
