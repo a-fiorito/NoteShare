@@ -45,23 +45,23 @@ module.exports = (function () {
                 user.getCourses()
                 .then(courses => {
                     res.json(courses);
-                })
-            })
+                });
+            });
     });
 
     // delete a course
-    courses.post('/delete/course', (req, res) => {
-        let {course, user} = req.body;
+    courses.delete('/:userId/:courseId', (req, res) => {
+        let {courseId, userId} = req.params;
         Promise.all([
-            models.User.findOne({where: {id: user.id}}),
-            models.Course.findOne({where: {id: course.id}})
+            models.User.findOne({where: {id: userId}}),
+            models.Course.findOne({where: {id: courseId}})
         ])
         .spread((user, course) => {
             user.removeCourse(course)
             .then(() => {
                 res.json({success: true});
-            })
-        }) 
+            });
+        });
     });
 
     return courses;

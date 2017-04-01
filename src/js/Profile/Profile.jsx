@@ -103,7 +103,12 @@ export default class Profile extends Component {
     }
 
     deleteCourse = (pos, course) => {
-
+        axios.delete(`/courses/${this.props.user.id}/${course.id}`)
+        .then(() => {
+            let courses = this.state.courses.slice();
+            courses.splice(pos, 1);
+            this.setState({ courses: courses });
+        });
     };
 
     loadCourses() {
