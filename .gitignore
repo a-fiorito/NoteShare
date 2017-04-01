@@ -17,3 +17,6 @@ dist/
 
 tmp/
 documents/
+
+#scripts
+*.sh
