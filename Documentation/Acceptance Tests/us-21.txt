@@ -1,0 +1,13 @@
+ACCEPTANCE TEST FOR US-21: Delete a Joined Course from Profile (#60)
+https://github.com/a-fiorito/NoteShare/issues/60
+
+Given: User is logged into the website and belongs to a course
+1. User clicks on 'Profile' link in the navbar
+2. Profile is displayed
+3. User clicks on edit profile
+4. Profile is now in editing mode
+5. User clicks on 'x' to delete a course
+6. Course is deleted for the user
+
+[x] Test Verified by team
+[ ] Test Verfied by client

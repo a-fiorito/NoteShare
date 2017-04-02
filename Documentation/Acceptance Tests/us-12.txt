@@ -1,0 +1,11 @@
+ACCEPTANCE TEST FOR US-12: My Courses (#19)
+https://github.com/a-fiorito/NoteShare/issues/19
+
+Given: User is logged into the website
+1. User clicks on 'Dashboard' link in the navbar
+2. Dashboard is displayed for the user
+3. On the left side of the screen, User selects a course
+4. Course becomes selected
+
+[x] Test Verified by team
+[ ] Test Verfied by client

@@ -1,0 +1,13 @@
+ACCEPTANCE TEST FOR US-14: Comment Area (#33)
+https://github.com/a-fiorito/NoteShare/issues/33
+
+Given: User is logged into the website
+1. User clicks on 'Dashboard' link in the navbar
+2. Dashboard is displayed for the user
+3. User selects a course from the sidebar
+4. Documents for the course are displayed
+5. User clicks on the comment icon
+6. The comment area is displayed
+
+[x] Test Verified by team
+[ ] Test Verfied by client
