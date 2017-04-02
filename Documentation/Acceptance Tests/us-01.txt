@@ -1,0 +1,11 @@
+ACCEPTANCE TEST FOR US-01 Website Login (#2)
+https://github.com/a-fiorito/NoteShare/issues/2
+
+Given: User is on homepage
+1. User clicks on 'Get Started' button or 'SIGN IN / SIGN UP' link in navbar
+2. The signup / login page is displayed
+3. The user fills in their details to signup or login
+4. The user is now logged into the website
+
+[x] Test Verified by team
+[ ] Test Verfied by client
