@@ -1,0 +1,9 @@
+ACCEPTANCE TEST FOR US-10: Navbar (#17)
+https://github.com/a-fiorito/NoteShare/issues/17
+
+Given: User loads the website
+1. Navbar is displayed at the top of the page
+2. User clicks on links to navigate the website
+
+[x] Test Verified by team
+[ ] Test Verfied by client

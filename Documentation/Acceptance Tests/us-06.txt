@@ -1,0 +1,11 @@
+ACCEPTANCE TEST FOR US-06: New Document Notifications (#7)
+https://github.com/a-fiorito/NoteShare/issues/7
+
+Given: The user is on the dashboard and has courses added
+1. User selects a course from the sidebar
+2. User uploads a document
+3. Email is sent to all users part of the selected course
+4. User receives email
+
+[x] Test Verified by team
+[ ] Test Verfied by client

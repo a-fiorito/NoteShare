@@ -1,0 +1,14 @@
+ACCEPTANCE TEST FOR US-08: Adding Courses (#9)
+https://github.com/a-fiorito/NoteShare/issues/9
+
+Given: User is logged into the website
+1. User clicks on the 'Profile' link in the navbar
+2. User's profile is displayed
+3. User clicks on 'Profile' link in the navbar
+4. User clicks 'Add or join a class' button
+5. User enters course information
+6. User clicks on the 'Add' button
+7. Course is added
+
+[x] Test Verified by team
+[ ] Test Verfied by client
