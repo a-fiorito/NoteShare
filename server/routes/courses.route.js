@@ -16,7 +16,7 @@ module.exports = (function () {
         var username = req.body.user.username;
         Promise.all([
             models.User.findOne({ where: { username: username } }),
-            models.Course.findOne({ where: {name: name, number: number}})
+            models.Course.findOne({ where: {name: name, number: number, verified: true}})
         ])
         .spread((user, course) => {
             if(course) {

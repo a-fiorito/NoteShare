@@ -14,7 +14,10 @@ module.exports = function (sequelize) {
     const Course = sequelize.define('course', {
         name: Sequelize.TEXT,
         number: Sequelize.TEXT,
-        
+        verified: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        }
     });
 
     const Document = sequelize.define('document', {
