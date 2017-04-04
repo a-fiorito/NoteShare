@@ -118,13 +118,16 @@ export default class Profile extends Component {
         .catch(err => {});
     };
 
-    updateDocumentName = (name, pos, sendToDB=false) => {
+    updateDocumentName({name, pos, sendToDB}) {
         if(!sendToDB) {
             let documents = this.state.documents.slice();
             documents[pos].name = name;
             this.setState({documents: documents});
         } else {
-            // make network request
+            axios.post('/pdfs/rename', {
+                id: this.state.documents[0].id,
+                name: this.state.documents[0].name
+            });
         }
     }
 
@@ -200,7 +203,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/icons/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName.bind(this)} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>

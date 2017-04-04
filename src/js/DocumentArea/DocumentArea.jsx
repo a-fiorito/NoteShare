@@ -96,14 +96,12 @@ export class DocThumbnail extends Component {
     }
 
     updateDocumentName = (e) => {
-        this.props.updateDocumentName(e.target.value, this.props.pos);
+
+        this.props.updateDocumentName({name: e.target.value, pos: this.props.pos, sendToDB: false});
     }
 
-    handleBlur = () => {
-        axios.post('/pdfs/rename', {
-            id: this.props.document.id,
-            name: this.props.document.name
-        });
+    handleBlur = (e) => {
+        this.props.updateDocumentName({name: e.target.value, pos: this.props.pos, sendToDB: true});
     }
 
     handleEnter = (e) => {

@@ -9,6 +9,9 @@
     "test": "jest",
     "reset": "node server/reset"
   },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "<rootDir>/__tests__/helpers"]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
