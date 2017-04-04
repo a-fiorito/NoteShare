@@ -1,0 +1,10 @@
+ACCEPTANCE TEST FOR US-03: Downloading Documents (#4)
+https://github.com/a-fiorito/NoteShare/issues/4
+
+Given: The user is on the dashboard and has uploaded documents
+1. User selects a course from the sidebar
+2. User clicks on the download icon for the document they wish to download
+3. Document is downloaded by the browser to the user's computer
+
+[x] Test Verified by team
+[ ] Test Verfied by client

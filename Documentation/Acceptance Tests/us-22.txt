@@ -1,0 +1,15 @@
+ACCEPTANCE TEST FOR US-22: Rename Uploaded Documents (#61)
+https://github.com/a-fiorito/NoteShare/issues/61
+
+Given: User is logged into the website and has uploaded a document
+1. User clicks on 'Profile' link in the navbar
+2. Profile is displayed
+3. User clicks on edit profile
+4. Profile is now in editing mode
+5. User clicks on document name to start typing
+6. User enters new document name
+7. User clicks finish editing
+8. Document name is updated
+
+[x] Test Verified by team
+[ ] Test Verfied by client

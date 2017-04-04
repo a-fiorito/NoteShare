@@ -1,0 +1,22 @@
+ACCEPTANCE TEST FOR US-02: Uploading Documents (#3)
+https://github.com/a-fiorito/NoteShare/issues/3
+
+Given: User is on the homepage and logged in.
+1. User clicks on 'Dashboard' link in the navbar
+2. The Dashboard is displayed for the user 
+3. User selects a course from the Dashboard
+    if user does not belong to any courses
+    3.1 User clicks on 'Profile' link in the navbar
+    3.2 User clicks 'Add or join a class' button
+    3.3 User enters course information
+    3.4 User clicks on the 'Add' button
+    3.5 repeat step 1
+    3.6 perform step 3
+4. User clicks on 'Upload a document' button
+5. User clicks on book icon or drags a file into the modal
+6. User chooses the name for their file
+7. User clicks upload 
+8. File is uploaded, success message is shown
+
+[x] Test Verified by team
+[ ] Test Verfied by client

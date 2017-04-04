@@ -1,0 +1,12 @@
+ACCEPTANCE TEST FOR US-05: Censoring Comments (#6)
+https://github.com/a-fiorito/NoteShare/issues/6
+
+Given: The user is on the dashboard and has uploaded documents
+1. User selects a course from the sidebar
+2. User clicks on the comment icon for the document they wish to comment on
+3. User enters their comment in the provided field
+4. User clicks on the submit button
+5. Comment is posted
+
+[x] Test Verified by team
+[ ] Test Verfied by client

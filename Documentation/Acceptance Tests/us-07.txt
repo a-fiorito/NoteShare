@@ -1,0 +1,9 @@
+ACCEPTANCE TEST FOR US-07: User Profile (#8)
+https://github.com/a-fiorito/NoteShare/issues/8
+
+Given: User is logged into the website
+1. User clicks on the 'Profile' link in the navbar
+2. User's profile is displayed
+
+[x] Test Verified by team
+[ ] Test Verfied by client
