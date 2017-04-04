@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router';
 import CSSTransition from 'react-addons-css-transition-group';
+import filter from '../utils/filter';
 
 export default class CommentsModal extends Component {
     constructor(props) {
@@ -122,7 +123,7 @@ export class Comment extends Component {
                 <div className="info">
                     <Link to={`/profile/${this.props.username}`}><h1>{this.props.username}</h1></Link>
                     <h2>{this.props.time}</h2>
-                    <p>{this.props.comment}</p>
+                    <p>{filter(this.props.comment)}</p>
                 </div>
             </div>
 

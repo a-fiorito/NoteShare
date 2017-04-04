@@ -38,7 +38,8 @@ export default class Profile extends Component {
             axios.get(`/stats/${nextProps.params.username}`)
                 .then(res => {
                     this.setState({ ...res.data });
-                });
+                })
+                .catch(err => {});
         }
     }
 
@@ -47,7 +48,8 @@ export default class Profile extends Component {
         axios.get(`/stats/${this.props.params.username}`)
             .then(res => {
                 this.setState({ ...res.data });
-            });
+            })
+            .catch(err => {});
 
     }
 
@@ -82,7 +84,8 @@ export default class Profile extends Component {
                 } else {
                     this.setState({ showAdd: false, courses: this.state.courses.concat([res.data]), error: null });
                 }
-            });
+            })
+            .then(err => {});
         } else {
             console.log('invalid');
         }
@@ -102,13 +105,41 @@ export default class Profile extends Component {
         this.setState({ documents: documents });
     }
 
+    deleteCourse = (pos, course) => {
+        axios.delete(`/courses/${this.props.user.id}/${course.id}`)
+        .then(() => {
+            if(localStorage.getItem('selectedCourse') && course.id == JSON.parse(localStorage.getItem('selectedCourse')).id) {
+                localStorage.removeItem('selectedCourse');
+            }
+            let courses = this.state.courses.slice();
+            courses.splice(pos, 1);
+            this.setState({ courses: courses });
+        })
+        .catch(err => {});
+    };
+
+    updateDocumentName = (name, pos, sendToDB=false) => {
+        if(!sendToDB) {
+            let documents = this.state.documents.slice();
+            documents[pos].name = name;
+            this.setState({documents: documents});
+        } else {
+            // make network request
+        }
+    }
+
     loadCourses() {
         return this.state.courses.map((c, i) => {
             return (
                 <div key={i} className="subcourses">
-                    {`${c.name} ${c.number}`}
+                    <div>{`${c.name} ${c.number}`}</div>
+                    {this.state.editing &&
+                        <div className="delete-course"
+                            onClick={this.deleteCourse.bind(null, i, c)}>
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                        </div>}
                 </div>
-            )
+            );
         });
     }
 
@@ -125,7 +156,8 @@ export default class Profile extends Component {
                     localStorage.setItem('jwtToken', token);
                     auth.setAuthToken(token);
                     this.props.renewAuth(auth.getCredentials(token));
-                });
+                })
+                .catch(err => {});
         }
         this.setState({ changesMade: false, editing: !this.state.editing });
     }
@@ -168,7 +200,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/icons/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>
@@ -223,7 +255,7 @@ export class Name extends Component {
                             <div className="type">{this.props.type}</div>
                             <div onClick={this.goRight} className="right"><i className="fa fa-angle-right" aria-hidden="true"></i></div>
                         </div>
-                        : <h2>{this.props.type || '-'}</h2>}
+                        : <h2 className="type">{this.props.type || '-'}</h2>}
                 </div>
             </div>
         );

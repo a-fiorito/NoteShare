@@ -340,12 +340,12 @@ var profanityDict = ["2g1c",
     "yiffy",
     "zoophilia"];
 
-function ProfanityReplacer(Input) {
+export default function ProfanityReplacer(Input) {
 
 
     var a = Input.split(" ");
     var foundprofanity = [];
-    for (i = 0; i < a.length; i++) {
+    for (var i = 0; i < a.length; i++) {
         if (profanityDict.indexOf(a[i]) != -1) {
             foundprofanity.push(i);
         }
@@ -353,6 +353,6 @@ function ProfanityReplacer(Input) {
     for (i = 0; i < foundprofanity.length; i++) {
         a[foundprofanity[i]] = "*****";
     }
-    output = a.join(" ");
+    var output = a.join(" ");
     return output;
 }

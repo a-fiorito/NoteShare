@@ -52,6 +52,7 @@ export default class Dashboard extends Component {
     updateDocuments = (doc) => {
         let newDoc = { ...doc };
         newDoc.user = { ...this.props.user };
+        newDoc.course = this.state.selectedCourse;
         newDoc.commentsCount = 0;
         this.setState({ documents: [newDoc].concat(this.state.documents) });
     }

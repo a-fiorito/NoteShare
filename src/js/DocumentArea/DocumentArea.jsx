@@ -21,12 +21,17 @@ export default class DocumentArea extends Component {
         this.context.router.goBack();
     }
 
+    updateDocumentName = (name, pos) => {
+        this.props.updateDocumentName(name, pos);
+    }
+
     displayNotes() {
         if (this.props.documents.length) {
             return this.props.documents.map((d, i) => {
                 return (
                     <DocThumbnail key={d.id}
-                        deleteDocument={this.props.deleteDocument} 
+                        deleteDocument={this.props.deleteDocument}
+                        updateDocumentName={this.updateDocumentName} 
                         pos={i} 
                         editing={this.props.editing} 
                         showComments={this.showComments} 
@@ -90,9 +95,27 @@ export class DocThumbnail extends Component {
         this.props.deleteDocument(pos);
     }
 
+    updateDocumentName = (e) => {
+        this.props.updateDocumentName(e.target.value, this.props.pos);
+    }
+
+    handleBlur = () => {
+        axios.post('/pdfs/rename', {
+            id: this.props.document.id,
+            name: this.props.document.name
+        });
+    }
+
+    handleEnter = (e) => {
+        if (e.key == 'Enter') {
+            e.preventDefault();
+            e.target.blur();
+        }
+    }
+
     render() {
-        let { pos, document, selectedCourse } = this.props;
-        let downloadLink = `/pdfs/download/${document.user.username}/${selectedCourse.name + selectedCourse.number}/${document.id}`
+        let { pos, document} = this.props;
+        let downloadLink = `/pdfs/download/${document.user.username}/${document.course.name + document.course.number}/${document.id}`;
         return (
             <div>
                 <div className="doc-thumbnail">
@@ -103,7 +126,7 @@ export class DocThumbnail extends Component {
                         </div>}
                     <div className="doc-holder">
                         <img src="/assets/images/icons/pdf-icon.svg"></img>
-                        <p className="course-title">{document.name}</p>
+                        {this.props.editing ? <textarea onBlur={this.handleBlur} onChange={this.updateDocumentName} value={document.name} onKeyPress={this.handleEnter} maxLength="30" /> : <p className="course-title">{document.name}</p>}
                         <div className="action-buttons">
                             <div className="downloadicon">
                                 <a href={downloadLink} target="_blank"><img src="/assets/images/icons/downloadicon.png"></img></a></div>

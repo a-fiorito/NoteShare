@@ -1,0 +1,14 @@
+ACCEPTANCE TEST FOR US-19: Deleting Documents (#48)
+https://github.com/a-fiorito/NoteShare/issues/48
+
+Given: User is logged into the website and has uploaded a document
+1. User clicks on 'Profile' link in the navbar
+2. Profile is displayed
+3. User clicks on edit profile
+4. Profile is now in editing mode
+5. User clicks on right arrow to display documents
+6. User clicks on red 'x' to delete a document
+7. Document is deleted
+
+[x] Test Verified by team
+[ ] Test Verfied by client

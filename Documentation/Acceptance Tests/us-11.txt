@@ -1,0 +1,9 @@
+ACCEPTANCE TEST FOR US-11: Homepage (#18)
+https://github.com/a-fiorito/NoteShare/issues/18
+
+Given: User loads the website
+1. User is greeted by the homepage or User clicks on the 'Home' link in the navbar
+2. User scrolls to learn more about the website
+
+[x] Test Verified by team
+[ ] Test Verfied by client

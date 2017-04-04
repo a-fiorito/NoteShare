@@ -14,7 +14,10 @@ module.exports = function (sequelize) {
     const Course = sequelize.define('course', {
         name: Sequelize.TEXT,
         number: Sequelize.TEXT,
-        
+        verified: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
+        }
     });
 
     const Document = sequelize.define('document', {
@@ -35,6 +38,7 @@ module.exports = function (sequelize) {
     });
 
     User.belongsToMany(Course, {as: 'courses', through: 'class'});
+    Course.belongsToMany(User, {as: 'users', through: 'class'});
     User.hasMany(Document, {as: 'documents'});
     Document.belongsTo(User, {as: 'user'});
     Course.hasMany(Document, {as: 'documents'});

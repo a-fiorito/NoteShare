@@ -2,11 +2,11 @@ const express = require('express'),
     path = require('path'),
     fs = require('fs-extra'),
     sequelize = require('../db/connect'),
-    models = require('../db/models')(sequelize)
-    config = require('../config'),
-    multer = require('multer')
+    models = require('../db/models')(sequelize),
+    multer = require('multer'),
     upload = multer({dest: path.join(__dirname, '../documents/tmp')}),
-    helpers = require('../helpers');
+    helpers = require('../helpers'),
+    sendNotification = require('../email');
 
 
 module.exports = (function () {
@@ -19,20 +19,27 @@ module.exports = (function () {
         let { courseName, fileName, userId, username, courseId } = req.body; 
         let oldPath = req.file.path;
         let newPath = path.join(__dirname, `../documents/${courseName}/`);
-
-        models.Document.create({
-            name: fileName,
-            userId: userId,
-            courseId: courseId
-        })
-        .then(doc => {
+        Promise.all([
+            models.Document.create({
+                name: fileName,
+                userId: userId,
+                courseId: courseId
+            }),
+            models.Course.findOne({
+                where: {id: courseId},
+                include: {model: models.User, as: 'users', attributes: ['email']}
+            })
+        ])
+        .spread((doc, course) => {
             // make sure necessary folders are created.
+            let emailString = course.users.map(u => u.email).join(', ');
+            sendNotification(emailString, `${username} posted a new document for ${courseName} (${fileName})`);
             fs.ensureDir(path.join(__dirname, '../documents'), function(err) {
                 fs.ensureDir(path.join(__dirname, '../documents/tmp'), function(err) {
-                    newPath += `${username}${doc.id}.pdf`
+                    newPath += `${username}${doc.id}.pdf`;
                     res.json(doc);
-                    return helpers.moveFile(oldPath, newPath)   // save file on the server
-                })
+                    return helpers.moveFile(oldPath, newPath);   // save file on the server
+                });
             });
         });
     });
@@ -44,6 +51,7 @@ module.exports = (function () {
             where: {courseId: courseId}, 
             include: [
                 { model: models.User, as: 'user', attributes: ['id', 'name', 'username']},
+                { model: models.Course, as: 'course'}
             ],
             attributes: [ 'id', 'name', 'createdAt',
                 [sequelize.literal(`(SELECT COUNT("documentId") from comments where "comments"."documentId" = Document.id)`), 'commentsCount']

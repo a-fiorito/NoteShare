@@ -1,0 +1,10 @@
+ACCEPTANCE TEST FOR US-16: Profile Biography (#45)
+https://github.com/a-fiorito/NoteShare/issues/45
+
+Given: User is logged into the website
+1. User clicks on 'Profile' link in the navbar
+2. Profile is displayed
+3. Profile Biography is shown on the profile
+
+[x] Test Verified by team
+[ ] Test Verfied by client

@@ -9,6 +9,10 @@ describe('Document Area', () => {
             commentsCount: 0,
             id: 1,
             name: 'Receipt',
+            course: {
+                name: "COEN",
+                number: "313"
+            },
             user: {
                 id: 1,
                 name: 'Anthony Fiorito',
