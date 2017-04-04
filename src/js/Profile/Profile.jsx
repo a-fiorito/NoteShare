@@ -38,7 +38,8 @@ export default class Profile extends Component {
             axios.get(`/stats/${nextProps.params.username}`)
                 .then(res => {
                     this.setState({ ...res.data });
-                });
+                })
+                .catch(err => {});
         }
     }
 
@@ -47,7 +48,8 @@ export default class Profile extends Component {
         axios.get(`/stats/${this.props.params.username}`)
             .then(res => {
                 this.setState({ ...res.data });
-            });
+            })
+            .catch(err => {});
 
     }
 
@@ -82,7 +84,8 @@ export default class Profile extends Component {
                 } else {
                     this.setState({ showAdd: false, courses: this.state.courses.concat([res.data]), error: null });
                 }
-            });
+            })
+            .then(err => {});
         } else {
             console.log('invalid');
         }
@@ -111,7 +114,8 @@ export default class Profile extends Component {
             let courses = this.state.courses.slice();
             courses.splice(pos, 1);
             this.setState({ courses: courses });
-        });
+        })
+        .catch(err => {});
     };
 
     updateDocumentName = (name, pos, sendToDB=false) => {
@@ -152,7 +156,8 @@ export default class Profile extends Component {
                     localStorage.setItem('jwtToken', token);
                     auth.setAuthToken(token);
                     this.props.renewAuth(auth.getCredentials(token));
-                });
+                })
+                .catch(err => {});
         }
         this.setState({ changesMade: false, editing: !this.state.editing });
     }
