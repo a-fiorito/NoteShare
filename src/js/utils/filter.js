@@ -55,6 +55,7 @@ var profanityDict = ["2g1c",
     "bukkake",
     "bulldyke",
     "bullet vibe",
+    "bullshit",
     "bung hole",
     "bunghole",
     "busty",
@@ -127,6 +128,9 @@ var profanityDict = ["2g1c",
     "footjob",
     "frotting",
     "fuck",
+    "fucking",
+    "fucker",
+    "fuckers",
     "fuck buttons",
     "fudge packer",
     "fudgepacker",
@@ -350,7 +354,7 @@ export default function ProfanityReplacer(Input) {
             foundprofanity.push(i);
         }
     }
-    for (i = 0; i < foundprofanity.length; i++) {
+    for (var i = 0; i < foundprofanity.length; i++) {
         a[foundprofanity[i]] = "*****";
     }
     var output = a.join(" ");
