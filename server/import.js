@@ -2,20 +2,26 @@ const sequelize = require('./db/connect'),
     models = require('./db/models')(sequelize),
     fs = require('fs'),
     path = require('path');
+
+fs.readFile(path.join(__dirname + '/db/course-list.txt'), 'utf8', (err, data) => {
+    if (err) throw err;
+    // seperate file by new lines
+    let courses = data.split('\n');
+    let courseList = [];
     
-fs.readFile(__dirname + '/db/course-list.txt', 'utf8', (err, data) => {
-    if(err) throw err;
-    var array = data.toString().split("\n");
-    for(i in array){
-        array[i] = array[i].split(" ");
-    }
-    courseList = array.map((course, index) => {
-      var objlist = {name: course[0], number: course[1], verified: true};
-      return objlist
+    // split course name and number
+    courses.forEach(c => {
+        let courseInfo = c.split(' ');
+        courseList.push({
+            name: courseInfo[0],
+            number: courseInfo[1],
+            verified: true
+        });
     });
+
+    // create courses in db
     models.Course.bulkCreate(courseList)
     .then(() => {
         console.log('Courses imported in database successfully');
     });
 });
-    
