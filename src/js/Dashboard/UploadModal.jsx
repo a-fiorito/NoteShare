@@ -69,6 +69,12 @@ class UploadModal extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    handleEnter = (e) => {
+        if(e.key == 'Enter') {
+            this.onUpload();
+        }
+    }
+
     closeModal = () => {
         this.setState({files: []});
         this.props.closeModal();
@@ -109,8 +115,8 @@ class UploadModal extends Component {
                                     {this.state.success && <div className="success">Success!</div>}
                                 </Dropzone>
                                 <p>Drag <span>PDF</span> here to upload.</p>
-                                {this.state.files.length > 0 && <input name="filename" type="text" value={this.state.filename} onChange={this.onChange} placeholder={"Enter the filename"} maxLength="30" />}
-                                <Button isDisabled={!this.state.files.length || this.state.filename.length > 30} className="uploadButton" label="Upload" func={this.onUpload} />
+                                {this.state.files.length > 0 && <input name="filename" type="text" value={this.state.filename} onKeyDown={this.handleEnter} onChange={this.onChange} placeholder={"Enter the filename"} maxLength="30" />}
+                                <Button isDisabled={!this.state.files.length || this.state.filename.length > 30 || this.state.isUploading} className="uploadButton" label="Upload" func={this.onUpload} />
                             </div>
                         </div>}
                 </CSSTransition>
