@@ -89,7 +89,7 @@ class Features extends Component {
 }
 
 
-const Feature = ({ imgSrc, header, body }) => {
+export const Feature = ({ imgSrc, header, body }) => {
     return (
         <div className="feature">
             <img src={imgSrc} width="50" height="50"></img>
@@ -99,7 +99,7 @@ const Feature = ({ imgSrc, header, body }) => {
     );
 }
 
-class Footer extends Component {
+export class Footer extends Component {
     render() {
         return (
             <div className="footer">

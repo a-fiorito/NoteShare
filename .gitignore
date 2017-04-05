@@ -17,6 +17,7 @@ dist/
 
 tmp/
 documents/
+coverage/
 
 #scripts
 *.sh

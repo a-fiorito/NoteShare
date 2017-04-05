@@ -38,7 +38,8 @@ export default class Profile extends Component {
             axios.get(`/stats/${nextProps.params.username}`)
                 .then(res => {
                     this.setState({ ...res.data });
-                });
+                })
+                .catch(err => {});
         }
     }
 
@@ -47,7 +48,8 @@ export default class Profile extends Component {
         axios.get(`/stats/${this.props.params.username}`)
             .then(res => {
                 this.setState({ ...res.data });
-            });
+            })
+            .catch(err => {});
 
     }
 
@@ -82,7 +84,8 @@ export default class Profile extends Component {
                 } else {
                     this.setState({ showAdd: false, courses: this.state.courses.concat([res.data]), error: null });
                 }
-            });
+            })
+            .then(err => {});
         } else {
             console.log('invalid');
         }
@@ -111,16 +114,20 @@ export default class Profile extends Component {
             let courses = this.state.courses.slice();
             courses.splice(pos, 1);
             this.setState({ courses: courses });
-        });
+        })
+        .catch(err => {});
     };
 
-    updateDocumentName = (name, pos, sendToDB=false) => {
+    updateDocumentName({name, pos, sendToDB}) {
         if(!sendToDB) {
             let documents = this.state.documents.slice();
             documents[pos].name = name;
             this.setState({documents: documents});
         } else {
-            // make network request
+            axios.post('/pdfs/rename', {
+                id: this.state.documents[0].id,
+                name: this.state.documents[0].name
+            });
         }
     }
 
@@ -152,7 +159,8 @@ export default class Profile extends Component {
                     localStorage.setItem('jwtToken', token);
                     auth.setAuthToken(token);
                     this.props.renewAuth(auth.getCredentials(token));
-                });
+                })
+                .catch(err => {});
         }
         this.setState({ changesMade: false, editing: !this.state.editing });
     }
@@ -195,7 +203,7 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/icons/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName.bind(this)} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
                         </div>
                     </div>
                 </div>
@@ -241,7 +249,7 @@ export class Name extends Component {
     render() {
         return (
             <div className="name-container">
-                {this.props.editing ? <input onChange={this.onChange} name="name" type="text" value={this.props.name} /> : <h1>{this.props.name || '-'}</h1>}
+                {this.props.editing ? <input onChange={this.onChange} name="name" type="text" value={this.props.name} /> : <h1 className="name">{this.props.name || '-'}</h1>}
                 <div className="sub-name">
                     <h2>{this.props.username} |</h2>
                     {this.props.editing ?
