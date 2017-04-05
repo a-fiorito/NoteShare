@@ -48,14 +48,8 @@ describe('Uploading documents', () => {
                     courseId: 1
                  }
 
-    it('calls componentDidMount', () => {
     
-    expect( shallow(<Dashboard />).length).toEqual(1);
-  });
-
-
-
-  it('will call the upload function', () => {
+  it('will call the upload function when the button is clicked', () => {
 
     //mount the modal and give it a state and props so the button will not be disabled
     const uploadModal = mount(<UploadModal />);
@@ -83,7 +77,7 @@ describe('Uploading documents', () => {
 
   })
 
-  it('wil add a new document to the state in preparation of uploading', () => {
+  it('will add a new document to the uploadModal state in preparation of uploading', () => {
 
     const uploadModal = shallow(<UploadModal />);
     let acceptedFiles = [];
@@ -101,7 +95,6 @@ describe('Uploading documents', () => {
         expect(uploadModal.state().filename).toEqual('filename');
   })
 
- 
 
   it('uploads the file', () => {
 
@@ -135,7 +128,8 @@ describe('Uploading documents', () => {
   })
 
 
-  it('will add a new document to the state once uploaded', () => {
+  it('will add a new document to the dashboard once uploaded', () => {
+
 
     //document has already been uploaded
     const dashboard = shallow(<Dashboard />);
