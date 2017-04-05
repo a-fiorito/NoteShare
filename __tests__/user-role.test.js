@@ -8,6 +8,7 @@ import { Name } from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/46
  */
 describe('US-17: User Role', () => {
+    require('./helpers/local-storage-mock');
     it('Makes sure user has a role on the profile', () => {
         let user = {
             type: 'Student',

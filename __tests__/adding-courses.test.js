@@ -8,6 +8,7 @@ import Profile from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/9
  */
 describe('US-08: Adding Courses', () => {
+    require('./helpers/local-storage-mock');
     beforeEach(function () {
         moxios.install();
     });

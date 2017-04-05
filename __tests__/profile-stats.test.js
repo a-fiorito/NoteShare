@@ -7,6 +7,7 @@ import Profile from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/44
  */
 describe('US-15: Profile Statistics', () => {
+    require('./helpers/local-storage-mock');
     it('Shows correct Statistics', () => {
         let statistics = {
             numberOfComments: 7,

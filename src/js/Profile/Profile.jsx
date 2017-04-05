@@ -15,7 +15,7 @@ export default class Profile extends Component {
         super(props);
 
         this.state = {
-            showDocuments: false,
+            showDocuments: +localStorage.getItem('showDocuments') || 0,
             showAdd: false,
             documents: [],
             statistics: {
@@ -59,6 +59,8 @@ export default class Profile extends Component {
     updateType = (t) => { this.setState({ changesMade: true, user: { ...this.state.user, type: t } }); }
 
     toggleBar = (e) => {
+        let showDocuments = this.state.showDocuments ? 0 : 1;
+        localStorage.setItem('showDocuments', showDocuments);
         this.setState({ showDocuments: !this.state.showDocuments });
     }
 
@@ -203,13 +205,13 @@ export default class Profile extends Component {
                         </div>
                         <div className="document-container">
                             <div onClick={this.toggleBar} className="toggle-bar"><h3>Uploaded Notes</h3><img className={this.state.showDocuments && "show"} src="/assets/images/icons/indicator.svg" /></div>
-                            {this.state.showDocuments && <DocumentArea updateDocumentName={this.updateDocumentName.bind(this)} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} />}
+                            {this.state.showDocuments ? <DocumentArea updateDocumentName={this.updateDocumentName.bind(this)} deleteDocument={this.deleteDocument} editing={this.state.editing} documents={this.state.documents} selectedCourse={true} user={this.props.user} params={this.props.params} /> : null}
                         </div>
                     </div>
                 </div>
             </div>
 
-        )
+        );
     }
 }
 

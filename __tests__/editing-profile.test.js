@@ -8,6 +8,7 @@ import { Name } from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/47
  */
 describe('US-18: Profile Editing', () => {
+    require('./helpers/local-storage-mock');
     it('updates the profile', () => {
         let profile = mount(<Profile params={{username: 'mock'}} user={{id: 1, username: 'ovoant', name: 'anthony', type: 'Student'}} />);
 

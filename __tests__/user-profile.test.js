@@ -7,6 +7,7 @@ import Profile from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/8
  */
 describe('US-07: User Profile', () => {
+    require('./helpers/local-storage-mock');
     it('Renders the profile properly', () => {
         let user = {
             type: 'Student',

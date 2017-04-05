@@ -7,6 +7,7 @@ import Profile from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/61
  */
 describe('US-22: Rename Uploaded Documents', () => {
+    require('./helpers/local-storage-mock');
     it('Renames a document', () => {
         let documents = [
             {id: 1, name: 'name', commentsCount: 2, user: {id: 1, name: 'f', username: 'f'}},

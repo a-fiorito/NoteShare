@@ -8,6 +8,7 @@ import Profile from '../src/js/Profile/Profile';
  * https://github.com/a-fiorito/NoteShare/issues/45
  */
 describe('US-16: Profile Biography', () => {
+    require('./helpers/local-storage-mock');
     it('Renders the biography of a user', () => {
         let user = {
             type: 'Student',
