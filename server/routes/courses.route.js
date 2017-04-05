@@ -1,7 +1,8 @@
 const express = require('express'),
     sequelize = require('../db/connect'),
     models = require('../db/models')(sequelize),
-    helpers = require('../helpers');
+    helpers = require('../helpers'),
+    importCourses = require('../import');
 
 
 module.exports = (function () {
@@ -61,6 +62,13 @@ module.exports = (function () {
             .then(() => {
                 res.json({success: true});
             });
+        });
+    });
+
+    courses.get('/load/verfied/courses/into/db', (req, res) => {
+        importCourses()
+        .then(() => {
+            res.json({success: true});
         });
     });
 
