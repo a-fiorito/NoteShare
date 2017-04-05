@@ -101,6 +101,40 @@ describe('Uploading documents', () => {
         expect(uploadModal.state().filename).toEqual('filename');
   })
 
+ 
+
+  it('uploads the file', () => {
+
+    jest.useFakeTimers();
+    
+    //mount the modal and give it a state and props so the button will not be disabled
+    const uploadModal = mount(<UploadModal />);
+    let state = { 
+                files: [new File(['data'], 'filename')], 
+                filename: 'filename',
+                success: false,
+                isDisabled: false,
+                isUploading: false,
+        };
+    
+    let props = {
+                selectedCourse: {id: 1, name: 'SOEN', number: '341'},
+                user: {id: 1, username: 'user'},
+        };
+
+    uploadModal.setState(state);
+    uploadModal.setProps(props);
+
+   uploadModal.instance().onUpload();
+   jest.runTimersToTime(700);
+   
+   //if the file uploads properly, the success state will be true at 0.7 seconds
+   expect(uploadModal.state().success).toEqual(true);
+
+
+  })
+
+
   it('will add a new document to the state once uploaded', () => {
 
     //document has already been uploaded
