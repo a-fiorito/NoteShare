@@ -1,9 +1,13 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Profile from '../src/js/Profile/Profile';
 import { Name } from '../src/js/Profile/Profile';
 
-describe('Updating Profile', () => {
+/**
+ * UNIT TEST FOR US-18: Profile Editing (#47)
+ * https://github.com/a-fiorito/NoteShare/issues/47
+ */
+describe('US-18: Profile Editing', () => {
     it('updates the profile', () => {
         let profile = mount(<Profile params={{username: 'mock'}} user={{id: 1, username: 'ovoant', name: 'anthony', type: 'Student'}} />);
 

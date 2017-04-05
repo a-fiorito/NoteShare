@@ -2,6 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Profile from '../src/js/Profile/Profile';
 
+/**
+ * UNIT TEST FOR US-22: Rename Uploaded Documents (#61)
+ * https://github.com/a-fiorito/NoteShare/issues/61
+ */
 describe('US-22: Rename Uploaded Documents', () => {
     it('Renames a document', () => {
         let documents = [

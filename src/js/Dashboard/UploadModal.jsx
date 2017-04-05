@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from '../Abstract/Button';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
-import CSSTransition from 'react-addons-css-transition-group'
+import CSSTransition from 'react-addons-css-transition-group';
 
 class UploadModal extends Component {
 
@@ -50,7 +50,7 @@ class UploadModal extends Component {
                 req.append(p, upload[p]);
             });
             // send axios request
-            axios.post('pdfs/upload', req, config)
+            axios.post('/pdfs/upload', req, config)
                 .then((res) => {
                     this.props.updateDocuments(res.data);
                     // set timeout to show success message when uploading
@@ -59,8 +59,8 @@ class UploadModal extends Component {
                         this.setState({ success: false, files: [] });
                     }, 700);
                 }).catch(function (error) {
-                    console.log(error); // TODO: add error handling
-                })
+                    console.log("error", error); // TODO: add error handling
+                });
             this.setState({ isUploading: false, success: true });
         }, 700);
     }

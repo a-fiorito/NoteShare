@@ -4,6 +4,10 @@ import Homepage from '../src/js/Global/Homepage';
 import { Feature } from '../src/js/Global/Homepage';
 import { Footer } from '../src/js/Global/Homepage';
 
+/**
+ * UNIT TEST FOR US-11: Homepage (#18)
+ * https://github.com/a-fiorito/NoteShare/issues/18
+ */
 describe('US-11: Homepage', () => {
     it('Renders the homepage properly', () => {
         let homepage = mount(<Homepage />);

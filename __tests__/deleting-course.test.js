@@ -3,6 +3,10 @@ import moxios from 'moxios';
 import { shallow } from 'enzyme';
 import Profile from '../src/js/Profile/Profile';
 
+/**
+ * UNIT TEST FOR US-21: Delete a Joined Course (#60)
+ * https://github.com/a-fiorito/NoteShare/issues/60
+ */
 describe('US-21: Delete a Joined Course', () => {
     require('./helpers/local-storage-mock');
 
@@ -17,7 +21,7 @@ describe('US-21: Delete a Joined Course', () => {
     it('Deletes the course from the profile', (done) => {
         // mock data
         let courses = [
-            { id: 1, name: "COEN", number: '313' },
+            { id: 1, name: 'COEN', number: '313' },
             { id: 2, name: 'SOEN', number: '341' }
         ];
         let user = {

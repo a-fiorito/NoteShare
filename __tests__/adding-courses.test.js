@@ -1,8 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import moxios from 'moxios'
+import moxios from 'moxios';
 import Profile from '../src/js/Profile/Profile';
 
+/**
+ * UNIT TEST FOR US-08: Adding Courses (#9)
+ * https://github.com/a-fiorito/NoteShare/issues/9
+ */
 describe('US-08: Adding Courses', () => {
     beforeEach(function () {
         moxios.install();
@@ -15,7 +19,7 @@ describe('US-08: Adding Courses', () => {
     it('Adds a course to the profile', (done) => {
         // mock data
         let courses = [
-            { id: 1, name: "COEN", number: '313' },
+            { id: 1, name: 'COEN', number: '313' },
             { id: 2, name: 'SOEN', number: '341' }
         ];
         let user = {
@@ -24,7 +28,7 @@ describe('US-08: Adding Courses', () => {
             username: 'mock'
         };
         let addedCourse = {
-            id: 1, name: "ELEC", number: "273"
+            id: 1, name: 'ELEC', number: '273'
         };
 
         let profile = shallow(<Profile user={user} params={{ username: '' }} />);

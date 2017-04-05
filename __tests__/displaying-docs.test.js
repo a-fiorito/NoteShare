@@ -1,9 +1,13 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 import DocumentArea from '../src/js/DocumentArea/DocumentArea';
 import { DocThumbnail } from '../src/js/DocumentArea/DocumentArea';
 
-describe('Displaying Docs', () => {
+/**
+ * UNIT TEST FOR US-13: Displaying Documents (#20)
+ * https://github.com/a-fiorito/NoteShare/issues/20
+ */
+describe('US-13: Displaying Documents', () => {
     it('Displays the documents', () => {
         let documents = [
             {id: 1, name: 'name', commentsCount: 2, user: {id: 1, name: 'f', username: 'f'}},

@@ -1,8 +1,12 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { shallow } from 'enzyme';
 import Profile from '../src/js/Profile/Profile';
 
-describe('Deleting Docs', () => {
+/**
+ * UNIT TEST FOR US-19: Deleting Documents (#48)
+ * https://github.com/a-fiorito/NoteShare/issues/48
+ */
+describe('US-19: Deleting Documents', () => {
     it('Deletes the document', () => {
         let documents = [
             {id: 1, name: 'name', commentsCount: 2, user: {id: 1, name: 'f', username: 'f'}},

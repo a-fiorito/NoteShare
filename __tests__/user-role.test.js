@@ -1,9 +1,13 @@
 import React from 'react';
-import { shallow, mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 import Profile from '../src/js/Profile/Profile';
 import { Name } from '../src/js/Profile/Profile';
 
-describe('Profile', () => {
+/**
+ * UNIT TEST FOR US-16: Profile Biography (#46)
+ * https://github.com/a-fiorito/NoteShare/issues/46
+ */
+describe('US-17: User Role', () => {
     it('Makes sure user has a role on the profile', () => {
         let user = {
             type: 'Student',
@@ -29,5 +33,5 @@ describe('Profile', () => {
         profile.setState({user: user});
         expect(profile.find(Name).find('.type').first().text()).toEqual('-');
 
-    })
-})
+    });
+});

@@ -76,7 +76,7 @@ export default class Dashboard extends Component {
             this.fetchDocumentsForCourse(c.id)
                 .then(res => {
                     this.setState({ documents: res.data });
-                });;
+                });
         }
         this.setState({ selectedCourse: c });
         localStorage.setItem('selectedCourse', JSON.stringify(c));

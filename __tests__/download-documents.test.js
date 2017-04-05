@@ -2,7 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { DocThumbnail } from '../src/js/DocumentArea/DocumentArea';
 
-describe('Document Area', () => {
+/**
+ * UNIT TEST FOR US-03: Downloading Documents (#4)
+ * https://github.com/a-fiorito/NoteShare/issues/4
+ */
+describe('US-03: Downloading Documents', () => {
     it('Creates proper download link for the user', () => {
         // mock document thumbnail
         let document = {
@@ -10,8 +14,8 @@ describe('Document Area', () => {
             id: 1,
             name: 'Receipt',
             course: {
-                name: "COEN",
-                number: "313"
+                name: 'COEN',
+                number: '313'
             },
             user: {
                 id: 1,
@@ -30,6 +34,7 @@ describe('Document Area', () => {
                 document={document} 
             />
         );
+        // expected download link
         let downloadLink = `/pdfs/download/${document.user.username}/${selectedCourse.name + selectedCourse.number}/${document.id}`;
         expect(docThumbnail.find('a').first().prop('href')).toBe(downloadLink);
 
